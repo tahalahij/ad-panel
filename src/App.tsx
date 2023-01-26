@@ -1,5 +1,6 @@
 import "./App.css";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { RootRouter } from "./routes/RootRouter";
 
 const theme = createTheme({
   typography: {
@@ -10,7 +11,7 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div className="App"></div>
+      <RootRouter />
     </ThemeProvider>
   );
 }
