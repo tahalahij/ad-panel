@@ -1,4 +1,5 @@
 import "./App.css";
+import "vazirmatn/Vazirmatn-font-face.css"
 import { createTheme, ThemeProvider } from "@mui/material";
 import { RootRouter } from "./routes/RootRouter";
 

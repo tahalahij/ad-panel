@@ -1,5 +1,15 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 import { Home } from "../layouts/home";
+import { Login } from "../layouts/login";
+import { List } from "../layouts/list";
+import { User } from "../layouts/user";
+import { New } from "../layouts/new";
 import { PageNotFound } from "../layouts/pageNotFound";
 
 const router = createBrowserRouter([
@@ -19,5 +29,26 @@ const router = createBrowserRouter([
 ]);
 
 export const RootRouter = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/">
+          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="users">
+            <Route index element={<List />} />
+            <Route path=":userId" element={<User />} />
+            <Route path="new" element={<New />} />
+          </Route>
+          <Route path="schedule">
+            <Route index element={<List />} />
+            <Route path=":scheduleId" element={<User />} />
+            <Route path="new" element={<New />} />
+          </Route>
+
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 };

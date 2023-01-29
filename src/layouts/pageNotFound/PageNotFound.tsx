@@ -2,8 +2,8 @@ import { useRouteError } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 
 export function PageNotFound() {
-  const error = useRouteError();
-  console.error(error);
+  // const error = useRouteError();
+  // console.error(error);
 
   return (
     <div id="error-page">
@@ -11,10 +11,10 @@ export function PageNotFound() {
       <Typography variant="body1">
         با عرض پوزش، صفحه مورد نظر یافت نشد!
       </Typography>
-      <Typography variant="subtitle1">
+      {/* <Typography variant="subtitle1"> */}
         {/* @ts-ignore */}
-        <i>{error?.statusText || error?.message}</i>
-      </Typography>
+        {/* <i>{error?.statusText || error?.message}</i> */}
+      {/* </Typography> */}
     </div>
   );
 }
