@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import { RootRouter } from "./routes/RootRouter";
 
 const theme = createTheme({
+  direction: 'rtl',
   typography: {
     fontFamily: ["Vazirmatn", "sans-serif"].join(","),
   },
