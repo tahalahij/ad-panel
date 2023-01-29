@@ -1,5 +1,12 @@
-import Typography from '@mui/material/Typography';
+import "./Home.scss";
+import Typography from "@mui/material/Typography";
+import { Sidebar } from "../../components";
 
 export const Home = () => {
-    return <Typography>WELCOME TO HOME</Typography>
-}
+  return (
+    <div className="home">
+      <Sidebar />
+      <div className="homeContainer">container</div>
+    </div>
+  );
+};
