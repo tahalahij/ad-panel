@@ -7,6 +7,7 @@ import {
   WIDGET_TYPE,
   Featured,
   Chart,
+  Table,
 } from "../../components";
 
 export const Home = () => {
@@ -24,6 +25,10 @@ export const Home = () => {
         <div className="charts">
           <Featured />
           <Chart />
+        </div>
+        <div className="listContainer">
+          <Typography className="listTitle">آخرین تراکنش ها</Typography>
+          <Table />
         </div>
       </div>
     </div>
