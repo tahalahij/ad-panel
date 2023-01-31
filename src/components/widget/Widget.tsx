@@ -1,5 +1,5 @@
 import "./widget.scss";
-import { FC, ReactNode, useMemo } from "react";
+import { FC, ReactNode } from "react";
 import Typography from "@mui/material/Typography";
 import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
@@ -7,6 +7,7 @@ import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalance
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import { convertToCurrency } from "../../utils/Utils";
 
 export const enum WIDGET_TYPE {
   users = "users",
@@ -115,7 +116,12 @@ export const Widget: FC<WidgetProps> = ({ type }) => {
           {data.title}
         </Typography>
         <Typography component={"span"} className="counter">
-          {data.isMoney && `تومان `} {amount}
+          {convertToCurrency(amount, { withComma: true })}{" "}
+          {data.isMoney && (
+            <Typography component={"span"} className="moneySign">
+              {"تومان"}
+            </Typography>
+          )}
         </Typography>
         <Typography component={"span"} className="link">
           {data.linkTitle}
