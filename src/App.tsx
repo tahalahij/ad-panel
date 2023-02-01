@@ -1,10 +1,11 @@
-import "./App.css";
-import "vazirmatn/Vazirmatn-font-face.css"
+import "./App.scss";
+import "vazirmatn/Vazirmatn-font-face.css";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { RootRouter } from "./routes/RootRouter";
+import { Navbar, Sidebar } from "./components";
 
 const theme = createTheme({
-  direction: 'rtl',
+  direction: "rtl",
   typography: {
     fontFamily: ["Vazirmatn", "sans-serif"].join(","),
   },
@@ -13,7 +14,13 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <RootRouter />
+      <div className="App">
+        <Sidebar />
+        <div className="mainContainer">
+          <Navbar />
+          <RootRouter />
+        </div>
+      </div>
     </ThemeProvider>
   );
 }
