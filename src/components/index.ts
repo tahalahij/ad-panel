@@ -4,3 +4,4 @@ export * from "./widget/Widget";
 export * from "./chart/Chart";
 export * from "./featured/Featured";
 export * from "./table/Table";
+export * from "./dataTable/DataTable";

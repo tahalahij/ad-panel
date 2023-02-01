@@ -1,0 +1,11 @@
+.cellImage {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+}
