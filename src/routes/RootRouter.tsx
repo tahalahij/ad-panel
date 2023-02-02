@@ -8,8 +8,8 @@ import {
 import { Home } from "../layouts/home";
 import { Login } from "../layouts/login";
 import { List } from "../layouts/list";
-import { User } from "../layouts/user";
-import { New } from "../layouts/new";
+import { User, New as NewUser } from "../layouts/user";
+// import { New } from "../layouts/user/new";
 import { PageNotFound } from "../layouts/pageNotFound";
 import { Single } from "../layouts/single";
 
@@ -39,13 +39,19 @@ export const RootRouter = () => {
           <Route path="users">
             <Route index element={<List />} />
             <Route path=":userId" element={<Single />} />
-            <Route path="new" element={<New />} />
+            <Route path="new" element={<NewUser title={"افزودن کاربر جدید"} />} />
           </Route>
-          <Route path="schedule">
+          {/* <Route path="schedules">
             <Route index element={<List />} />
             <Route path=":scheduleId" element={<Single />} />
-            <Route path="new" element={<New />} />
-          </Route>
+            <Route path="new" element={<New title={"افزودن برنامه جدید"} />} />
+          </Route> */}
+
+          {/* <Route path="uploads">
+            <Route index element={<List />} />
+            <Route path=":upload" element={<Single />} />
+            <Route path="new" element={<New title={"افزودن فایل جدید"} />} />
+          </Route> */}
 
           <Route path="*" element={<PageNotFound />} />
         </Route>
