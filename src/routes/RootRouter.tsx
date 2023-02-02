@@ -1,6 +1,6 @@
+import { useState } from "react";
 import {
   createBrowserRouter,
-  RouterProvider,
   BrowserRouter,
   Routes,
   Route,
@@ -12,50 +12,35 @@ import { User, New as NewUser } from "../layouts/user";
 // import { New } from "../layouts/user/new";
 import { PageNotFound } from "../layouts/pageNotFound";
 import { Single } from "../layouts/single";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-    errorElement: <PageNotFound />,
-  },
-  {
-    path: "content",
-    element: null,
-  },
-  {
-    path: "content/:contentId",
-    element: null,
-  },
-]);
+import { MainContainer} from "../components";
 
 export const RootRouter = () => {
+  const [isLogin, setLogin] = useState(true);
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/">
-          <Route index element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="users">
-            <Route index element={<List />} />
-            <Route path=":userId" element={<Single />} />
-            <Route path="new" element={<NewUser title={"افزودن کاربر جدید"} />} />
-          </Route>
-          {/* <Route path="schedules">
-            <Route index element={<List />} />
-            <Route path=":scheduleId" element={<Single />} />
-            <Route path="new" element={<New title={"افزودن برنامه جدید"} />} />
-          </Route> */}
-
-          {/* <Route path="uploads">
-            <Route index element={<List />} />
-            <Route path=":upload" element={<Single />} />
-            <Route path="new" element={<New title={"افزودن فایل جدید"} />} />
-          </Route> */}
-
+      {isLogin ? (
+        <MainContainer>
+          <Routes>
+            <Route path="/">
+              <Route index element={<Home />} />
+              {/* <Route path="login" element={<Login />} /> */}
+              <Route path="users">
+                <Route index element={<List />} />
+                <Route path=":userId" element={<Single />} />
+                <Route
+                  path="new"
+                  element={<NewUser title={"افزودن کاربر جدید"} />}
+                />
+              </Route>
+            </Route>
+          </Routes>
+        </MainContainer>
+      ) : (
+        <Routes>
+          <Route index element={<Login />} />
           <Route path="*" element={<PageNotFound />} />
-        </Route>
-      </Routes>
+        </Routes>
+      )}
     </BrowserRouter>
   );
 };

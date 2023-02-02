@@ -25,13 +25,7 @@ function App() {
   return (
     <CacheProvider value={cacheRtl}>
       <ThemeProvider theme={theme}>
-        <div className="App">
-          <Sidebar />
-          <div className="mainContainer">
-            <Navbar />
-            <RootRouter />
-          </div>
-        </div>
+        <RootRouter />
       </ThemeProvider>
     </CacheProvider>
   );
