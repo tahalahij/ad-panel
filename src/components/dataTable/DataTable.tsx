@@ -2,6 +2,7 @@ import "./dataTable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import Typography from "@mui/material/Typography";
 import { userColumns, userRows } from "./dataTableSource";
+import { Link } from "react-router-dom";
 
 const actionColumn = [
   {
@@ -11,7 +12,9 @@ const actionColumn = [
     renderCell: () => {
       return (
         <div className="cellAction">
-          <div className="viewButton">مشاهده</div>
+          <Link to="/users/test">
+            <div className="viewButton">مشاهده</div>
+          </Link>
           <div className="deleteButton">حذف</div>
         </div>
       );

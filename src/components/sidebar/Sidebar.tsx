@@ -5,14 +5,18 @@ import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import UpdateOutlinedIcon from "@mui/icons-material/UpdateOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
+import { Link } from "react-router-dom";
 
 export const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="top">
-        <Typography component={"span"} className="logo">
-          SCHEDULER
-        </Typography>
+        <Link to={"/"} style={{ textDecoration: "none" }}>
+          <Typography component={"span"} className="logo">
+            SCHEDULER
+          </Typography>
+        </Link>
       </div>
       <hr />
       <div className="center">
@@ -20,21 +24,33 @@ export const Sidebar = () => {
           <Typography className="title" component={"p"}>
             اصلی
           </Typography>
-          <li>
-            <DashboardOutlinedIcon className="icon" />
-            <Typography component={"span"}>داشبورد</Typography>
-          </li>
+          <Link to={"/"} style={{ textDecoration: "none" }}>
+            <li>
+              <DashboardOutlinedIcon className="icon" />
+              <Typography component={"span"}>داشبورد</Typography>
+            </li>
+          </Link>
           <Typography className="title" component={"p"}>
             لیست ها
           </Typography>
-          <li>
-            <GroupOutlinedIcon className="icon" />
-            <Typography component={"span"}>کاربران</Typography>
-          </li>
-          <li>
-            <UpdateOutlinedIcon className="icon" />
-            <Typography component={"span"}>برنامه ها</Typography>
-          </li>
+          <Link to={"/users"} style={{ textDecoration: "none" }}>
+            <li>
+              <GroupOutlinedIcon className="icon" />
+              <Typography component={"span"}>کاربران</Typography>
+            </li>
+          </Link>
+          <Link to={"/schedules"} style={{ textDecoration: "none" }}>
+            <li>
+              <UpdateOutlinedIcon className="icon" />
+              <Typography component={"span"}>برنامه ها</Typography>
+            </li>
+          </Link>
+          <Link to={"/uploads"} style={{ textDecoration: "none" }}>
+            <li>
+              <CloudUploadOutlinedIcon className="icon" />
+              <Typography component={"span"}>بارگذاری ها</Typography>
+            </li>
+          </Link>
           <Typography className="title" component={"p"}>
             کاربر
           </Typography>
