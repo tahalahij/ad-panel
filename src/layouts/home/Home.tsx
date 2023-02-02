@@ -21,7 +21,7 @@ export const Home = () => {
       </div>
       <div className="charts">
         <Featured />
-        <Chart />
+        <Chart title="درآمد 6 ماه گذشته"/>
       </div>
       <div className="listContainer">
         <Typography className="listTitle">آخرین تراکنش ها</Typography>

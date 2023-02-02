@@ -1,4 +1,5 @@
 import "./chart.scss";
+import { FC } from "react";
 import {
   AreaChart,
   Area,
@@ -10,9 +11,10 @@ import {
 } from "recharts";
 import Typography from "@mui/material/Typography";
 import { convertCurrencyToHighValueReadable } from "../../utils/Utils";
+import { title } from "process";
 
 const data = [
-  { name: "شهریور", total: 1300000, subTotal: 90},
+  { name: "شهریور", total: 1300000, subTotal: 90 },
   { name: "مهر", total: 700000 },
   { name: "آبان", total: 800000 },
   { name: "آذر", total: 1700000 },
@@ -24,11 +26,17 @@ const data = [
 // nivo
 // recharts
 // react-rechart-js2
-export const Chart = () => {
+
+type ChartProps = {
+  aspect?: number;
+  title?: string;
+};
+
+export const Chart: FC<ChartProps> = ({ aspect, title }) => {
   return (
     <div className="chart">
-      <Typography>درآمد شش ماه گذشته</Typography>
-      <ResponsiveContainer width={"100%"} aspect={2 / 1}>
+      <Typography>{title}</Typography>
+      <ResponsiveContainer width={"100%"} aspect={aspect}>
         <AreaChart
           width={730}
           height={250}
@@ -49,8 +57,8 @@ export const Chart = () => {
           {/* <YAxis /> */}
           <CartesianGrid strokeDasharray="3 3" className="chartGrid" />
           <Tooltip
-            //@ts-ignore
-            // formatter={(value) => convertCurrencyToHighValueReadable(value)}
+          //@ts-ignore
+          // formatter={(value) => convertCurrencyToHighValueReadable(value)}
           />
           <Area
             type="monotone"
@@ -70,4 +78,9 @@ export const Chart = () => {
       </ResponsiveContainer>
     </div>
   );
+};
+
+Chart.defaultProps = {
+  aspect: 2 / 1,
+  title: "",
 };
