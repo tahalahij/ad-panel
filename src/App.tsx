@@ -1,6 +1,10 @@
 import "./App.scss";
 import "vazirmatn/Vazirmatn-font-face.css";
 import { createTheme, ThemeProvider } from "@mui/material";
+import rtlPlugin from "stylis-plugin-rtl";
+import { prefixer } from "stylis";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
 import { RootRouter } from "./routes/RootRouter";
 import { Navbar, Sidebar } from "./components";
 
@@ -11,17 +15,25 @@ const theme = createTheme({
   },
 });
 
+// Create rtl cache
+const cacheRtl = createCache({
+  key: "muirtl",
+  stylisPlugins: [prefixer, rtlPlugin],
+});
+
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <div className="App">
-        <Sidebar />
-        <div className="mainContainer">
-          <Navbar />
-          <RootRouter />
+    <CacheProvider value={cacheRtl}>
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          <Sidebar />
+          <div className="mainContainer">
+            <Navbar />
+            <RootRouter />
+          </div>
         </div>
-      </div>
-    </ThemeProvider>
+      </ThemeProvider>
+    </CacheProvider>
   );
 }
 
