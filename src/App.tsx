@@ -6,7 +6,7 @@ import { prefixer } from "stylis";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { RootRouter } from "./routes/RootRouter";
-import { Navbar, Sidebar } from "./components";
+import { ContextStoreProvider } from "./context/ContextStoreProvider";
 
 const theme = createTheme({
   direction: "rtl",
@@ -24,9 +24,11 @@ const cacheRtl = createCache({
 function App() {
   return (
     <CacheProvider value={cacheRtl}>
-      <ThemeProvider theme={theme}>
-        <RootRouter />
-      </ThemeProvider>
+      <ContextStoreProvider>
+        <ThemeProvider theme={theme}>
+          <RootRouter />
+        </ThemeProvider>
+      </ContextStoreProvider>
     </CacheProvider>
   );
 }

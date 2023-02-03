@@ -1,6 +1,4 @@
-import { useState } from "react";
 import {
-  createBrowserRouter,
   BrowserRouter,
   Routes,
   Route,
@@ -13,12 +11,14 @@ import { User, New as NewUser } from "../layouts/user";
 import { PageNotFound } from "../layouts/pageNotFound";
 import { Single } from "../layouts/single";
 import { MainContainer } from "../components";
+import { useAuthenticationState } from "../context/authentication";
 
 export const RootRouter = () => {
-  const [isLogin, setLogin] = useState(true);
+  const authState = useAuthenticationState();
+
   return (
     <BrowserRouter>
-      {isLogin ? (
+      {authState.isLogin ? (
         <MainContainer>
           <Routes>
             <Route path="/">

@@ -7,8 +7,11 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import { Link } from "react-router-dom";
+import { useAuthenticationDispatch } from "../../context";
 
 export const Sidebar = () => {
+  const authDispatch = useAuthenticationDispatch();
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -58,7 +61,7 @@ export const Sidebar = () => {
             <AccountCircleOutlinedIcon className="icon" />
             <Typography component={"span"}>پروفایل</Typography>
           </li>
-          <li>
+          <li onClick={() => authDispatch({ type: "LOGIN" })}>
             <LogoutOutlinedIcon className="icon" />
             <Typography component={"span"}>خروج</Typography>
           </li>
