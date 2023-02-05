@@ -28,9 +28,9 @@ export const DataTable = () => {
       <DataGrid
         rows={userRows}
         columns={userColumns.concat(actionColumn)}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
+        // pageSize={}
+        rowsPerPageOptions={[25]}
+        // checkboxSelection
       />
     </div>
   );

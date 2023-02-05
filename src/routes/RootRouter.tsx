@@ -1,8 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "../layouts/home";
 import { Login } from "../layouts/login";
 import { List } from "../layouts/list";
@@ -10,6 +6,7 @@ import { User, New as NewUser } from "../layouts/user";
 // import { New } from "../layouts/user/new";
 import { PageNotFound } from "../layouts/pageNotFound";
 import { Single } from "../layouts/single";
+import { Schedule } from "../layouts/schedule";
 import { MainContainer } from "../components";
 import { useAuthenticationState } from "../context/authentication";
 
@@ -35,6 +32,14 @@ export const RootRouter = () => {
                 <Route
                   path="new"
                   element={<NewUser title={"افزودن کاربر جدید"} />}
+                />
+              </Route>
+              <Route path="schedules">
+                <Route index element={<Schedule />} />
+                <Route path=":scheduleId" element={<Single />} />
+                <Route
+                  path="new"
+                  element={<NewUser title={"افزودن برنامه جدید"} />}
                 />
               </Route>
             </Route>

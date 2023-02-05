@@ -1,0 +1,27 @@
+.schedule {
+  padding: 20px;
+
+  .header {
+    display: flex;
+    margin: 0px 20px;
+    align-items: center;
+    justify-content: space-between;
+    color: gray;
+
+    .link {
+      text-decoration: none;
+      padding: 5px 10px;
+      color: green;
+      font-weight: 400;
+      border: 1px solid green;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .buttonContainer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+  }
+}
