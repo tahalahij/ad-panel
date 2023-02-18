@@ -103,9 +103,9 @@ async function requestRunner<T>(
     const data = await response.json();
     const { ok } = response;
     return {
-      success: true,
+      success: ok,
       httpStatus: status,
-      payload: ok ? data?.result : undefined,
+      payload: ok ? data : undefined,
       error: !ok ? data?.err : undefined,
     };
   } catch (error: any) {

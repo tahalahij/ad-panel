@@ -5,17 +5,30 @@ import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { Alert, Snackbar } from "@mui/material";
 import { useAuthenticationDispatch } from "../../context";
+import { loginRequest } from "../../network/requests";
+import { useFormik } from "formik";
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const authDispatch = useAuthenticationDispatch();
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -25,9 +38,19 @@ export const Login = () => {
     event.preventDefault();
   };
 
-  const onLoginClick = () => {
-    // setError("خطا در دریافت اطلاعات");
-    authDispatch({ type: "LOGIN" });
+  const onLoginClick = async () => {
+    setLoading(true);
+    const response = await loginRequest(formik.values);
+    if (response.success) {
+      setLoading(false);
+      authDispatch({
+        type: "LOGIN",
+        value: { isLogin: true, token: response.payload?.access_token! },
+      });
+    } else {
+      setLoading(false);
+      setError("خطا در ورود به برنامه");
+    }
   };
 
   return (
@@ -37,9 +60,11 @@ export const Login = () => {
           <Typography variant="h6">SCHEDULE</Typography>
           <TextField
             error={false}
-            id="outlined-error-helper-text"
+            id="username"
+            name="username"
             label="نام کاربری"
-            defaultValue=""
+            value={formik.values.username}
+            onChange={formik.handleChange}
             // helperText={"خطا"}
             placeholder="نام کاربری را وارد کنید"
             sx={{ width: "34ch" }}
@@ -47,7 +72,10 @@ export const Login = () => {
           <TextField
             error={false}
             id="password"
+            name="password"
             label="رمز عبور"
+            value={formik.values.password}
+            onChange={formik.handleChange}
             // helperText={"خطا"}
             placeholder="رمز عبور را وارد کنید"
             sx={{ width: "34ch" }}
@@ -73,10 +101,13 @@ export const Login = () => {
               ),
             }}
           />
-
-          <Button variant="contained" onClick={onLoginClick}>
+          <LoadingButton
+            loading={loading}
+            variant="contained"
+            onClick={onLoginClick}
+          >
             ورود
-          </Button>
+          </LoadingButton>
         </Card>
       </Container>
       <Snackbar
