@@ -1,4 +1,4 @@
-export const BASE_API_URL = "http://localhost:3000/";
+export const BASE_API_URL = process.env.NODE_ENV === 'development' ? "/" : 'https://example.ir/';
 
 export const DEFAULT_HEADERS = {
   "Content-Type": "application/json",
