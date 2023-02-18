@@ -32,7 +32,7 @@ export function reducer(state: ContextSchema, action: ActionType) {
     case "LOGIN":
       return {
         isLogin: true,
-        token: action.value.token,
+        token: action?.value?.token!,
       };
     case "LOGOUT":
       return {
