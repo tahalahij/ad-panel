@@ -12,6 +12,7 @@ import { ActionType, ContextSchema } from "./AuthenticationContextTypes";
 const STORAGE_KEY = 'Authentication'
 const INITIAL_STATE: ContextSchema = {
   isLogin: false,
+  token: '',
 };
 
 function getInitialState() {
@@ -31,10 +32,12 @@ export function reducer(state: ContextSchema, action: ActionType) {
     case "LOGIN":
       return {
         isLogin: true,
+        token: action.value.token,
       };
     case "LOGOUT":
       return {
         isLogin: false,
+        token: '',
       };
     default:
       return state;
