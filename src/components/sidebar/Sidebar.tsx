@@ -61,7 +61,7 @@ export const Sidebar = () => {
             <AccountCircleOutlinedIcon className="icon" />
             <Typography component={"span"}>پروفایل</Typography>
           </li>
-          <li onClick={() => authDispatch({ type: "LOGIN" })}>
+          <li onClick={() => authDispatch({ type: "LOGOUT" })}>
             <LogoutOutlinedIcon className="icon" />
             <Typography component={"span"}>خروج</Typography>
           </li>
