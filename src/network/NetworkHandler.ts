@@ -90,7 +90,7 @@ async function requestRunner<T>(
   const headers = {
     ...DEFAULT_HEADERS,
     ...config.extraHeaders,
-    access_token: token,
+    Authorization: token,
   };
 
   if (data instanceof FormData) {
