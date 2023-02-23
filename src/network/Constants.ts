@@ -1,7 +1,7 @@
 export const BASE_API_URL = process.env.NODE_ENV === 'development' ? "/" : 'https://example.ir/';
 
 export const DEFAULT_HEADERS = {
-  "Content-Type": "application/json",
+  // "Content-Type": "application/json",
   "Cache-Control": "no-cache",
 };
 

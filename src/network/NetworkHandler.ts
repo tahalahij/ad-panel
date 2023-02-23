@@ -90,12 +90,12 @@ async function requestRunner<T>(
   const headers = {
     ...DEFAULT_HEADERS,
     ...config.extraHeaders,
-    Authorization: token,
+    Authorization: `Bearer ${token}`,
   };
 
-  if (data instanceof FormData) {
-    headers["Content-Type"] = "multipart/form-data";
-  }
+  // if (data instanceof FormData) {
+  //   headers["Content-Type"] = "multipart/form-data";
+  // }
 
   try {
     const response: Response = await fetch(finalUrl, { method, headers, body });
