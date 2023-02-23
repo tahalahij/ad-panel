@@ -1,33 +1,59 @@
 import "./dataTable.scss";
+import { FC } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Typography from "@mui/material/Typography";
-import { userColumns, userRows } from "./dataTableSource";
+import { userColumns, userRows, fileColumns } from "./dataTableSource";
 import { Link } from "react-router-dom";
 
-const actionColumn = [
-  {
-    field: "action",
-    headerName: "دستور",
-    width: 200,
-    renderCell: () => {
-      return (
-        <div className="cellAction">
-          <Link to="/users/test">
-            <div className="viewButton">مشاهده</div>
-          </Link>
-          <div className="deleteButton">حذف</div>
-        </div>
-      );
-    },
-  },
-];
+interface IDataTableProps {
+  columnKey: "user" | "file" | "schedule";
+  singleItemRoute?: string;
+  data?: any[]
+}
 
-export const DataTable = () => {
+export const DataTable: FC<IDataTableProps> = ({
+  columnKey,
+  singleItemRoute,
+  data,
+}) => {
+  const actionColumn = [
+    {
+      field: "action",
+      headerName: "دستور",
+      width: 200,
+      renderCell: () => {
+        return (
+          <div className="cellAction">
+            {!!singleItemRoute && (
+              <Link to={singleItemRoute}>
+                <div className="viewButton">مشاهده</div>
+              </Link>
+            )}
+            <div className="deleteButton">حذف</div>
+          </div>
+        );
+      },
+    },
+  ];
+
+  const getColumns = () => {
+    switch (columnKey) {
+      case "file":
+        return fileColumns.concat(actionColumn);
+      case "user":
+      default:
+        return userColumns.concat(actionColumn);
+    }
+  };
+
+  if (!data) return null;
+
   return (
     <div className="dataTable">
       <DataGrid
-        rows={userRows}
-        columns={userColumns.concat(actionColumn)}
+        rows={data}
+        columns={getColumns()}
+        getRowId={(row) => row._id}
         // pageSize={}
         rowsPerPageOptions={[25]}
         // checkboxSelection

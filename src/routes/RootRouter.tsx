@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "../layouts/home";
 import { Login } from "../layouts/login";
 import { List } from "../layouts/list";
+import { FileList, NewFileUpload } from "../layouts/file";
 import { User, New as NewUser } from "../layouts/user";
 // import { New } from "../layouts/user/new";
 import { PageNotFound } from "../layouts/pageNotFound";
@@ -25,7 +26,11 @@ export const RootRouter = () => {
                 <Route
                   index
                   element={
-                    <List newItemRoute="/users/new" title="افزودن کاربر جدید" />
+                    <List
+                      newItemRoute="/users/new"
+                      title="افزودن کاربر جدید"
+                      columnKey="user"
+                    />
                   }
                 />
                 <Route path=":userId" element={<Single />} />
@@ -40,6 +45,22 @@ export const RootRouter = () => {
                 <Route
                   path="new"
                   element={<NewUser title={"افزودن برنامه جدید"} />}
+                />
+              </Route>
+              <Route path="uploads">
+                <Route
+                  index
+                  element={
+                    <FileList
+                      title="افزودن فایل جدید"
+                      columnKey="file"
+                    />
+                  }
+                />
+                <Route path=":fileId" element={<Single />} />
+                <Route
+                  path="new"
+                  element={<NewFileUpload title={"افزودن فایل جدید"} />}
                 />
               </Route>
             </Route>
