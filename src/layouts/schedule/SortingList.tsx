@@ -9,6 +9,12 @@ import {
 import { SortableList } from "../../components/sortableList/SortableList";
 import { Schedule } from "../../types/ScheduleTypes";
 import Typography from "@mui/material/Typography";
+import { FileUploadItem } from "../../types/FileTypes";
+import VideoFileOutlinedIcon from '@mui/icons-material/VideoFileOutlined';
+import AudioFileOutlinedIcon from '@mui/icons-material/AudioFileOutlined';
+import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
+import { BASE_API_URL } from "../../network/Constants";
 
 export function createRange<T>(
   length: number,
@@ -22,10 +28,10 @@ export function createRange<T>(
 // }
 
 type SortingListProps = {
-  listData: Schedule[];
+  listData: FileUploadItem[];
 };
 
-type WithOrderId = Schedule & { id: number | string };
+type WithOrderId = FileUploadItem & { id: number | string };
 export type SortListMethods = {
   getOrderedList: () => WithOrderId[];
 };
@@ -41,7 +47,7 @@ export const SortingList = forwardRef<SortListMethods, SortingListProps>(
       );
 
       setItems(tempArray);
-    }, []);
+    }, [listData]);
 
     useImperativeHandle(ref, () => ({
       getOrderedList: () => items,
@@ -58,6 +64,22 @@ export const SortingList = forwardRef<SortListMethods, SortingListProps>(
       return result;
     };
 
+    const getFileIcon = (type: string, path: string) => {
+      // const prefixUrl = 'http://localhost:3000/'
+      // const url = prefixUrl+path.replace('files\\', 'files/');
+      switch(type) {
+        case 'video':
+          return <VideoFileOutlinedIcon fontSize={'large'} fontSizeAdjust={40}/>
+        case 'audio':
+          return <AudioFileOutlinedIcon fontSize={'large'} fontSizeAdjust={40}/>
+        case 'image':
+          // return <img src={url} alt="thumbnail" className="img" /> 
+          return <ImageOutlinedIcon fontSize={'large'} fontSizeAdjust={140} />
+        default:
+        return <InsertDriveFileOutlinedIcon fontSize={'large'} fontSizeAdjust={40}/>
+      }
+    }
+
     return (
       <div className="sortingList">
         <SortableList
@@ -69,17 +91,22 @@ export const SortingList = forwardRef<SortListMethods, SortingListProps>(
                 <div className="part id">{item.id}</div>
                 <div className="part">
                   <div className="thumbnail">
-                    <img src="" alt="thumbnail" className="img" />
+                    {getFileIcon(item.type, item.path)}
+                    {/* <img src="" alt="thumbnail" className="img" /> */}
                   </div>
                 </div>
                 <div className="part">
-                  <Typography>{item.title}</Typography>
+                  <Typography>
+                    <a href={item.path} target="_blank" rel="noreferrer">
+                      {item.path}
+                    </a>
+                  </Typography>
                 </div>
-                <div className="part">
+                {/* <div className="part">
                   <Typography>
                     {convertSecondToHumanReadable(item.onScreenDuration!)}
                   </Typography>
-                </div>
+                </div> */}
               </div>
 
               <SortableList.DragHandle iconWidth={18} />
