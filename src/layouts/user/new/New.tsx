@@ -8,14 +8,37 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
+import { addOperatorRequest } from "../../../network/requests";
 
 type NewProps = {
   title: string;
 };
 
 export const New: FC<NewProps> = ({ title }) => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [file, setFile] = useState<Blob | MediaSource>();
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<{
+    title: string;
+    type?: "success" | "error";
+  }>({ title: "" });
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      name: "",
+      password: "",
+      ip: "",
+    },
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -25,15 +48,31 @@ export const New: FC<NewProps> = ({ title }) => {
     event.preventDefault();
   };
 
+  const submitUser = async () => {
+    const response = await addOperatorRequest(formik.values);
+    if (response.success) {
+      setMessage({ title: "با موفقیت اضافه شد", type: "success" });
+      setTimeout(() => {
+        navigate(-1);
+      }, 2000);
+    } else {
+      setMessage({
+        title: "خطایی در ثبت اپراتور جدید رخ داده است",
+        type: "error",
+      });
+    }
+    setLoading(false);
+  };
+
   return (
-    <div className="new">
+    <div className="newUser">
       <div className="top">
         <Typography variant="h5" className="title">
           {title}
         </Typography>
       </div>
       <div className="bottom">
-        <div className="left">
+        {/* <div className="left">
           <img
             src={
               file
@@ -43,10 +82,10 @@ export const New: FC<NewProps> = ({ title }) => {
             alt="empty field"
             className="image"
           />
-        </div>
+        </div> */}
         <div className="right">
           <form action="">
-            <div className="formInput fileInput">
+            {/* <div className="formInput fileInput">
               <label htmlFor="file" className="fileInput">
                 <Typography component={"span"}>فایل:</Typography>
                 <CloudUploadOutlinedIcon className="icon" />
@@ -61,13 +100,15 @@ export const New: FC<NewProps> = ({ title }) => {
                   }
                 }}
               />
-            </div>
+            </div> */}
             <div className="formInput">
               <TextField
                 error={false}
-                id="outlined-error-helper-text"
+                id="username"
+                name="username"
+                value={formik.values.username}
+                onChange={formik.handleChange}
                 label="نام کاربری"
-                defaultValue=""
                 helperText={""}
                 placeholder="نام کاربری را وارد کنید"
                 sx={{ width: "25ch" }}
@@ -76,15 +117,17 @@ export const New: FC<NewProps> = ({ title }) => {
             <div className="formInput">
               <TextField
                 error={false}
-                id="outlined-error-helper-text"
-                label="نام و نام‌خانوادگی"
-                defaultValue=""
+                id="name"
+                name="name"
+                label="نام اپراتور"
+                value={formik.values.name}
+                onChange={formik.handleChange}
                 helperText={""}
-                placeholder="نام و نام‌خانوادگی را وارد کنید"
+                placeholder="نام اپراتور را وارد کنید"
                 sx={{ width: "25ch" }}
               />
             </div>
-            <div className="formInput">
+            {/* <div className="formInput">
               <TextField
                 error={false}
                 id="outlined-error-helper-text"
@@ -94,10 +137,13 @@ export const New: FC<NewProps> = ({ title }) => {
                 placeholder="ایمیل را وارد کنید"
                 sx={{ width: "25ch" }}
               />
-            </div>
+            </div> */}
             <div className="formInput">
               <TextField
                 id="password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
                 placeholder="رمز عبور را وارد کنید"
                 type={showPassword ? "text" : "password"}
                 sx={{ width: "25ch" }}
@@ -123,15 +169,17 @@ export const New: FC<NewProps> = ({ title }) => {
             <div className="formInput">
               <TextField
                 error={false}
-                id="outlined-error-helper-text"
-                label="تلفن"
-                defaultValue=""
+                id="ip"
+                name="ip"
+                value={formik.values.ip}
+                onChange={formik.handleChange}
+                label="آدرس ip"
                 helperText={""}
-                placeholder="تلفن را وارد کنید"
+                placeholder="آدرس ip را وارد کنید"
                 sx={{ width: "25ch" }}
               />
             </div>
-            <div className="formInput">
+            {/* <div className="formInput">
               <TextField
                 error={false}
                 id="outlined-error-helper-text"
@@ -143,15 +191,31 @@ export const New: FC<NewProps> = ({ title }) => {
                 multiline={true}
                 // fullWidth
               />
-            </div>
+            </div> */}
             <div className="formInput">
-              <Button variant="contained" className="submitButton">
+              <LoadingButton
+                variant="contained"
+                className="submitButton"
+                loading={loading}
+                onClick={submitUser}
+              >
                 ارسال
-              </Button>
+              </LoadingButton>
             </div>
           </form>
         </div>
       </div>
+      <Snackbar
+        open={!!message.title}
+        // message={error}
+        autoHideDuration={5000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        onClose={() => setMessage({ title: "" })}
+      >
+        <Alert severity={message.type} sx={{ width: "100%" }}>
+          {message.title}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
