@@ -5,18 +5,20 @@ import {
   Reducer,
   useEffect,
   useReducer,
+  useRef,
 } from "react";
+import store from "./AuthenticationStore";
 
 import { ActionType, ContextSchema } from "./AuthenticationContextTypes";
 
-const STORAGE_KEY = 'Authentication'
+const STORAGE_KEY = "Authentication";
 const INITIAL_STATE: ContextSchema = {
   isLogin: false,
-  token: '',
+  token: "",
 };
 
 function getInitialState() {
-  const state = localStorage.getItem(STORAGE_KEY)
+  const state = localStorage.getItem(STORAGE_KEY);
   return state ? JSON.parse(state) : INITIAL_STATE;
 }
 
@@ -28,6 +30,7 @@ export const AuthenticationContextSetState = createContext<
 >(undefined);
 
 export function reducer(state: ContextSchema, action: ActionType) {
+  console.log(action)
   switch (action.type) {
     case "LOGIN":
       return {
@@ -37,7 +40,7 @@ export function reducer(state: ContextSchema, action: ActionType) {
     case "LOGOUT":
       return {
         isLogin: false,
-        token: '',
+        token: "",
       };
     default:
       return state;
@@ -55,6 +58,22 @@ export function AuthenticationContextProvider({
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }, [state]);
+
+  const stateRef = useRef(getInitialState());
+  useEffect(() => {
+    stateRef.current = state;
+    store.__onStateUpdated();
+  }, [state]);
+
+  /*
+    Store init
+  */
+  if (!store.isReady) {
+    store.init({
+      dispatch: (params) => dispatch(params),
+      getState: () => ({ ...stateRef.current }),
+    });
+  }
 
   return (
     <AuthenticationContextState.Provider value={state}>

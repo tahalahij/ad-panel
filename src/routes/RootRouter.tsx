@@ -16,7 +16,12 @@ export const RootRouter = () => {
 
   return (
     <BrowserRouter>
-      {authState.isLogin ? (
+      {!authState.isLogin ? (
+        <Routes>
+          <Route index element={<Login />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      ) : (
         <MainContainer>
           <Routes>
             <Route path="/">
@@ -51,10 +56,7 @@ export const RootRouter = () => {
                 <Route
                   index
                   element={
-                    <FileList
-                      title="افزودن فایل جدید"
-                      columnKey="file"
-                    />
+                    <FileList title="افزودن فایل جدید" columnKey="file" />
                   }
                 />
                 <Route path=":fileId" element={<Single />} />
@@ -66,11 +68,6 @@ export const RootRouter = () => {
             </Route>
           </Routes>
         </MainContainer>
-      ) : (
-        <Routes>
-          <Route index element={<Login />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
       )}
     </BrowserRouter>
   );

@@ -20,6 +20,7 @@ import type {
   ResponseType,
   NetworkHandlerType,
 } from "./types";
+import { store } from "../context/authentication";
 
 function buildUrl(parameters: object) {
   let qs = "";
@@ -87,26 +88,29 @@ async function requestRunner<T>(
       : data instanceof FormData
       ? data
       : JSON.stringify(data);
-  const headers = {
+  const headers: Record<string, string> = {
     ...DEFAULT_HEADERS,
     ...config.extraHeaders,
     Authorization: `Bearer ${token}`,
   };
 
-  // if (data instanceof FormData) {
-  //   headers["Content-Type"] = "multipart/form-data";
-  // }
+  if (!(data instanceof FormData)) {
+    headers["Content-Type"] = "application/json";
+  }
 
   try {
     const response: Response = await fetch(finalUrl, { method, headers, body });
     const status = response.status;
     const data = await response.json();
     const { ok } = response;
+    if (status === 401 || status === 403) {
+      store.dispatch({ type: "LOGOUT" });
+    }
     return {
       success: ok,
       httpStatus: status,
       payload: ok ? data : undefined,
-      error: !ok ? data?.err : undefined,
+      error: !ok ? data?.message : undefined,
     };
   } catch (error: any) {
     return {
