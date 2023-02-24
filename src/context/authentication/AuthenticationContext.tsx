@@ -15,6 +15,7 @@ const STORAGE_KEY = "Authentication";
 const INITIAL_STATE: ContextSchema = {
   isLogin: false,
   token: "",
+  role: "OPERATOR",
 };
 
 function getInitialState() {
@@ -30,17 +31,18 @@ export const AuthenticationContextSetState = createContext<
 >(undefined);
 
 export function reducer(state: ContextSchema, action: ActionType) {
-  console.log(action)
   switch (action.type) {
     case "LOGIN":
       return {
         isLogin: true,
         token: action?.value?.token!,
+        role: action?.value?.role!,
       };
     case "LOGOUT":
       return {
         isLogin: false,
         token: "",
+        role: "",
       };
     default:
       return state;

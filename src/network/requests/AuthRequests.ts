@@ -7,5 +7,8 @@ type loginInputReq = {
 };
 
 export const loginRequest = async (body: loginInputReq) => {
-  return NetworkHandler.post<{ access_token: string }>(`auth/login`, body);
+  return NetworkHandler.post<{
+    access_token: string;
+    role: "ADMIN" | "OPERATOR";
+  }>(`auth/login`, body);
 };

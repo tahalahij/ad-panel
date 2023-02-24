@@ -7,10 +7,14 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import { Link } from "react-router-dom";
-import { useAuthenticationDispatch } from "../../context";
+import {
+  useAuthenticationDispatch,
+  useAuthenticationState,
+} from "../../context";
 
 export const Sidebar = () => {
   const authDispatch = useAuthenticationDispatch();
+  const authState = useAuthenticationState();
 
   return (
     <div className="sidebar">
@@ -36,31 +40,37 @@ export const Sidebar = () => {
           <Typography className="title" component={"p"}>
             لیست ها
           </Typography>
-          <Link to={"/users"} style={{ textDecoration: "none" }}>
-            <li>
-              <GroupOutlinedIcon className="icon" />
-              <Typography component={"span"}>کاربران</Typography>
-            </li>
-          </Link>
-          <Link to={"/schedules"} style={{ textDecoration: "none" }}>
-            <li>
-              <UpdateOutlinedIcon className="icon" />
-              <Typography component={"span"}>برنامه ها</Typography>
-            </li>
-          </Link>
-          <Link to={"/uploads"} style={{ textDecoration: "none" }}>
-            <li>
-              <CloudUploadOutlinedIcon className="icon" />
-              <Typography component={"span"}>بارگذاری ها</Typography>
-            </li>
-          </Link>
+          {authState.role === "ADMIN" && (
+            <Link to={"/users"} style={{ textDecoration: "none" }}>
+              <li>
+                <GroupOutlinedIcon className="icon" />
+                <Typography component={"span"}>کاربران</Typography>
+              </li>
+            </Link>
+          )}
+          {authState.role === "OPERATOR" && (
+            <Link to={"/schedules"} style={{ textDecoration: "none" }}>
+              <li>
+                <UpdateOutlinedIcon className="icon" />
+                <Typography component={"span"}>برنامه ها</Typography>
+              </li>
+            </Link>
+          )}
+          {authState.role === "OPERATOR" && (
+            <Link to={"/uploads"} style={{ textDecoration: "none" }}>
+              <li>
+                <CloudUploadOutlinedIcon className="icon" />
+                <Typography component={"span"}>بارگذاری ها</Typography>
+              </li>
+            </Link>
+          )}
           <Typography className="title" component={"p"}>
             کاربر
           </Typography>
-          <li>
+          {/* <li>
             <AccountCircleOutlinedIcon className="icon" />
             <Typography component={"span"}>پروفایل</Typography>
-          </li>
+          </li> */}
           <li onClick={() => authDispatch({ type: "LOGOUT" })}>
             <LogoutOutlinedIcon className="icon" />
             <Typography component={"span"}>خروج</Typography>

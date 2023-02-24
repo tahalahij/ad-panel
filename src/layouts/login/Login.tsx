@@ -45,7 +45,7 @@ export const Login = () => {
       setLoading(false);
       authDispatch({
         type: "LOGIN",
-        value: { isLogin: true, token: response.payload?.access_token! },
+        value: { isLogin: true, token: response.payload?.access_token!, role: response.payload?.role! },
       });
     } else {
       setLoading(false);

@@ -1,8 +1,8 @@
 export type ContextSchema = {
   isLogin: boolean;
   token: string;
+  role: string;
 };
-
 
 export declare enum ReducerActionType {
   LOGIN = "LOGIN",
