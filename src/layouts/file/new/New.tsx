@@ -3,6 +3,7 @@ import { useState, FC } from "react";
 import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import { uploadFileRequest } from "../../../network/requests/FileRequests";
@@ -14,6 +15,7 @@ type NewProps = {
 
 export const NewFileUpload: FC<NewProps> = ({ title }) => {
   const [file, setFile] = useState<File>();
+  const [delay, setDelay] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{
     title: string;
@@ -27,10 +29,20 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
       return;
     }
 
+    if (file.type.startsWith("image") && (!delay || Number(delay) <= 0)) {
+      setMessage({
+        title: "مدت زمان نمایش تصویر به درستی وارد نشده است",
+        type: "error",
+      });
+      return;
+    }
+
     setLoading(true);
     const data = new FormData();
     data.append(`file`, file);
-    // data.append("delay", "100");
+    if (file.type.startsWith("image")) {
+      data.append("delay", delay.toString());
+    }
     // data.append("animationName", "flip");
 
     const response = await uploadFileRequest(data);
@@ -47,6 +59,14 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
     }
     setLoading(false);
   };
+
+  const delayErrorText = delay === ''
+    ? "مدت زمان نمایش تصویر را به 'ثانیه' وارد کنید"
+    : Number(delay) < 0
+    ? "ثانیه نمیتواند منفی باشد"
+    : Number(delay) == 0
+    ? "مقداری بزرگتر از صفر وارد کنید"
+    : "";
 
   return (
     <div className="newFile">
@@ -96,6 +116,20 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
                 }}
               />
             </div>
+            {!!file && file.type.startsWith("image") && (
+              <TextField
+                error={!!delayErrorText}
+                type="number"
+                id="delay"
+                name="delay"
+                label="مدت زمان نمایش تصویر"
+                value={delay}
+                onChange={(e) => setDelay(e.target.value)}
+                helperText={delayErrorText}
+                placeholder="مدت زمان نمایش تصویر را به 'ثانیه' وارد کنید"
+                sx={{ width: "40%", marginLeft: "24px" }}
+              />
+            )}
             <div className="formInput">
               <LoadingButton
                 variant="contained"
