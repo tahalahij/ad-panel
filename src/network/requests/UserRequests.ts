@@ -17,7 +17,7 @@ type operatorListParamsReq = {
 export const getOperatorListRequest = async (
   params: operatorListParamsReq = { page: 0, limit: 100 }
 ) => {
-  return NetworkHandler.get<User[]>(`users`, {
+  return NetworkHandler.get<User[]>(`users/operators`, {
     params,
   });
 };

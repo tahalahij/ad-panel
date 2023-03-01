@@ -1,4 +1,4 @@
-import './cellImage.scss';
+import "./cellImage.scss";
 import Typography from "@mui/material/Typography";
 import { GridRenderCellParams } from "@mui/x-data-grid";
 const Gravatar = require("react-gravatar");
@@ -8,14 +8,14 @@ export const CellImage = (props: GridRenderCellParams<string>) => {
   return (
     <div className="cellImage">
       <Gravatar
-        email={props.row.email}
+        email={props.row.username + "@gmail.com"}
         size={30}
         rating="g"
         default="identicon"
         className="avatar"
         protocol="https://"
       />
-      <Typography>{props.row.userName}</Typography>
+      <Typography>{props.row.username}</Typography>
     </div>
   );
 };

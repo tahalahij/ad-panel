@@ -3,14 +3,14 @@ import { CellImage } from "./CellImage";
 import { CellLink } from "./CellLink";
 
 export const userColumns: GridColDef[] = [
-  { field: "id", headerName: "شناسه", width: 130, sortable: false },
+  { field: "_id", headerName: "شناسه", width: 280, sortable: false },
   {
-    field: "userName",
+    field: "username",
     headerName: "نام کاربری",
     width: 200,
     renderCell: CellImage,
   },
-  { field: "email", headerName: "ایمیل", width: 230, sortable: false },
+  { field: "name", headerName: "نام", width: 230, sortable: true },
   {
     field: "role",
     headerName: "دسترسی",
