@@ -46,7 +46,7 @@ export const RootRouter = () => {
                 />
                 <Route
                   path="new"
-                  element={<NewUser title={"افزودن کاربر جدید"} />}
+                  element={<NewUser title={"افزودن اپراتور جدید"} />}
                 />
               </Route>
               <Route path="schedules">
