@@ -45,7 +45,7 @@ export const Sidebar = () => {
             <Link to={"/users"} style={{ textDecoration: "none" }}>
               <li>
                 <GroupOutlinedIcon className="icon" />
-                <Typography component={"span"}>کاربران</Typography>
+                <Typography component={"span"}>اپراتور ها</Typography>
               </li>
             </Link>
           )}
