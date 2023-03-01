@@ -33,7 +33,7 @@ export const List: FC<ListProps> = ({
         </Link>
       </div>
       {loading ? <CircularProgress /> : null}
-      <DataTable columnKey={"user"} singleItemRoute={singleItemRoute} data={userList}/>
+      <DataTable columnKey={"user"} data={userList}/>
     </div>
   );
 };

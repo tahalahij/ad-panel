@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 interface IDataTableProps {
   columnKey: "user" | "file" | "schedule";
   singleItemRoute?: string;
-  data?: any[]
+  data?: any[];
 }
 
 export const DataTable: FC<IDataTableProps> = ({
@@ -21,11 +21,15 @@ export const DataTable: FC<IDataTableProps> = ({
       field: "action",
       headerName: "دستور",
       width: 200,
-      renderCell: () => {
+      renderCell: (params: any) => {
+        const patchLink =
+          columnKey === "user"
+            ? `${params.row._id}/${params.row.ip}/${params.row.username}/${params.row.name}`
+            : singleItemRoute;
         return (
           <div className="cellAction">
-            {!!singleItemRoute && (
-              <Link to={singleItemRoute}>
+            {!!patchLink && (
+              <Link to={patchLink}>
                 <div className="viewButton">مشاهده</div>
               </Link>
             )}

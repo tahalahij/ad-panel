@@ -33,12 +33,17 @@ export const RootRouter = () => {
                   element={
                     <List
                       newItemRoute="/users/new"
-                      title="افزودن کاربر جدید"
+                      title="افزودن اپراتور جدید"
                       columnKey="user"
                     />
                   }
                 />
-                <Route path=":userId" element={<Single />} />
+                <Route
+                  path=":userId/:ip/:username/:name"
+                  element={
+                    <NewUser title={"ویرایش اپراتور"} update={true} />
+                  }
+                />
                 <Route
                   path="new"
                   element={<NewUser title={"افزودن کاربر جدید"} />}

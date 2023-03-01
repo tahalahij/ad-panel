@@ -12,15 +12,20 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
-import { addOperatorRequest } from "../../../network/requests";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  addOperatorRequest,
+  updateOperatorRequest,
+} from "../../../network/requests";
 
 type NewProps = {
   title: string;
+  update?: boolean;
 };
 
-export const New: FC<NewProps> = ({ title }) => {
+export const New: FC<NewProps> = ({ title, update = false }) => {
   const navigate = useNavigate();
+  const { userId, ip, username, name } = useParams();
   const [showPassword, setShowPassword] = useState(false);
   const [file, setFile] = useState<Blob | MediaSource>();
   const [loading, setLoading] = useState(false);
@@ -30,10 +35,10 @@ export const New: FC<NewProps> = ({ title }) => {
   }>({ title: "" });
   const formik = useFormik({
     initialValues: {
-      username: "",
-      name: "",
+      username: username ?? "",
+      name: name ?? "",
       password: "",
-      ip: "",
+      ip: ip ?? "",
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -49,7 +54,13 @@ export const New: FC<NewProps> = ({ title }) => {
   };
 
   const submitUser = async () => {
-    const response = await addOperatorRequest(formik.values);
+    const { password, ...requestBody } = formik.values;
+    if (!!password) {
+      Object.assign(requestBody, password);
+    }
+    const response = update
+      ? await updateOperatorRequest({ ...requestBody, _id: userId })
+      : await addOperatorRequest(formik.values);
     if (response.success) {
       setMessage({ title: "با موفقیت اضافه شد", type: "success" });
       setTimeout(() => {
@@ -57,7 +68,7 @@ export const New: FC<NewProps> = ({ title }) => {
       }, 2000);
     } else {
       setMessage({
-        title: "خطایی در ثبت اپراتور جدید رخ داده است",
+        title: `خطایی در ثبت اپراتور ${update ? '' : 'جدید '}رخ داده است`,
         type: "error",
       });
     }

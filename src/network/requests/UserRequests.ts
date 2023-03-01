@@ -2,9 +2,10 @@ import { User } from "../../types/UserTypes";
 import NetworkHandler from "../NetworkHandler";
 
 type newUserParams = {
+  _id?: string;
   username: string;
   name: string;
-  password: string;
+  password?: string;
   ip: string;
 };
 
@@ -24,4 +25,8 @@ export const getOperatorListRequest = async (
 
 export const addOperatorRequest = async (data: newUserParams) => {
   return NetworkHandler.post<any>(`users`, data);
+};
+
+export const updateOperatorRequest = async (data: newUserParams) => {
+  return NetworkHandler.patch<any>(`users/${data._id}`, data);
 };
