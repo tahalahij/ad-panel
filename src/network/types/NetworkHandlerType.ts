@@ -36,4 +36,9 @@ export type NetworkHandlerType = {
     data: RequestBody,
     config?: RequestConfig,
   ) => Promise<ResponseType<T>>;
+  patch: <T>(
+    url: string,
+    data: RequestBody,
+    config?: RequestConfig,
+  ) => Promise<ResponseType<T>>;
 }

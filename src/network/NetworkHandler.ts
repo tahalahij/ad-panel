@@ -143,6 +143,9 @@ const NetworkHandler: NetworkHandlerType = {
   delete: async function (url, data, config) {
     return requestRunner("DELETE", url, data, config);
   },
+  patch: async function (url, data, config) {
+    return requestRunner("PATCH", url, data, config);
+  },
 };
 
 export default NetworkHandler;
