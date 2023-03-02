@@ -52,3 +52,12 @@ export const fileColumns: GridColDef[] = [
     sortable: false,
   },
 ];
+
+export const scheduleColumns: GridColDef[] = [
+  { field: "_id", headerName: "شناسه برنامه", width: 230, sortable: false },
+  {
+    field: "ip",
+    headerName: "آی پی دستگاه",
+    width: 330,
+  },
+];

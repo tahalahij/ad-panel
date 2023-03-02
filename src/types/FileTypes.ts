@@ -9,3 +9,14 @@ export class FileUploadItem {
     public type: "image" | "video" | "audio"
   ) {}
 }
+
+export class ScheduleConductor {
+  constructor(
+    public conductor: string[],
+    public ip: string,
+    public operator: string,
+    public updatedAt: string | null,
+    public __v: number,
+    public _id: string
+  ) {}
+}

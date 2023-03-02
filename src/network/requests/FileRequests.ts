@@ -1,5 +1,5 @@
 // import type {ExpertCardType} from './../types';
-import { FileUploadItem } from "../../types/FileTypes";
+import { FileUploadItem, ScheduleConductor } from "../../types/FileTypes";
 import NetworkHandler from "../NetworkHandler";
 
 type fileListParamsReq = {
@@ -20,8 +20,16 @@ export const uploadFileRequest = async (file: FormData) => {
   return NetworkHandler.post<any>(`files/upload`, file);
 };
 
-export const updateSchedulesRequest = async (scheduleList: string[]) => {
-  return NetworkHandler.post<any>(`files/schedule`, {
+export const updateSchedulesRequest = async (
+  scheduleList: string[],
+  ip: string
+) => {
+  return NetworkHandler.post<ScheduleConductor>(`files/schedule`, {
     conductor: scheduleList,
+    ip,
   });
+};
+
+export const getScheduleListRequest = async () => {
+  return NetworkHandler.get<ScheduleConductor[]>(`files/schedule/operators`);
 };

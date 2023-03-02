@@ -2,19 +2,26 @@ import "./dataTable.scss";
 import { FC } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Typography from "@mui/material/Typography";
-import { userColumns, userRows, fileColumns } from "./dataTableSource";
+import {
+  userColumns,
+  userRows,
+  fileColumns,
+  scheduleColumns,
+} from "./dataTableSource";
 import { Link } from "react-router-dom";
 
 interface IDataTableProps {
   columnKey: "user" | "file" | "schedule";
   singleItemRoute?: string;
   data?: any[];
+  onViewClick?: (_id: string) => void;
 }
 
 export const DataTable: FC<IDataTableProps> = ({
   columnKey,
   singleItemRoute,
   data,
+  onViewClick,
 }) => {
   const actionColumn = [
     {
@@ -30,8 +37,25 @@ export const DataTable: FC<IDataTableProps> = ({
           <div className="cellAction">
             {!!patchLink && (
               <Link to={patchLink}>
-                <div className="viewButton">مشاهده</div>
+                <div
+                  className="viewButton"
+                  onClick={() => {
+                    onViewClick && onViewClick(params.row._id);
+                  }}
+                >
+                  مشاهده
+                </div>
               </Link>
+            )}
+            {onViewClick && (
+              <div
+                className="viewButton"
+                onClick={() => {
+                  onViewClick && onViewClick(params.row._id);
+                }}
+              >
+                مشاهده
+              </div>
             )}
             <div className="deleteButton">حذف</div>
           </div>
@@ -42,6 +66,8 @@ export const DataTable: FC<IDataTableProps> = ({
 
   const getColumns = () => {
     switch (columnKey) {
+      case "schedule":
+        return scheduleColumns.concat(actionColumn);
       case "file":
         return fileColumns.concat(actionColumn);
       case "user":

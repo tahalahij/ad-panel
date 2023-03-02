@@ -10,10 +10,11 @@ import { SortableList } from "../../components/sortableList/SortableList";
 import { Schedule } from "../../types/ScheduleTypes";
 import Typography from "@mui/material/Typography";
 import { FileUploadItem } from "../../types/FileTypes";
-import VideoFileOutlinedIcon from '@mui/icons-material/VideoFileOutlined';
-import AudioFileOutlinedIcon from '@mui/icons-material/AudioFileOutlined';
-import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
-import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
+import VideoFileOutlinedIcon from "@mui/icons-material/VideoFileOutlined";
+import AudioFileOutlinedIcon from "@mui/icons-material/AudioFileOutlined";
+import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
+import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { BASE_API_URL } from "../../network/Constants";
 
 export function createRange<T>(
@@ -29,16 +30,17 @@ export function createRange<T>(
 
 type SortingListProps = {
   listData: FileUploadItem[];
+  onRemove: (_id: string) => void;
 };
 
-type WithOrderId = FileUploadItem & { id: number | string };
+export type WithOrderId = FileUploadItem & { id: number | string };
 export type SortListMethods = {
   getOrderedList: () => WithOrderId[];
 };
 const initialList: WithOrderId[] = [];
 
 export const SortingList = forwardRef<SortListMethods, SortingListProps>(
-  ({ listData }, ref) => {
+  ({ listData, onRemove }, ref) => {
     const [items, setItems] = useState<WithOrderId[]>(initialList);
 
     useEffect(() => {
@@ -47,7 +49,7 @@ export const SortingList = forwardRef<SortListMethods, SortingListProps>(
       );
 
       setItems(tempArray);
-    }, [listData]);
+    }, [listData.length]);
 
     useImperativeHandle(ref, () => ({
       getOrderedList: () => items,
@@ -67,18 +69,27 @@ export const SortingList = forwardRef<SortListMethods, SortingListProps>(
     const getFileIcon = (type: string, path: string) => {
       // const prefixUrl = 'http://localhost:3000/'
       // const url = prefixUrl+path.replace('files\\', 'files/');
-      switch(type) {
-        case 'video':
-          return <VideoFileOutlinedIcon fontSize={'large'} fontSizeAdjust={40}/>
-        case 'audio':
-          return <AudioFileOutlinedIcon fontSize={'large'} fontSizeAdjust={40}/>
-        case 'image':
-          // return <img src={url} alt="thumbnail" className="img" /> 
-          return <ImageOutlinedIcon fontSize={'large'} fontSizeAdjust={140} />
+      switch (type) {
+        case "video":
+          return (
+            <VideoFileOutlinedIcon fontSize={"large"} fontSizeAdjust={40} />
+          );
+        case "audio":
+          return (
+            <AudioFileOutlinedIcon fontSize={"large"} fontSizeAdjust={40} />
+          );
+        case "image":
+          // return <img src={url} alt="thumbnail" className="img" />
+          return <ImageOutlinedIcon fontSize={"large"} fontSizeAdjust={140} />;
         default:
-        return <InsertDriveFileOutlinedIcon fontSize={'large'} fontSizeAdjust={40}/>
+          return (
+            <InsertDriveFileOutlinedIcon
+              fontSize={"large"}
+              fontSizeAdjust={40}
+            />
+          );
       }
-    }
+    };
 
     return (
       <div className="sortingList">
@@ -108,7 +119,9 @@ export const SortingList = forwardRef<SortListMethods, SortingListProps>(
                   </Typography>
                 </div> */}
               </div>
-
+              <div className="part delete" onClick={() => onRemove(item._id)}>
+                <DeleteOutlineOutlinedIcon />
+              </div>
               <SortableList.DragHandle iconWidth={18} />
             </SortableList.Item>
           )}

@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFilesState } from "../../../context/file";
+import { getScheduleListRequest } from "../../../network/requests";
+import { ScheduleConductor } from "../../../types/FileTypes";
 import { Schedule } from "../../../types/ScheduleTypes";
 import { useFileData } from "../../file/useFileData";
 
@@ -31,6 +33,33 @@ const FAKE_DATA: Array<Schedule> = [
 export const useScheduleData = () => {
   const data = useFilesState();
   useFileData();
-  
+
   return data;
+};
+
+export const useGetSchedule = () => {
+  const [operatorSchedules, setOperatorSchedules] = useState<
+    ScheduleConductor[]
+  >([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = async (page: number = 0) => {
+    setLoading(true);
+    const response = await getScheduleListRequest();
+    console.log(response);
+    if (response.success) {
+      setOperatorSchedules(response.payload!);
+    }
+    setLoading(false);
+  };
+
+  const addOperatorSchedule = (item: ScheduleConductor) => {
+    setOperatorSchedules((prev) => [...prev, item]);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return { fetchData, operatorSchedules, loading, addOperatorSchedule };
 };
