@@ -83,10 +83,10 @@ export const Sidebar = () => {
           </li>
         </ul>
       </div>
-      <div className="bottom">
+      {/* <div className="bottom">
         <div className="colorOption" />
         <div className="colorOption" />
-      </div>
+      </div> */}
     </div>
   );
 };
