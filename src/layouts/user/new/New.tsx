@@ -150,32 +150,34 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
               />
             </div> */}
             <div className="formInput">
-              <TextField
-                id="password"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                placeholder="رمز عبور را وارد کنید"
-                type={showPassword ? "text" : "password"}
-                sx={{ width: "25ch" }}
-                InputProps={{
-                  //}}
-                  // endAdornment={
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                label="رمز عبور"
-              />
+              {!update && (
+                <TextField
+                  id="password"
+                  name="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  placeholder="رمز عبور را وارد کنید"
+                  type={showPassword ? "text" : "password"}
+                  sx={{ width: "25ch" }}
+                  InputProps={{
+                    //}}
+                    // endAdornment={
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  label="رمز عبور"
+                />
+              )}
             </div>
             {/* <div className="formInput">
               <TextField
