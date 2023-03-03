@@ -3,7 +3,7 @@ import { Home } from "../layouts/home";
 import { Login } from "../layouts/login";
 import { List } from "../layouts/list";
 import { FileList, NewFileUpload } from "../layouts/file";
-import { User, New as NewUser } from "../layouts/user";
+import { User, New as NewUser, ResetPassword } from "../layouts/user";
 // import { New } from "../layouts/user/new";
 import { PageNotFound } from "../layouts/pageNotFound";
 import { Single } from "../layouts/single";
@@ -39,10 +39,14 @@ export const RootRouter = () => {
                   }
                 />
                 <Route
-                  path=":userId/:username/:name"
+                  path="resetPassword"
                   element={
-                    <NewUser title={"ویرایش اپراتور"} update={true} />
+                    <ResetPassword title={"تغییر رمز عبور"} />
                   }
+                />
+                <Route
+                  path=":userId/:username/:name"
+                  element={<NewUser title={"ویرایش اپراتور"} update={true} />}
                 />
                 <Route
                   path="new"

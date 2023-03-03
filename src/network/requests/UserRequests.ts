@@ -30,3 +30,10 @@ export const addOperatorRequest = async (data: newUserParams) => {
 export const updateOperatorRequest = async (data: newUserParams) => {
   return NetworkHandler.patch<any>(`users/${data._id}`, data);
 };
+
+export const resetPasswordRequest = async (
+  // userId: string,
+  password: string
+) => {
+  return NetworkHandler.patch<any>(`users/operator`, { password });
+};

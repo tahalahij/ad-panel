@@ -6,6 +6,7 @@ import UpdateOutlinedIcon from "@mui/icons-material/UpdateOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
+import LockResetIcon from "@mui/icons-material/LockReset";
 import { Link, useNavigate } from "react-router-dom";
 import {
   useAuthenticationDispatch,
@@ -68,6 +69,12 @@ export const Sidebar = () => {
           <Typography className="title" component={"p"}>
             کاربر
           </Typography>
+          <Link to={"/users/resetPassword"} style={{ textDecoration: "none" }}>
+            <li>
+              <LockResetIcon className="icon" />
+              <Typography component={"span"}>تغییر رمز عبور</Typography>
+            </li>
+          </Link>
           {/* <li>
             <AccountCircleOutlinedIcon className="icon" />
             <Typography component={"span"}>پروفایل</Typography>
@@ -75,7 +82,7 @@ export const Sidebar = () => {
           <li
             onClick={() => {
               authDispatch({ type: "LOGOUT" });
-              navigate('/')
+              navigate("/");
             }}
           >
             <LogoutOutlinedIcon className="icon" />
