@@ -6,7 +6,7 @@ type newUserParams = {
   username: string;
   name: string;
   password?: string;
-  ip: string;
+  // ip: string;
 };
 
 type operatorListParamsReq = {

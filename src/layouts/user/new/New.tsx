@@ -25,7 +25,7 @@ type NewProps = {
 
 export const New: FC<NewProps> = ({ title, update = false }) => {
   const navigate = useNavigate();
-  const { userId, ip, username, name } = useParams();
+  const { userId, username, name } = useParams();
   const [showPassword, setShowPassword] = useState(false);
   const [file, setFile] = useState<Blob | MediaSource>();
   const [loading, setLoading] = useState(false);
@@ -38,7 +38,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
       username: username ?? "",
       name: name ?? "",
       password: "",
-      ip: ip ?? "",
+      // ip: ip ?? "",
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -68,7 +68,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
       }, 2000);
     } else {
       setMessage({
-        title: `خطایی در ثبت اپراتور ${update ? '' : 'جدید '}رخ داده است`,
+        title: `خطایی در ثبت اپراتور ${update ? "" : "جدید "}رخ داده است`,
         type: "error",
       });
     }
@@ -177,7 +177,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 label="رمز عبور"
               />
             </div>
-            <div className="formInput">
+            {/* <div className="formInput">
               <TextField
                 error={false}
                 id="ip"
@@ -189,7 +189,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 placeholder="آدرس ip را وارد کنید"
                 sx={{ width: "25ch" }}
               />
-            </div>
+            </div> */}
             {/* <div className="formInput">
               <TextField
                 error={false}
@@ -203,6 +203,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 // fullWidth
               />
             </div> */}
+            <div className="formInput"></div>
             <div className="formInput">
               <LoadingButton
                 variant="contained"
@@ -213,6 +214,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 ارسال
               </LoadingButton>
             </div>
+            <div className="formInput"></div>
           </form>
         </div>
       </div>

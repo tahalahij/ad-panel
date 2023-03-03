@@ -31,7 +31,7 @@ export const DataTable: FC<IDataTableProps> = ({
       renderCell: (params: any) => {
         const patchLink =
           columnKey === "user"
-            ? `${params.row._id}/${params.row.ip}/${params.row.username}/${params.row.name}`
+            ? `${params.row._id}/${params.row.username}/${params.row.name}`
             : singleItemRoute;
         return (
           <div className="cellAction">
