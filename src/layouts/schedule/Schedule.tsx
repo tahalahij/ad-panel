@@ -9,13 +9,12 @@ import Alert from "@mui/material/Alert";
 import LoadingButton from "@mui/lab/LoadingButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
-import AddIcon from "@mui/icons-material/Add";
-import ReorderIcon from "@mui/icons-material/Reorder";
 import { useGetSchedule, useScheduleData } from "./data/useScheduleData";
 import { SortingList, SortListMethods, WithOrderId } from "./SortingList";
 import { updateSchedulesRequest } from "../../network/requests/FileRequests";
 import { validateIPAddress } from "../../utils/Validator";
 import { FileUploadItem } from "../../types/FileTypes";
+import { MdAdd, MdReorder } from "react-icons/md";
 
 type ScheduleProps = {};
 
@@ -120,14 +119,14 @@ export const Schedule: FC<ScheduleProps> = () => {
               <Button
                 variant="outlined"
                 onClick={() => setOrdering(true)}
-                startIcon={<ReorderIcon />}
+                startIcon={<MdReorder />}
               >
                 تغییر ترتیب
               </Button>
               <Button
                 variant="contained"
                 onClick={() => onAddScheduleClick()}
-                startIcon={<AddIcon />}
+                startIcon={<MdAdd />}
               >
                 افزودن
               </Button>

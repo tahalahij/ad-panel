@@ -5,10 +5,9 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
-import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import { uploadFileRequest } from "../../../network/requests/FileRequests";
 import { useNavigate } from "react-router-dom";
-
+import { MdOutlineCloudUpload } from "react-icons/md";
 type NewProps = {
   title: string;
 };
@@ -60,13 +59,14 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
     setLoading(false);
   };
 
-  const delayErrorText = delay === ''
-    ? "مدت زمان نمایش تصویر را به 'ثانیه' وارد کنید"
-    : Number(delay) < 0
-    ? "ثانیه نمیتواند منفی باشد"
-    : Number(delay) == 0
-    ? "مقداری بزرگتر از صفر وارد کنید"
-    : "";
+  const delayErrorText =
+    delay === ""
+      ? "مدت زمان نمایش تصویر را به 'ثانیه' وارد کنید"
+      : Number(delay) < 0
+      ? "ثانیه نمیتواند منفی باشد"
+      : Number(delay) == 0
+      ? "مقداری بزرگتر از صفر وارد کنید"
+      : "";
 
   return (
     <div className="newFile">
@@ -97,10 +97,7 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
 
                 <div className="placeholder">
                   <Typography component={"span"}>فایل:</Typography>
-                  <CloudUploadOutlinedIcon
-                    className="icon"
-                    fontSize={"large"}
-                  />
+                  <MdOutlineCloudUpload className="icon" fontSize={"large"} />
                 </div>
               </label>
               <input

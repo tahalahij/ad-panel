@@ -2,13 +2,15 @@ import "./featured.scss";
 import { CircularProgressbar } from "react-circular-progressbar";
 import Typography from "@mui/material/Typography";
 import "react-circular-progressbar/dist/styles.css";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
-import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import {
   convertCurrencyToHighValueReadable,
   convertToCurrency,
 } from "../../utils/Utils";
+import {
+  MdMoreVert,
+  MdOutlineKeyboardArrowDown,
+  MdOutlineKeyboardArrowUp,
+} from "react-icons/md";
 
 export const Featured = () => {
   return (
@@ -17,7 +19,7 @@ export const Featured = () => {
         <Typography variant="h1" className="title">
           مجموع درآمد
         </Typography>
-        <MoreVertIcon fontSize="small" />
+        <MdMoreVert fontSize="small" />
       </div>
       <div className="bottom">
         <div className="featuredChart">
@@ -36,7 +38,7 @@ export const Featured = () => {
           <div className="item">
             <Typography className="itemTitle">هدف</Typography>
             <div className="itemResult positive">
-              <KeyboardArrowUpOutlinedIcon fontSize="small" />
+              <MdOutlineKeyboardArrowUp fontSize="small" />
               <Typography className="resultAmount">
                 {convertCurrencyToHighValueReadable(120000)}
               </Typography>
@@ -45,7 +47,7 @@ export const Featured = () => {
           <div className="item">
             <Typography className="itemTitle">هفته گذشته</Typography>
             <div className="itemResult negative">
-              <KeyboardArrowDownOutlinedIcon fontSize="small" />
+              <MdOutlineKeyboardArrowDown fontSize="small" />
               <Typography className="resultAmount">
                 {convertCurrencyToHighValueReadable(120000)}
               </Typography>
@@ -54,7 +56,7 @@ export const Featured = () => {
           <div className="item">
             <Typography className="itemTitle">ماه گذشته</Typography>
             <div className="itemResult positive">
-              <KeyboardArrowUpOutlinedIcon fontSize="small" />
+              <MdOutlineKeyboardArrowUp fontSize="small" />
               <Typography className="resultAmount">
                 {convertCurrencyToHighValueReadable(120000)}
               </Typography>

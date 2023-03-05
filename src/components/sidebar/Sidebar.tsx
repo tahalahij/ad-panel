@@ -1,17 +1,18 @@
 import "./Sidebar.scss";
 import Typography from "@mui/material/Typography";
-import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
-import UpdateOutlinedIcon from "@mui/icons-material/UpdateOutlined";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
-import LockResetIcon from "@mui/icons-material/LockReset";
 import { Link, useNavigate } from "react-router-dom";
 import {
   useAuthenticationDispatch,
   useAuthenticationState,
 } from "../../context";
+import {
+  MdOutlineDashboard,
+  MdOutlineGroup,
+  MdOutlineUpdate,
+  MdOutlineCloud,
+  MdOutlineLogout,
+  MdLockReset,
+} from "react-icons/md";
 
 export const Sidebar = () => {
   const authDispatch = useAuthenticationDispatch();
@@ -35,7 +36,7 @@ export const Sidebar = () => {
           </Typography>
           <Link to={"/"} style={{ textDecoration: "none" }}>
             <li>
-              <DashboardOutlinedIcon className="icon" />
+              <MdOutlineDashboard className="icon" />
               <Typography component={"span"}>داشبورد</Typography>
             </li>
           </Link>
@@ -45,7 +46,7 @@ export const Sidebar = () => {
           {authState.role === "ADMIN" && (
             <Link to={"/users"} style={{ textDecoration: "none" }}>
               <li>
-                <GroupOutlinedIcon className="icon" />
+                <MdOutlineGroup className="icon" />
                 <Typography component={"span"}>اپراتور ها</Typography>
               </li>
             </Link>
@@ -53,7 +54,7 @@ export const Sidebar = () => {
           {authState.role === "OPERATOR" && (
             <Link to={"/schedules"} style={{ textDecoration: "none" }}>
               <li>
-                <UpdateOutlinedIcon className="icon" />
+                <MdOutlineUpdate className="icon" />
                 <Typography component={"span"}>برنامه ها</Typography>
               </li>
             </Link>
@@ -61,7 +62,7 @@ export const Sidebar = () => {
           {authState.role === "OPERATOR" && (
             <Link to={"/uploads"} style={{ textDecoration: "none" }}>
               <li>
-                <CloudUploadOutlinedIcon className="icon" />
+                <MdOutlineCloud className="icon" />
                 <Typography component={"span"}>بارگذاری ها</Typography>
               </li>
             </Link>
@@ -71,7 +72,7 @@ export const Sidebar = () => {
           </Typography>
           <Link to={"/users/resetPassword"} style={{ textDecoration: "none" }}>
             <li>
-              <LockResetIcon className="icon" />
+              <MdLockReset className="icon" />
               <Typography component={"span"}>تغییر رمز عبور</Typography>
             </li>
           </Link>
@@ -85,7 +86,7 @@ export const Sidebar = () => {
               navigate("/");
             }}
           >
-            <LogoutOutlinedIcon className="icon" />
+            <MdOutlineLogout className="icon" />
             <Typography component={"span"}>خروج</Typography>
           </li>
         </ul>
