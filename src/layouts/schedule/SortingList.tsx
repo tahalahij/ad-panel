@@ -10,11 +10,13 @@ import { SortableList } from "../../components/sortableList/SortableList";
 import { Schedule } from "../../types/ScheduleTypes";
 import Typography from "@mui/material/Typography";
 import { FileUploadItem } from "../../types/FileTypes";
-import VideoFileOutlinedIcon from "@mui/icons-material/VideoFileOutlined";
-import AudioFileOutlinedIcon from "@mui/icons-material/AudioFileOutlined";
-import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
-import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import {
+  MdOutlineAudioFile,
+  MdOutlineDeleteOutline,
+  MdOutlineVideoFile,
+  MdOutlineImage,
+  MdOutlineInsertDriveFile,
+} from "react-icons/md";
 import { BASE_API_URL } from "../../network/Constants";
 
 export function createRange<T>(
@@ -71,19 +73,15 @@ export const SortingList = forwardRef<SortListMethods, SortingListProps>(
       // const url = prefixUrl+path.replace('files\\', 'files/');
       switch (type) {
         case "video":
-          return (
-            <VideoFileOutlinedIcon fontSize={"large"} fontSizeAdjust={40} />
-          );
+          return <MdOutlineVideoFile fontSize={"large"} fontSizeAdjust={40} />;
         case "audio":
-          return (
-            <AudioFileOutlinedIcon fontSize={"large"} fontSizeAdjust={40} />
-          );
+          return <MdOutlineAudioFile fontSize={"large"} fontSizeAdjust={40} />;
         case "image":
           // return <img src={url} alt="thumbnail" className="img" />
-          return <ImageOutlinedIcon fontSize={"large"} fontSizeAdjust={140} />;
+          return <MdOutlineImage fontSize={"large"} fontSizeAdjust={140} />;
         default:
           return (
-            <InsertDriveFileOutlinedIcon
+            <MdOutlineInsertDriveFile
               fontSize={"large"}
               fontSizeAdjust={40}
             />
@@ -120,7 +118,7 @@ export const SortingList = forwardRef<SortListMethods, SortingListProps>(
                 </div> */}
               </div>
               <div className="part delete" onClick={() => onRemove(item._id)}>
-                <DeleteOutlineOutlinedIcon />
+                <MdOutlineDeleteOutline />
               </div>
               <SortableList.DragHandle iconWidth={18} />
             </SortableList.Item>

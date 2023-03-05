@@ -8,12 +8,12 @@ import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { Alert, Snackbar } from "@mui/material";
 import { useAuthenticationDispatch } from "../../context";
 import { loginRequest } from "../../network/requests";
 import { useFormik } from "formik";
+import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
+
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -92,9 +92,9 @@ export const Login = () => {
                     edge="end"
                   >
                     {showPassword ? (
-                      <VisibilityOffOutlinedIcon />
+                      <MdOutlineVisibilityOff />
                     ) : (
-                      <VisibilityOutlinedIcon />
+                      <MdOutlineVisibility />
                     )}
                   </IconButton>
                 </InputAdornment>

@@ -4,16 +4,14 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Button from "@mui/material/Button";
-import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { resetPasswordRequest } from "../../../network/requests";
+import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
+
 
 type ResetPasswordProps = {
   title: string;
@@ -133,7 +131,7 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ title }) => {
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                        {showPassword ? <MdOutlineVisibilityOff /> : <MdOutlineVisibility />}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -163,7 +161,7 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ title }) => {
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                        {showPassword ? <MdOutlineVisibilityOff /> : <MdOutlineVisibility />}
                       </IconButton>
                     </InputAdornment>
                   ),
