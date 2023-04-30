@@ -22,7 +22,7 @@ type NewProps = {
 
 export const New: FC<NewProps> = ({ title, update = false }) => {
   const navigate = useNavigate();
-  const { userId, username, name } = useParams();
+  const { userId, username, name, ip, map } = useParams();
   const [showPassword, setShowPassword] = useState(false);
   const [file, setFile] = useState<Blob | MediaSource>();
   const [loading, setLoading] = useState(false);
@@ -35,7 +35,8 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
       username: username ?? "",
       name: name ?? "",
       password: "",
-      // ip: ip ?? "",
+      ip: ip ?? "",
+      mac: map ?? "",
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -146,8 +147,8 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 sx={{ width: "25ch" }}
               />
             </div> */}
-            <div className="formInput">
-              {!update && (
+            {!update && (
+              <div className="formInput">
                 <TextField
                   id="password"
                   name="password"
@@ -167,16 +168,20 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
                         >
-                          {showPassword ? <MdOutlineVisibilityOff /> : <MdOutlineVisibility />}
+                          {showPassword ? (
+                            <MdOutlineVisibilityOff />
+                          ) : (
+                            <MdOutlineVisibility />
+                          )}
                         </IconButton>
                       </InputAdornment>
                     ),
                   }}
                   label="رمز عبور"
                 />
-              )}
-            </div>
-            {/* <div className="formInput">
+              </div>
+            )}
+            <div className="formInput">
               <TextField
                 error={false}
                 id="ip"
@@ -188,7 +193,20 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 placeholder="آدرس ip را وارد کنید"
                 sx={{ width: "25ch" }}
               />
-            </div> */}
+            </div>
+            <div className="formInput">
+              <TextField
+                error={false}
+                id="mac"
+                name="mac"
+                value={formik.values.mac}
+                onChange={formik.handleChange}
+                label="آدرس mac"
+                helperText={""}
+                placeholder="آدرس mac را وارد کنید"
+                sx={{ width: "25ch" }}
+              />
+            </div>
             {/* <div className="formInput">
               <TextField
                 error={false}
@@ -202,7 +220,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 // fullWidth
               />
             </div> */}
-            <div className="formInput"></div>
+            {/* <div className="formInput"></div> */}
             <div className="formInput">
               <LoadingButton
                 variant="contained"

@@ -6,6 +6,8 @@ export class User {
     public username: string,
     public createdAt: string,
     public updatedAt: Date | string | null,
-    public role: string
+    public role: string,
+    public ip: string,
+    public mac: string,
   ) {}
 }

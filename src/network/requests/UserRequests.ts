@@ -6,7 +6,8 @@ type newUserParams = {
   username: string;
   name: string;
   password?: string;
-  // ip: string;
+  ip: string;
+  mac: string;
 };
 
 type operatorListParamsReq = {
@@ -18,17 +19,17 @@ type operatorListParamsReq = {
 export const getOperatorListRequest = async (
   params: operatorListParamsReq = { page: 0, limit: 100 }
 ) => {
-  return NetworkHandler.get<User[]>(`users/operators`, {
+  return NetworkHandler.get<User[]>(`users/admin/operators`, {
     params,
   });
 };
 
 export const addOperatorRequest = async (data: newUserParams) => {
-  return NetworkHandler.post<any>(`users`, data);
+  return NetworkHandler.post<any>(`users/admin`, data);
 };
 
 export const updateOperatorRequest = async (data: newUserParams) => {
-  return NetworkHandler.patch<any>(`users/${data._id}`, data);
+  return NetworkHandler.patch<any>(`users/admin/${data._id}`, data);
 };
 
 export const resetPasswordRequest = async (

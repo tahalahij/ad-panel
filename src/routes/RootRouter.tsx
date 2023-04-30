@@ -45,7 +45,7 @@ export const RootRouter = () => {
                   }
                 />
                 <Route
-                  path=":userId/:username/:name"
+                  path=":userId/:username/:name/:ip/:map"
                   element={<NewUser title={"ویرایش اپراتور"} update={true} />}
                 />
                 <Route
