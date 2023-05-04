@@ -7,11 +7,12 @@ import {
   userRows,
   fileColumns,
   scheduleColumns,
+  deviceColumns,
 } from "./dataTableSource";
 import { Link } from "react-router-dom";
 
 interface IDataTableProps {
-  columnKey: "user" | "file" | "schedule";
+  columnKey: "user" | "file" | "schedule" | "device";
   singleItemRoute?: string;
   data?: any[];
   onViewClick?: (_id: string) => void;
@@ -32,6 +33,8 @@ export const DataTable: FC<IDataTableProps> = ({
         const patchLink =
           columnKey === "user"
             ? `${params.row._id}/${params.row.username}/${params.row.name}/${params.row.ip}/${params.row.mac}`
+            : columnKey === "device"
+            ? `${params.row._id}`
             : singleItemRoute;
         return (
           <div className="cellAction">
@@ -70,6 +73,8 @@ export const DataTable: FC<IDataTableProps> = ({
         return scheduleColumns.concat(actionColumn);
       case "file":
         return fileColumns.concat(actionColumn);
+      case "device":
+        return deviceColumns.concat(actionColumn);
       case "user":
       default:
         return userColumns.concat(actionColumn);

@@ -10,6 +10,7 @@ import { Single } from "../layouts/single";
 import { Schedule } from "../layouts/schedule";
 import { MainContainer } from "../components";
 import { useAuthenticationState } from "../context/authentication";
+import { List as DeviceList, New as NewDevice } from "../layouts/device";
 
 export const RootRouter = () => {
   const authState = useAuthenticationState();
@@ -40,9 +41,7 @@ export const RootRouter = () => {
                 />
                 <Route
                   path="resetPassword"
-                  element={
-                    <ResetPassword title={"تغییر رمز عبور"} />
-                  }
+                  element={<ResetPassword title={"تغییر رمز عبور"} />}
                 />
                 <Route
                   path=":userId/:username/:name/:ip/:map"
@@ -52,6 +51,34 @@ export const RootRouter = () => {
                   path="new"
                   element={<NewUser title={"افزودن اپراتور جدید"} />}
                 />
+              </Route>
+              <Route path="devices">
+                {authState.role === "ADMIN" ? (
+                  <>
+                    <Route
+                      index
+                      element={
+                        <DeviceList
+                          columnKey="device"
+                          title={"افزودن دستگاه جدید"}
+                        />
+                      }
+                    />
+                    <Route
+                      path=":deviceId"
+                      element={<NewDevice title={"ویرایش دستگاه"} update={true}/>}
+                    />
+                    <Route
+                      path="new"
+                      element={<NewDevice title={"افزودن دستگاه جدید"} />}
+                    />
+                  </>
+                ) : (
+                  <Route
+                    path="me"
+                    element={<DeviceList columnKey="device" />}
+                  />
+                )}
               </Route>
               <Route path="schedules">
                 <Route index element={<Schedule />} />

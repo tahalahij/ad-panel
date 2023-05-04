@@ -61,3 +61,13 @@ export const scheduleColumns: GridColDef[] = [
     width: 330,
   },
 ];
+
+export const deviceColumns: GridColDef[] = [
+  { field: "_id", headerName: "شناسه دستگاه", width: 230, sortable: false },
+  {
+    field: "name",
+    headerName: "نام دستگاه",
+    width: 200,
+  },
+  { field: "operatorId", headerName: "شناسه اپراتور", width: 230, sortable: false },
+];

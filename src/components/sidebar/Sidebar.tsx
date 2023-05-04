@@ -12,6 +12,7 @@ import {
   MdOutlineCloud,
   MdOutlineLogout,
   MdLockReset,
+  MdOutlineDevices,
 } from "react-icons/md";
 
 export const Sidebar = () => {
@@ -51,6 +52,14 @@ export const Sidebar = () => {
               </li>
             </Link>
           )}
+          {authState.role === "ADMIN" && (
+            <Link to={"/devices"} style={{ textDecoration: "none" }}>
+              <li>
+                <MdOutlineDevices className="icon" />
+                <Typography component={"span"}>دستگاه ها</Typography>
+              </li>
+            </Link>
+          )}
           {authState.role === "OPERATOR" && (
             <Link to={"/schedules"} style={{ textDecoration: "none" }}>
               <li>
@@ -64,6 +73,14 @@ export const Sidebar = () => {
               <li>
                 <MdOutlineCloud className="icon" />
                 <Typography component={"span"}>بارگذاری ها</Typography>
+              </li>
+            </Link>
+          )}
+          {authState.role === "OPERATOR" && (
+            <Link to={"/devices/me"} style={{ textDecoration: "none" }}>
+              <li>
+                <MdOutlineDevices className="icon" />
+                <Typography component={"span"}>دستگاه های من</Typography>
               </li>
             </Link>
           )}
