@@ -13,6 +13,7 @@ import {
   MdOutlineLogout,
   MdLockReset,
   MdOutlineDevices,
+  MdOutlineDateRange,
 } from "react-icons/md";
 
 export const Sidebar = () => {
@@ -65,6 +66,14 @@ export const Sidebar = () => {
               <li>
                 <MdOutlineUpdate className="icon" />
                 <Typography component={"span"}>برنامه ها</Typography>
+              </li>
+            </Link>
+          )}
+          {authState.role === "OPERATOR" && (
+            <Link to={"/schedules/calendar"} style={{ textDecoration: "none" }}>
+              <li>
+                <MdOutlineDateRange className="icon" />
+                <Typography component={"span"}>تقویم برنامه ها</Typography>
               </li>
             </Link>
           )}

@@ -7,7 +7,7 @@ import { User, New as NewUser, ResetPassword } from "../layouts/user";
 // import { New } from "../layouts/user/new";
 import { PageNotFound } from "../layouts/pageNotFound";
 import { Single } from "../layouts/single";
-import { Schedule } from "../layouts/schedule";
+import { Schedule, ScheduleCalendar } from "../layouts/schedule";
 import { MainContainer } from "../components";
 import { useAuthenticationState } from "../context/authentication";
 import { List as DeviceList, New as NewDevice } from "../layouts/device";
@@ -66,7 +66,9 @@ export const RootRouter = () => {
                     />
                     <Route
                       path=":deviceId"
-                      element={<NewDevice title={"ویرایش دستگاه"} update={true}/>}
+                      element={
+                        <NewDevice title={"ویرایش دستگاه"} update={true} />
+                      }
                     />
                     <Route
                       path="new"
@@ -87,6 +89,7 @@ export const RootRouter = () => {
                   path="new"
                   element={<NewUser title={"افزودن برنامه جدید"} />}
                 />
+                <Route path="calendar" element={<ScheduleCalendar />} />
               </Route>
               <Route path="uploads">
                 <Route
