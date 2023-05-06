@@ -1,5 +1,5 @@
 import { Device } from "../../types/DeviceType";
-import NetworkHandler from "../NetworkHandler";
+import NetworkHandler, { listParamsReq } from "../NetworkHandler";
 
 type newDeviceParams = {
   _id?: string;
@@ -7,12 +7,6 @@ type newDeviceParams = {
   ip: string;
   mac: string;
   operatorId: string;
-};
-
-type listParamsReq = {
-  page?: number;
-  limit?: number;
-  _order?: "desc" | "asc";
 };
 
 export const getDeviceListRequest = async (
@@ -39,14 +33,10 @@ export const getMyDevicesListRequest = async (
   });
 };
 
-export const getDeviceByIdRequest = async (
-  deviceId: string
-) => {
+export const getDeviceByIdRequest = async (deviceId: string) => {
   return NetworkHandler.get<Device>(`devices/${deviceId}`);
 };
 
-export const getDeviceCurrentScheduleRequest = async (
-  deviceId: string
-) => {
+export const getDeviceCurrentScheduleRequest = async (deviceId: string) => {
   return NetworkHandler.get<Device[]>(`devices/admin/schedule/${deviceId}`);
 };

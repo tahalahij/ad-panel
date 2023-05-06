@@ -8,37 +8,43 @@ export type RequestConfig = {
   newFetchedToken?: string;
 };
 
-export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+export type RequestMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
 export type RequestBody = Record<string, unknown> | FormData | undefined;
+
+export type listParamsReq = {
+  page?: number;
+  limit?: number;
+  _order?: "desc" | "asc";
+};
 
 export type ResponseType<T> = {
   success: boolean;
   httpStatus: number;
   payload: T | undefined;
   error: string | undefined;
-}
+};
 
 export type NetworkHandlerType = {
   get: <T>(url: string, config?: RequestConfig) => Promise<ResponseType<T>>;
   post: <T>(
     url: string,
     data: RequestBody,
-    config?: RequestConfig,
+    config?: RequestConfig
   ) => Promise<ResponseType<T>>;
   delete: <T>(
     url: string,
     data: RequestBody,
-    config?: RequestConfig,
+    config?: RequestConfig
   ) => Promise<ResponseType<T>>;
   put: <T>(
     url: string,
     data: RequestBody,
-    config?: RequestConfig,
+    config?: RequestConfig
   ) => Promise<ResponseType<T>>;
   patch: <T>(
     url: string,
     data: RequestBody,
-    config?: RequestConfig,
+    config?: RequestConfig
   ) => Promise<ResponseType<T>>;
-}
+};

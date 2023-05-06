@@ -1,15 +1,9 @@
 // import type {ExpertCardType} from './../types';
 import { FileUploadItem, ScheduleConductor } from "../../types/FileTypes";
-import NetworkHandler from "../NetworkHandler";
-
-type fileListParamsReq = {
-  page?: number;
-  limit?: number;
-  _order?: "desc" | "asc";
-};
+import NetworkHandler, { listParamsReq } from "../NetworkHandler";
 
 export const getFilesListRequest = async (
-  params: fileListParamsReq = { page: 0, limit: 100 }
+  params: listParamsReq = { page: 0, limit: 100 }
 ) => {
   return NetworkHandler.get<FileUploadItem[]>(`files`, {
     params,
