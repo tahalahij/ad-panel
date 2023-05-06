@@ -16,6 +16,7 @@ interface IDataTableProps {
   singleItemRoute?: string;
   data?: any[];
   onViewClick?: (_id: string) => void;
+  actionVisible?: boolean;
 }
 
 export const DataTable: FC<IDataTableProps> = ({
@@ -23,6 +24,7 @@ export const DataTable: FC<IDataTableProps> = ({
   singleItemRoute,
   data,
   onViewClick,
+  actionVisible = true,
 }) => {
   const actionColumn = [
     {
@@ -30,6 +32,7 @@ export const DataTable: FC<IDataTableProps> = ({
       headerName: "دستور",
       width: 200,
       renderCell: (params: any) => {
+        if (!actionVisible) return null;
         const patchLink =
           columnKey === "user"
             ? `${params.row._id}/${params.row.username}/${params.row.name}/${params.row.ip}/${params.row.mac}`
@@ -60,7 +63,7 @@ export const DataTable: FC<IDataTableProps> = ({
                 مشاهده
               </div>
             )}
-            <div className="deleteButton">حذف</div>
+            {/* <div className="deleteButton">حذف</div> */}
           </div>
         );
       },

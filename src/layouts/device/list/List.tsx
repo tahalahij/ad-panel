@@ -5,6 +5,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { DataTable } from "../../../components";
 import { Link } from "react-router-dom";
 import { useDeviceData } from "../useDeviceData";
+import { useAuthenticationState } from "../../../context";
 
 type ListProps = {
   title?: string;
@@ -17,23 +18,22 @@ export const List: FC<ListProps> = ({
   newItemRoute,
   columnKey = "device",
 }) => {
-  const {fetchData, list, loading} = useDeviceData();
+  const { fetchData, list, loading } = useDeviceData();
+  const auth = useAuthenticationState();
   return (
     <div className="list">
       <div className="header">
         <Typography variant="h6">{title}</Typography>
-        <Link
-          to={"new"}
-          style={{ textDecoration: "none" }}
-          className="link"
-        >
-          <Typography variant="button">{"افزودن"}</Typography>
-        </Link>
+        {auth.role === "ADMIN" && (
+          <Link to={"new"} style={{ textDecoration: "none" }} className="link">
+            <Typography variant="button">{"افزودن"}</Typography>
+          </Link>
+        )}
       </div>
       {loading ? <CircularProgress /> : null}
       <DataTable
         columnKey={"device"}
-        singleItemRoute={newItemRoute}
+        actionVisible={auth.role === "ADMIN"}
         data={list}
       />
     </div>

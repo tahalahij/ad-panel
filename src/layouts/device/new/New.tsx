@@ -14,6 +14,7 @@ import {
   updateDeviceRequest,
 } from "../../../network/requests";
 import { useDeviceById } from "../useDeviceData";
+import { useAuthenticationState } from "../../../context";
 
 type NewProps = {
   title: string;
@@ -22,8 +23,9 @@ type NewProps = {
 
 export const New: FC<NewProps> = ({ title, update = false }) => {
   const navigate = useNavigate();
-  const {deviceId } = useParams();
-  const {data: deviceData, loading: deviceLoading} = useDeviceById(deviceId);
+  const { deviceId } = useParams();
+  const { data: deviceData, loading: deviceLoading } = useDeviceById(deviceId);
+  const auth = useAuthenticationState();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{
     title: string;
@@ -35,14 +37,12 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
       name: deviceData?.name ?? "",
       ip: deviceData?.ip ?? "",
       mac: deviceData?.mac ?? "",
-      operatorId: deviceData?.operatorId ?? ""
+      operatorId: deviceData?.operatorId ?? "",
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
   });
-
-
 
   const submitDevice = async () => {
     const { ...requestBody } = formik.values;
@@ -177,16 +177,18 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
               />
             </div> */}
             {/* <div className="formInput"></div> */}
-            <div className="formInput">
-              <LoadingButton
-                variant="contained"
-                className="submitButton"
-                loading={loading}
-                onClick={submitDevice}
-              >
-                ارسال
-              </LoadingButton>
-            </div>
+            {auth.role === "ADMIN" && (
+              <div className="formInput">
+                <LoadingButton
+                  variant="contained"
+                  className="submitButton"
+                  loading={loading}
+                  onClick={submitDevice}
+                >
+                  ارسال
+                </LoadingButton>
+              </div>
+            )}
             <div className="formInput"></div>
           </form>
         </div>
