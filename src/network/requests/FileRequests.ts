@@ -13,17 +13,3 @@ export const getFilesListRequest = async (
 export const uploadFileRequest = async (file: FormData) => {
   return NetworkHandler.post<any>(`files/upload`, file);
 };
-
-export const updateSchedulesRequest = async (
-  scheduleList: string[],
-  ip: string
-) => {
-  return NetworkHandler.post<ScheduleConductor>(`files/schedule`, {
-    conductor: scheduleList,
-    ip,
-  });
-};
-
-export const getScheduleListRequest = async () => {
-  return NetworkHandler.get<ScheduleConductor[]>(`files/schedule/operators`);
-};

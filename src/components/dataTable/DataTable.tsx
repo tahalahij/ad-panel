@@ -8,14 +8,16 @@ import {
   fileColumns,
   scheduleColumns,
   deviceColumns,
+  conductorColumns,
 } from "./dataTableSource";
 import { Link } from "react-router-dom";
 
 interface IDataTableProps {
-  columnKey: "user" | "file" | "schedule" | "device";
+  columnKey: "user" | "file" | "schedule" | "device" | "conductor";
   singleItemRoute?: string;
   data?: any[];
   onViewClick?: (_id: string) => void;
+  onDeleteClick?: (_id: string) => void;
   actionVisible?: boolean;
 }
 
@@ -24,6 +26,7 @@ export const DataTable: FC<IDataTableProps> = ({
   singleItemRoute,
   data,
   onViewClick,
+  onDeleteClick,
   actionVisible = true,
 }) => {
   const actionColumn = [
@@ -63,7 +66,9 @@ export const DataTable: FC<IDataTableProps> = ({
                 مشاهده
               </div>
             )}
-            {/* <div className="deleteButton">حذف</div> */}
+            <div className="deleteButton" onClick={() => {
+              onDeleteClick && onDeleteClick(params.row._id)
+            }}>حذف</div>
           </div>
         );
       },
@@ -74,6 +79,8 @@ export const DataTable: FC<IDataTableProps> = ({
     switch (columnKey) {
       case "schedule":
         return scheduleColumns.concat(actionColumn);
+      case "conductor":
+        return conductorColumns.concat(actionColumn);
       case "file":
         return fileColumns.concat(actionColumn);
       case "device":

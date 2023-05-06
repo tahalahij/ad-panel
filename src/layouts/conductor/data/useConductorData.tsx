@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useFilesState } from "../../../context/file";
-import { getScheduleListRequest } from "../../../network/requests";
+import { getConductorsListRequest } from "../../../network/requests";
 import { ScheduleConductor } from "../../../types/FileTypes";
 import { Schedule } from "../../../types/ScheduleTypes";
 import { useFileData } from "../../file/useFileData";
@@ -30,36 +30,51 @@ const FAKE_DATA: Array<Schedule> = [
   },
 ];
 
-export const useScheduleData = () => {
+export const useConductorData = () => {
   const data = useFilesState();
   useFileData();
 
   return data;
 };
 
-export const useGetSchedule = () => {
-  const [operatorSchedules, setOperatorSchedules] = useState<
+export const useGetConductor = () => {
+  const [operatorConductors, setOperatorConductors] = useState<
     ScheduleConductor[]
   >([]);
   const [loading, setLoading] = useState(false);
 
   const fetchData = async (page: number = 0) => {
     setLoading(true);
-    const response = await getScheduleListRequest();
-    console.log(response);
+    const response = await getConductorsListRequest();
     if (response.success) {
-      setOperatorSchedules(response.payload!);
+      setOperatorConductors(response.payload!);
     }
     setLoading(false);
   };
 
-  const addOperatorSchedule = (item: ScheduleConductor) => {
-    setOperatorSchedules((prev) => [...prev, item]);
+  const addOperatorConductor = (item: ScheduleConductor) => {
+    setOperatorConductors((prev) => [...prev, item]);
+  };
+
+  const removeOperatorConductor = (id: string) => {
+    const list = [...operatorConductors];
+    const index = list.findIndex((item) => item._id === id);
+    if (index > -1) {
+      list.splice(index, 1);
+    }
+
+    setOperatorConductors(list);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  return { fetchData, operatorSchedules, loading, addOperatorSchedule };
+  return {
+    fetchData,
+    operatorConductors,
+    loading,
+    addOperatorConductor,
+    removeOperatorConductor,
+  };
 };

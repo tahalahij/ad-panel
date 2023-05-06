@@ -13,6 +13,7 @@ import {
   MdOutlineLogout,
   MdLockReset,
   MdOutlineDevices,
+  MdOutlineAutoAwesomeMotion,
 } from "react-icons/md";
 
 export const Sidebar = () => {
@@ -65,6 +66,14 @@ export const Sidebar = () => {
               <li>
                 <MdOutlineUpdate className="icon" />
                 <Typography component={"span"}>برنامه ها</Typography>
+              </li>
+            </Link>
+          )}
+          {authState.role === "OPERATOR" && (
+            <Link to={"/conductors"} style={{ textDecoration: "none" }}>
+              <li>
+                <MdOutlineAutoAwesomeMotion className="icon" />
+                <Typography component={"span"}>سری های پخش</Typography>
               </li>
             </Link>
           )}

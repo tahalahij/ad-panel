@@ -1,4 +1,4 @@
-import "./schedule.scss";
+import "./conductor.scss";
 import { FC, useState, useRef } from "react";
 import Typography from "@mui/material/Typography";
 import { DataTable } from "../../components";
@@ -8,55 +8,66 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import LoadingButton from "@mui/lab/LoadingButton";
 import CircularProgress from "@mui/material/CircularProgress";
-import TextField from "@mui/material/TextField";
-import { useGetSchedule, useScheduleData } from "./data/useScheduleData";
+// import TextField from "@mui/material/TextField";
+import { useGetConductor, useConductorData } from "./data/useConductorData";
 import { SortingList, SortListMethods, WithOrderId } from "./SortingList";
-import { updateSchedulesRequest } from "../../network/requests/FileRequests";
-import { validateIPAddress } from "../../utils/Validator";
+import {
+  addConductorRequest,
+  updateConductorRequest,
+  deleteConductorRequest,
+} from "../../network/requests";
+// import { validateIPAddress } from "../../utils/Validator";
 import { FileUploadItem } from "../../types/FileTypes";
 import { MdAdd, MdReorder } from "react-icons/md";
 
-type ScheduleProps = {};
+type ConductorProps = {};
 
-export const Schedule: FC<ScheduleProps> = () => {
+export const Conductor: FC<ConductorProps> = () => {
   const navigate = useNavigate();
-  const scheduleList = useScheduleData();
+  const conductorList = useConductorData();
   const {
-    operatorSchedules,
+    operatorConductors,
     loading: listLoading,
-    addOperatorSchedule,
-  } = useGetSchedule();
+    addOperatorConductor,
+    removeOperatorConductor,
+  } = useGetConductor();
 
   const [isOrdering, setOrdering] = useState(false);
-  const [ip, setIp] = useState("");
+  // const [ip, setIp] = useState("");
   const [orderList, setOrderList] = useState<FileUploadItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const [isPatching, setPatching] = useState(false);
   const [message, setMessage] = useState<{
     title: string;
     type?: "success" | "error";
   }>({ title: "" });
 
+  const patchingId = useRef("");
   const sortListRef = useRef<SortListMethods>(null);
 
   const submitSort = async () => {
-    if (!validateIPAddress(ip)) {
-      setMessage({
-        title: "آدرس ip دستگاه مورد نظر را وارد نکرده اید!",
-        type: "error",
-      });
-      return;
-    }
+    // if (!validateIPAddress(ip)) {
+    //   setMessage({
+    //     title: "آدرس ip دستگاه مورد نظر را وارد نکرده اید!",
+    //     type: "error",
+    //   });
+    //   return;
+    // }
     setLoading(true);
     const tempArray = sortListRef.current
       ?.getOrderedList()
       .map((item) => item._id);
-    const response = await updateSchedulesRequest(tempArray!, ip);
+    let response = isPatching
+      ? await updateConductorRequest(patchingId.current, tempArray!)
+      : await addConductorRequest(tempArray!);
     if (response.success) {
       setMessage({ title: "با موفقیت ثبت شد", type: "success" });
       setTimeout(() => {
-        addOperatorSchedule(response.payload!);
-        setIp("");
+        addOperatorConductor(response.payload!);
+        // setIp("");
         setOrderList([]);
+        patchingId.current = "";
+        setPatching(false);
         setOrdering(false);
       }, 2000);
     } else {
@@ -69,18 +80,43 @@ export const Schedule: FC<ScheduleProps> = () => {
     console.log(tempArray);
   };
 
+  const onDeleteClick = async (_id: string) => {
+    try {
+      setLoading(true);
+      const response = await deleteConductorRequest(_id);
+      if (response.success) {
+        setMessage({ title: "با موفقیت حذف شد", type: "success" });
+        removeOperatorConductor(_id);
+      } else {
+        setMessage({
+          title: "خطایی در حذف اطلاعات رخ داده است",
+          type: "error",
+        });
+      }
+      setLoading(false);
+    } catch (error) {
+      setMessage({
+        title: "خطایی در حذف اطلاعات رخ داده است",
+        type: "error",
+      });
+      setLoading(false);
+    }
+  };
+
   const onViewClick = (_id: string) => {
     try {
-      const index = operatorSchedules.findIndex(
+      const index = operatorConductors.findIndex(
         (schedule) => schedule._id === _id
       );
-      const activeIds = operatorSchedules[index].conductor;
-      const tempIp = operatorSchedules[index].ip;
-      const tempArray = scheduleList.filter(function (item) {
+      const activeIds = operatorConductors[index].conductor;
+      // const tempIp = operatorConductors[index].ip;
+      const tempArray = conductorList.filter(function (item) {
         return activeIds.indexOf(item._id) > -1;
       });
       setOrderList(tempArray);
-      setIp(tempIp);
+      // setIp(tempIp);
+      setPatching(true);
+      // patchingId.current = _id;
       setOrdering(true);
     } catch (error) {
       console.log(error);
@@ -94,35 +130,53 @@ export const Schedule: FC<ScheduleProps> = () => {
     setOrderList(temp);
   };
 
+  const onCancel = () => {
+    setOrderList([]);
+    setPatching(false);
+    setOrdering(false);
+  };
+
   const onAddScheduleClick = () => {
     setOrdering(true);
-    setIp("");
-    setOrderList(scheduleList);
+    // setIp("");
+    setOrderList(conductorList);
   };
 
   return (
-    <div className="schedule">
+    <div className="conductor">
       <div className="header">
-        <Typography variant="h6">{"افزودن برنامه جدید"}</Typography>
+        <Typography variant="h6">{`${
+          isPatching ? "ویرایش" : "افزودن"
+        } سری پخش`}</Typography>
 
         <div className="buttonContainer">
           {isOrdering ? (
-            <LoadingButton
-              loading={loading}
-              variant="contained"
-              onClick={submitSort}
-            >
-              ثبت تغییرات
-            </LoadingButton>
+            <>
+              <LoadingButton
+                loading={loading}
+                variant="outlined"
+                onClick={onCancel}
+              >
+                لغو
+              </LoadingButton>
+              <LoadingButton
+                disabled={isPatching}
+                loading={loading}
+                variant="contained"
+                onClick={submitSort}
+              >
+                ثبت تغییرات
+              </LoadingButton>
+            </>
           ) : (
             <>
-              <Button
+              {/* <Button
                 variant="outlined"
                 onClick={() => setOrdering(true)}
                 startIcon={<MdReorder />}
               >
                 تغییر ترتیب
-              </Button>
+              </Button> */}
               <Button
                 variant="contained"
                 onClick={() => onAddScheduleClick()}
@@ -134,10 +188,10 @@ export const Schedule: FC<ScheduleProps> = () => {
           )}
         </div>
       </div>
-      {/* <SortingList listData={scheduleList} ref={sortListRef} /> */}
+      {/* <SortingList listData={conductorList} ref={sortListRef} /> */}
       {isOrdering ? (
         <>
-          <TextField
+          {/* <TextField
             error={ip.length > 2 && !validateIPAddress(ip)}
             id="ip"
             name="ip"
@@ -151,7 +205,7 @@ export const Schedule: FC<ScheduleProps> = () => {
             }
             placeholder="آدرس ip را وارد کنید"
             sx={{ width: "25ch", marginLeft: "16px", marginTop: "8px" }}
-          />
+          /> */}
           <SortingList
             listData={orderList}
             ref={sortListRef}
@@ -162,9 +216,11 @@ export const Schedule: FC<ScheduleProps> = () => {
         <>
           {listLoading ? <CircularProgress /> : null}
           <DataTable
-            columnKey="schedule"
-            data={operatorSchedules}
-            onViewClick={onViewClick}
+            columnKey="conductor"
+            data={operatorConductors}
+            // actionVisible={false}
+            onDeleteClick={onDeleteClick}
+            // onViewClick={onViewClick}
           />
         </>
       )}

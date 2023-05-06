@@ -62,6 +62,15 @@ export const scheduleColumns: GridColDef[] = [
   },
 ];
 
+export const conductorColumns: GridColDef[] = [
+  { field: "_id", headerName: "شناسه سری", width: 230, sortable: false },
+  {
+    field: "ip",
+    headerName: "آی پی دستگاه",
+    width: 330,
+  },
+];
+
 export const deviceColumns: GridColDef[] = [
   { field: "_id", headerName: "شناسه دستگاه", width: 230, sortable: false },
   {
