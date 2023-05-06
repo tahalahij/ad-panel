@@ -66,9 +66,16 @@ export const DataTable: FC<IDataTableProps> = ({
                 مشاهده
               </div>
             )}
-            <div className="deleteButton" onClick={() => {
-              onDeleteClick && onDeleteClick(params.row._id)
-            }}>حذف</div>
+            {onDeleteClick && (
+              <div
+                className="deleteButton"
+                onClick={() => {
+                  onDeleteClick && onDeleteClick(params.row._id);
+                }}
+              >
+                حذف
+              </div>
+            )}
           </div>
         );
       },
