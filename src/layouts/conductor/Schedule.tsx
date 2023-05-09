@@ -8,7 +8,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import LoadingButton from "@mui/lab/LoadingButton";
 import CircularProgress from "@mui/material/CircularProgress";
-// import TextField from "@mui/material/TextField";
+import TextField from "@mui/material/TextField";
 import { useGetConductor, useConductorData } from "./data/useConductorData";
 import { SortingList, SortListMethods, WithOrderId } from "./SortingList";
 import {
@@ -33,7 +33,7 @@ export const Conductor: FC<ConductorProps> = () => {
   } = useGetConductor();
 
   const [isOrdering, setOrdering] = useState(false);
-  // const [ip, setIp] = useState("");
+  const [conductorName, setConductorName] = useState("");
   const [orderList, setOrderList] = useState<FileUploadItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [isPatching, setPatching] = useState(false);
@@ -53,13 +53,20 @@ export const Conductor: FC<ConductorProps> = () => {
     //   });
     //   return;
     // }
+    if (!conductorName) {
+      setMessage({
+        title: "نام سری پخش را وارد نکرده اید!",
+        type: "error",
+      });
+      return;
+    }
     setLoading(true);
     const tempArray = sortListRef.current
       ?.getOrderedList()
       .map((item) => item._id);
     let response = isPatching
-      ? await updateConductorRequest(patchingId.current, tempArray!)
-      : await addConductorRequest(tempArray!);
+      ? await updateConductorRequest(patchingId.current, conductorName, tempArray!)
+      : await addConductorRequest(conductorName, tempArray!);
     if (response.success) {
       setMessage({ title: "با موفقیت ثبت شد", type: "success" });
       setTimeout(() => {
@@ -191,21 +198,17 @@ export const Conductor: FC<ConductorProps> = () => {
       {/* <SortingList listData={conductorList} ref={sortListRef} /> */}
       {isOrdering ? (
         <>
-          {/* <TextField
-            error={ip.length > 2 && !validateIPAddress(ip)}
-            id="ip"
-            name="ip"
-            value={ip}
-            onChange={(e) => setIp(e.target.value)}
-            label="آدرس ip"
-            helperText={
-              ip.length > 2 && !validateIPAddress(ip)
-                ? "آدرس ip معتبر نیست"
-                : ""
-            }
-            placeholder="آدرس ip را وارد کنید"
+          <TextField
+            error={false}
+            id="conductorName"
+            name="conductorName"
+            value={conductorName}
+            onChange={(e) => setConductorName(e.target.value)}
+            label="نام سری پخش"
+            helperText={""}
+            placeholder="نام"
             sx={{ width: "25ch", marginLeft: "16px", marginTop: "8px" }}
-          /> */}
+          />
           <SortingList
             listData={orderList}
             ref={sortListRef}

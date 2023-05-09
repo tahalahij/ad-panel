@@ -14,6 +14,7 @@ export class ScheduleConductor {
   constructor(
     public conductor: string[],
     public ip: string,
+    public name: string,
     public operator: string,
     public updatedAt: string | null,
     public __v: number,

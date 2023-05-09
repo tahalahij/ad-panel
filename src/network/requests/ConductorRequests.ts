@@ -1,14 +1,15 @@
 import { ScheduleConductor } from "../../types/FileTypes";
 import NetworkHandler, { listParamsReq } from "../NetworkHandler";
 
-export const addConductorRequest = async (conductor: string[]) => {
+export const addConductorRequest = async (name: string, conductor: string[]) => {
   return NetworkHandler.post<ScheduleConductor>(`conductors`, {
     conductor,
+    name,
   });
 };
 
-export const updateConductorRequest = async (id: string, conductor: string[]) => {
-  return NetworkHandler.patch<ScheduleConductor>(`conductors/${id}`, {conductor});
+export const updateConductorRequest = async (id: string, name: string, conductor: string[]) => {
+  return NetworkHandler.patch<ScheduleConductor>(`conductors/${id}`, {conductor, name});
 };
 
 export const deleteConductorRequest = async (id: string) => {
