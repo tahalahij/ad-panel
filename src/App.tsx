@@ -7,13 +7,17 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { RootRouter } from "./routes/RootRouter";
 import { ContextStoreProvider } from "./context/ContextStoreProvider";
+import { faIR } from "@mui/material/locale";
 
-const theme = createTheme({
-  direction: "rtl",
-  typography: {
-    fontFamily: ["Vazirmatn", "sans-serif"].join(","),
+const theme = createTheme(
+  {
+    direction: "rtl",
+    typography: {
+      fontFamily: ["Vazirmatn", "sans-serif"].join(","),
+    },
   },
-});
+  faIR
+);
 
 // Create rtl cache
 const cacheRtl = createCache({
