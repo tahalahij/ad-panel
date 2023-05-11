@@ -107,9 +107,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
       requestBody.start = new Date(rangeDay[0].valueOf()).toISOString();
       requestBody.end = new Date(rangeDay[1].valueOf()).toISOString();
     }
-    console.log(requestBody)
 
-    return;
     const response = await addScheduleRequest(requestBody);
     if (response.success) {
       setMessage({ title: "با موفقیت اضافه شد", type: "success" });
