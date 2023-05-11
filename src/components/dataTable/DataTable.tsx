@@ -19,6 +19,7 @@ interface IDataTableProps {
   onViewClick?: (_id: string) => void;
   onDeleteClick?: (_id: string) => void;
   actionVisible?: boolean;
+  resizable?: boolean;
 }
 
 export const DataTable: FC<IDataTableProps> = ({
@@ -28,12 +29,13 @@ export const DataTable: FC<IDataTableProps> = ({
   onViewClick,
   onDeleteClick,
   actionVisible = true,
+  resizable = false,
 }) => {
   const actionColumn = [
     {
       field: "action",
       headerName: "دستور",
-      width: 200,
+      width: 120,
       renderCell: (params: any) => {
         if (!actionVisible) return null;
         const patchLink =
@@ -109,6 +111,7 @@ export const DataTable: FC<IDataTableProps> = ({
         // pageSize={}
         rowsPerPageOptions={[25]}
         // checkboxSelection
+        getRowHeight={resizable ? () => 'auto' : undefined}
       />
     </div>
   );

@@ -33,29 +33,10 @@ import {
   ScheduleTypeEnum,
   WeekDays,
 } from "../../../types/ScheduleTypes";
+import { CellWeekDays } from "../../../components/dataTable/CellWeekDays";
+import { getReadableDay } from "../../../utils/Utils";
 
 const today = new Date();
-
-const getReadableDay = (item: WeekDays) => {
-  switch (item) {
-    case WeekDays.SATURDAY:
-      return "شنبه";
-    case WeekDays.SUNDAY:
-      return "یکشنبه";
-    case WeekDays.MONDAY:
-      return "دوشنبه";
-    case WeekDays.TUESDAY:
-      return "سه‌شنبه";
-    case WeekDays.WEDNESDAY:
-      return "چهارشنبه";
-    case WeekDays.THURSDAY:
-      return "پننج‌شنبه";
-    case WeekDays.FRIDAY:
-      return "جمعه";
-    default:
-      return "";
-  }
-};
 
 type NewProps = {
   title: string;
@@ -92,7 +73,11 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
     //   ? await updateDeviceRequest({ ...requestBody, _id: scheduleId })
     //   : await addDeviceRequest(formik.values);
     const requestBody: SchedulePure = { ...formik.values };
-    console.log(requestBody.type,  ScheduleTypeEnum.RECURSIVE,  ScheduleTypeEnum.RECURSIVE === requestBody.type)
+    console.log(
+      requestBody.type,
+      ScheduleTypeEnum.RECURSIVE,
+      ScheduleTypeEnum.RECURSIVE === requestBody.type
+    );
     if (requestBody.type === ScheduleTypeEnum.RECURSIVE) {
       requestBody.day = days;
       requestBody.from = {
@@ -221,16 +206,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                       onChange={onDayChange}
                       multiple={true}
                       renderValue={(selected: string[]) => (
-                        <Box
-                          sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
-                        >
-                          {selected.map((value) => (
-                            <Chip
-                              key={value}
-                              label={getReadableDay(value as WeekDays)}
-                            />
-                          ))}
-                        </Box>
+                        <CellWeekDays list={selected as WeekDays[]} />
                       )}
                     >
                       <MenuItem value={WeekDays.SATURDAY}>

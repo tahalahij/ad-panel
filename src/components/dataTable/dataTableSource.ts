@@ -1,6 +1,10 @@
 import { GridColDef } from "@mui/x-data-grid";
 import { CellImage } from "./CellImage";
 import { CellLink } from "./CellLink";
+import { ScheduleTypeEnum, WeekDays } from "../../types/ScheduleTypes";
+import moment from "moment-jalaali";
+import { digitsEnToFa } from "@persian-tools/persian-tools";
+import { CellWeekDays } from "./CellWeekDays";
 
 export const userColumns: GridColDef[] = [
   { field: "_id", headerName: "شناسه", width: 280, sortable: false },
@@ -54,11 +58,54 @@ export const fileColumns: GridColDef[] = [
 ];
 
 export const scheduleColumns: GridColDef[] = [
-  { field: "_id", headerName: "شناسه برنامه", width: 230, sortable: false },
+  { field: "_id", headerName: "شناسه برنامه", width: 210, sortable: false },
   {
-    field: "ip",
-    headerName: "آی پی دستگاه",
-    width: 330,
+    field: "deviceId",
+    headerName: "شناسه دستگاه",
+    width: 210,
+    sortable: false,
+  },
+  {
+    field: "type",
+    headerName: "نوع برنامه",
+    width: 80,
+    valueFormatter: (params) =>
+      params.value === ScheduleTypeEnum.ONE_TIME ? "یکبار پخش" : "دوره ای",
+  },
+  {
+    field: "start",
+    headerName: "تاریخ شروع",
+    width: 100,
+    valueFormatter: (params) =>
+      digitsEnToFa(moment(params.value).format("jYYYY-jMM-jDD")),
+  },
+  {
+    field: "end",
+    headerName: "تاریخ پایان",
+    width: 100,
+    valueFormatter: (params) =>
+      digitsEnToFa(moment(params.value).format("jYYYY-jMM-jDD")),
+  },
+  {
+    field: "day",
+    headerName: "روز های تکرار",
+    width: 200,
+    // @ts-ignore
+    renderCell: CellWeekDays,
+  },
+  {
+    field: "from",
+    headerName: "ساعت شروع",
+    width: 100,
+    valueFormatter: (params) =>
+      params.value ? digitsEnToFa(moment(params.value).format("hh:mm")) : "",
+  },
+  {
+    field: "to",
+    headerName: "ساعت پایان",
+    width: 100,
+    valueFormatter: (params) =>
+      params.value ? digitsEnToFa(moment(params.value).format("hh:mm")) : "",
   },
 ];
 
@@ -78,5 +125,10 @@ export const deviceColumns: GridColDef[] = [
     headerName: "نام دستگاه",
     width: 200,
   },
-  { field: "operatorId", headerName: "شناسه اپراتور", width: 230, sortable: false },
+  {
+    field: "operatorId",
+    headerName: "شناسه اپراتور",
+    width: 230,
+    sortable: false,
+  },
 ];

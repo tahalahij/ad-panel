@@ -1,4 +1,5 @@
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools";
+import { WeekDays } from "../types/ScheduleTypes";
 
 type convertOptions = {
   isRial?: boolean;
@@ -61,3 +62,24 @@ export function convertCurrencyToHighValueReadable(
 
   return result;
 }
+
+export const getReadableDay = (item: WeekDays) => {
+  switch (item) {
+    case WeekDays.SATURDAY:
+      return "شنبه";
+    case WeekDays.SUNDAY:
+      return "یکشنبه";
+    case WeekDays.MONDAY:
+      return "دوشنبه";
+    case WeekDays.TUESDAY:
+      return "سه‌شنبه";
+    case WeekDays.WEDNESDAY:
+      return "چهارشنبه";
+    case WeekDays.THURSDAY:
+      return "پنج‌شنبه";
+    case WeekDays.FRIDAY:
+      return "جمعه";
+    default:
+      return "";
+  }
+};
