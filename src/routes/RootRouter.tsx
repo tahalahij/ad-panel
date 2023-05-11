@@ -7,10 +7,11 @@ import { User, New as NewUser, ResetPassword } from "../layouts/user";
 // import { New } from "../layouts/user/new";
 import { PageNotFound } from "../layouts/pageNotFound";
 import { Single } from "../layouts/single";
-import { Conductor} from "../layouts/conductor";
+import { Conductor } from "../layouts/conductor";
 import { MainContainer } from "../components";
 import { useAuthenticationState } from "../context/authentication";
 import { List as DeviceList, New as NewDevice } from "../layouts/device";
+import { List as ScheduleList, New as NewSchedule } from "../layouts/schedule";
 
 export const RootRouter = () => {
   const authState = useAuthenticationState();
@@ -66,7 +67,9 @@ export const RootRouter = () => {
                     />
                     <Route
                       path=":deviceId"
-                      element={<NewDevice title={"ویرایش دستگاه"} update={true}/>}
+                      element={
+                        <NewDevice title={"ویرایش دستگاه"} update={true} />
+                      }
                     />
                     <Route
                       path="new"
@@ -86,6 +89,27 @@ export const RootRouter = () => {
                 <Route
                   path="new"
                   element={<NewUser title={"افزودن سری پخش جدید"} />}
+                />
+              </Route>
+              <Route path="schedules">
+                <Route
+                  index
+                  element={
+                    <ScheduleList
+                      columnKey="schedule"
+                      title={"افزودن برنامه جدید"}
+                    />
+                  }
+                />
+                <Route
+                  path=":scheduleId"
+                  element={
+                    <NewSchedule update={true} title={"ویرایش برنامه"} />
+                  }
+                />
+                <Route
+                  path="new"
+                  element={<NewSchedule title={"افزودن برنامه جدید"} />}
                 />
               </Route>
               <Route path="uploads">
