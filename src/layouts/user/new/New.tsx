@@ -54,7 +54,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   const submitUser = async () => {
     const { password, ...requestBody } = formik.values;
     if (!!password) {
-      Object.assign(requestBody, password);
+      Object.assign(requestBody, {password});
     }
     const response = update
       ? await updateOperatorRequest({ ...requestBody, _id: userId })
