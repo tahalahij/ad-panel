@@ -15,7 +15,8 @@ export const Home = () => {
   const authState = useAuthenticationState();
   return (
     <div className="home homeCenter">
-      <Typography variant="h3">خوش آمدید 👋</Typography>
+      <img className="logo" src={require("../../assets/images/icon_title.jpeg")} alt="logo" />
+      <Typography variant="h3">خوش آمدید</Typography>
       <br />
       <br />
       <Typography>{`شما دسترسی ${authState.role} دارید`}</Typography>

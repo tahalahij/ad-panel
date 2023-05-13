@@ -26,9 +26,7 @@ export const Sidebar = () => {
     <div className="sidebar">
       <div className="top">
         <Link to={"/"} style={{ textDecoration: "none" }}>
-          <Typography component={"span"} className="logo">
-            SCHEDULER
-          </Typography>
+          <img className="logo" src={require("../../assets/images/icon_title.jpeg")} alt="logo" />
         </Link>
       </div>
       <hr />

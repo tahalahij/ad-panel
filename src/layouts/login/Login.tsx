@@ -14,7 +14,6 @@ import { loginRequest } from "../../network/requests";
 import { useFormik } from "formik";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 
-
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
@@ -45,7 +44,11 @@ export const Login = () => {
       setLoading(false);
       authDispatch({
         type: "LOGIN",
-        value: { isLogin: true, token: response.payload?.access_token!, role: response.payload?.role! },
+        value: {
+          isLogin: true,
+          token: response.payload?.access_token!,
+          role: response.payload?.role!,
+        },
       });
     } else {
       setLoading(false);
@@ -55,61 +58,71 @@ export const Login = () => {
 
   return (
     <div className="login">
-      <Container maxWidth="sm">
-        <Card className="cardContainer">
-          <Typography variant="h6">SCHEDULE</Typography>
-          <TextField
-            error={false}
-            id="username"
-            name="username"
-            label="نام کاربری"
-            value={formik.values.username}
-            onChange={formik.handleChange}
-            // helperText={"خطا"}
-            placeholder="نام کاربری را وارد کنید"
-            sx={{ width: "34ch" }}
-          />
-          <TextField
-            error={false}
-            id="password"
-            name="password"
-            label="رمز عبور"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            // helperText={"خطا"}
-            placeholder="رمز عبور را وارد کنید"
-            sx={{ width: "34ch" }}
-            type={showPassword ? "text" : "password"}
-            InputProps={{
-              //}}
-              // endAdornment={
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? (
-                      <MdOutlineVisibilityOff />
-                    ) : (
-                      <MdOutlineVisibility />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          <LoadingButton
-            loading={loading}
-            variant="contained"
-            onClick={onLoginClick}
-          >
-            ورود
-          </LoadingButton>
-        </Card>
-      </Container>
+      <div className="cardContainer">
+        <img
+          className="logo"
+          src={require("../../assets/images/icon_title.jpeg")}
+          alt="logo"
+        />
+        <TextField
+          error={false}
+          id="username"
+          name="username"
+          label="نام کاربری"
+          value={formik.values.username}
+          onChange={formik.handleChange}
+          // helperText={"خطا"}
+          placeholder="نام کاربری را وارد کنید"
+          sx={{ width: "34ch" }}
+        />
+        <TextField
+          error={false}
+          id="password"
+          name="password"
+          label="رمز عبور"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          // helperText={"خطا"}
+          placeholder="رمز عبور را وارد کنید"
+          sx={{ width: "34ch" }}
+          type={showPassword ? "text" : "password"}
+          InputProps={{
+            //}}
+            // endAdornment={
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? (
+                    <MdOutlineVisibilityOff />
+                  ) : (
+                    <MdOutlineVisibility />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <LoadingButton
+          loading={loading}
+          variant="contained"
+          onClick={onLoginClick}
+          sx={{width: '100%'}}
+        >
+          ورود
+        </LoadingButton>
+      </div>
+      <div className="background">
+        <img
+          src={require("../../assets/images/dashboard.jpeg")}
+          alt="dashboard"
+          className="logo"
+        />
+      </div>
       <Snackbar
         open={!!error}
         // message={error}
