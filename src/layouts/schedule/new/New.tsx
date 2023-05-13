@@ -73,11 +73,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
     //   ? await updateDeviceRequest({ ...requestBody, _id: scheduleId })
     //   : await addDeviceRequest(formik.values);
     const requestBody: SchedulePure = { ...formik.values };
-    console.log(
-      requestBody.type,
-      ScheduleTypeEnum.RECURSIVE,
-      ScheduleTypeEnum.RECURSIVE === requestBody.type
-    );
+
     if (requestBody.type === ScheduleTypeEnum.RECURSIVE) {
       requestBody.day = days;
       requestBody.from = {
@@ -89,8 +85,18 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
         minute: Number(endTime.format("mm")),
       };
     } else {
-      requestBody.start = new Date(rangeDay[0].valueOf()).toISOString();
-      requestBody.end = new Date(rangeDay[1].valueOf()).toISOString();
+      const start = rangeDay[0].set({
+        hour: Number(startTime.format("hh")),
+        minute: Number(startTime.format("mm")),
+        millisecond: 0,
+      });
+      const end = rangeDay[0].set({
+        hour: Number(endTime.format("hh")),
+        minute: Number(endTime.format("mm")),
+        millisecond: 0,
+      });
+      requestBody.start = new Date(start.valueOf()).toISOString();
+      requestBody.end = new Date(end.valueOf()).toISOString();
     }
 
     const response = await addScheduleRequest(requestBody);
@@ -277,6 +283,27 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                     }
                   />
                 </div>
+                <div className="formInput">
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <TimePicker
+                      label="ساعت شروع"
+                      value={startTime}
+                      ampm={false}
+                      onChange={(t) => setStartTime(t!)}
+                    />
+                  </LocalizationProvider>
+                </div>
+                <div className="formInput">
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <TimePicker
+                      label="ساعت پایان"
+                      value={endTime}
+                      ampm={false}
+                      onChange={(t) => setEndTime(t!)}
+                    />
+                  </LocalizationProvider>
+                </div>
+                ّ
               </>
             )}
 
