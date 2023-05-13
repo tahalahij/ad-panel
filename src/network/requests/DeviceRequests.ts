@@ -21,8 +21,8 @@ export const addDeviceRequest = async (data: newDeviceParams) => {
   return NetworkHandler.post<any>(`devices/admin`, data);
 };
 
-export const updateDeviceRequest = async (data: newDeviceParams) => {
-  return NetworkHandler.patch<any>(`devices/admin/${data._id}`, data);
+export const updateDeviceRequest = async ({_id, ...data}: newDeviceParams) => {
+  return NetworkHandler.patch<any>(`devices/admin/${_id}`, data);
 };
 
 export const getMyDevicesListRequest = async (
