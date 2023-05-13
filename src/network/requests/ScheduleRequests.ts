@@ -4,13 +4,13 @@ import NetworkHandler, { listParamsReq } from "../NetworkHandler";
 export const getSchedulesRequest = async (
   params: listParamsReq = { page: 0, limit: 100 }
 ) => {
-  return NetworkHandler.get<Schedule[]>(`schedule/schedule/operators`, {
+  return NetworkHandler.get<Schedule[]>(`schedule/operators`, {
     params,
   });
 };
 
 export const addScheduleRequest = async (data: SchedulePure) => {
-  return NetworkHandler.post<Schedule>(`schedule/schedule`, data);
+  return NetworkHandler.post<Schedule>(`schedule`, data);
 };
 
 export const deleteScheduleRequest = async (id: string) => {
