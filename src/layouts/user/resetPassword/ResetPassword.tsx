@@ -9,9 +9,12 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
-import { resetPasswordRequest } from "../../../network/requests";
+import {
+  resetPasswordAdminRequest,
+  resetPasswordRequest,
+} from "../../../network/requests";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
-
+import { useAuthenticationState } from "../../../context";
 
 type ResetPasswordProps = {
   title: string;
@@ -20,6 +23,7 @@ type ResetPasswordProps = {
 export const ResetPassword: FC<ResetPasswordProps> = ({ title }) => {
   const navigate = useNavigate();
   //   const { userId, username, name } = useParams();
+  const auth = useAuthenticationState();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{
@@ -63,7 +67,10 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ title }) => {
     }
 
     setLoading(true);
-    const response = await resetPasswordRequest(password);
+    const response =
+      auth.role === "OPERATOR"
+        ? await resetPasswordRequest(password)
+        : await resetPasswordAdminRequest(password);
     if (response.success) {
       setMessage({ title: "رمز عبور با موفقیت ثبت شد", type: "success" });
       setTimeout(() => {
@@ -131,7 +138,11 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ title }) => {
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
-                        {showPassword ? <MdOutlineVisibilityOff /> : <MdOutlineVisibility />}
+                        {showPassword ? (
+                          <MdOutlineVisibilityOff />
+                        ) : (
+                          <MdOutlineVisibility />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -161,7 +172,11 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ title }) => {
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
-                        {showPassword ? <MdOutlineVisibilityOff /> : <MdOutlineVisibility />}
+                        {showPassword ? (
+                          <MdOutlineVisibilityOff />
+                        ) : (
+                          <MdOutlineVisibility />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   ),
