@@ -9,6 +9,10 @@ export const getSchedulesRequest = async (
   });
 };
 
+export const getScheduleByIdRequest = async (id: string) => {
+  return NetworkHandler.get<Schedule>(`schedule/${id}`);
+};
+
 export const addScheduleRequest = async (data: SchedulePure) => {
   return NetworkHandler.post<Schedule>(`schedule`, data);
 };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getSchedulesRequest } from "../../network/requests";
+import { getScheduleByIdRequest, getSchedulesRequest } from "../../network/requests";
 import { Schedule } from "../../types/ScheduleTypes";
 
 export const useScheduleData = () => {
@@ -37,14 +37,13 @@ export const useScheduleById = (id?: string) => {
   const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
-    // if (!id) return;
-    // setLoading(true);
-    // let response = await getDeviceByIdRequest(id)
-    // console.log(response);
-    // if (response.success) {
-    //   setData(response.payload);
-    // }
-    // setLoading(false);
+    if (!id) return;
+    setLoading(true);
+    const response = await getScheduleByIdRequest(id)
+    if (response.success) {
+      setData(response.payload);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
