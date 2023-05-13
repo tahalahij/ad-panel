@@ -1,0 +1,15 @@
+.currentPlaying {
+  padding: 20px;
+
+  .header {
+    display: flex;
+    margin: 0px 20px;
+    align-items: center;
+    justify-content: space-between;
+    color: gray;
+  }
+
+  .bottom {
+    margin: 20px;
+  }
+}

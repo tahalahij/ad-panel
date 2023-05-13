@@ -8,7 +8,7 @@ import { Device } from "../../types/DeviceType";
 import { useAuthenticationState } from "../../context";
 
 export const useDeviceData = () => {
-  const [list, setList] = useState<Device[]>();
+  const [list, setList] = useState<Device[]>([]);
   const [loading, setLoading] = useState(false);
   const auth = useAuthenticationState();
 
@@ -20,7 +20,7 @@ export const useDeviceData = () => {
         : await getMyDevicesListRequest({ page, limit: 100 });
     console.log(response);
     if (response.success) {
-      setList(response.payload);
+      setList(response.payload!);
     }
     setLoading(false);
   };

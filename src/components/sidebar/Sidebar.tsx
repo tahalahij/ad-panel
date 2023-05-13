@@ -14,6 +14,7 @@ import {
   MdLockReset,
   MdOutlineDevices,
   MdOutlineAutoAwesomeMotion,
+  MdOutlineLiveTv,
 } from "react-icons/md";
 
 export const Sidebar = () => {
@@ -58,6 +59,14 @@ export const Sidebar = () => {
               <li>
                 <MdOutlineDevices className="icon" />
                 <Typography component={"span"}>دستگاه ها</Typography>
+              </li>
+            </Link>
+          )}
+          {authState.role === "ADMIN" && (
+            <Link to={"/devices/current"} style={{ textDecoration: "none" }}>
+              <li>
+                <MdOutlineLiveTv className="icon" />
+                <Typography component={"span"}>برنامه در حال پخش</Typography>
               </li>
             </Link>
           )}

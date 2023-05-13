@@ -10,7 +10,11 @@ import { Single } from "../layouts/single";
 import { Conductor } from "../layouts/conductor";
 import { MainContainer } from "../components";
 import { useAuthenticationState } from "../context/authentication";
-import { List as DeviceList, New as NewDevice } from "../layouts/device";
+import {
+  List as DeviceList,
+  New as NewDevice,
+  CurrentPlaying,
+} from "../layouts/device";
 import { List as ScheduleList, New as NewSchedule } from "../layouts/schedule";
 
 export const RootRouter = () => {
@@ -75,6 +79,7 @@ export const RootRouter = () => {
                       path="new"
                       element={<NewDevice title={"افزودن دستگاه جدید"} />}
                     />
+                    <Route path="current" element={<CurrentPlaying />} />
                   </>
                 ) : (
                   <Route
@@ -126,6 +131,7 @@ export const RootRouter = () => {
                 />
               </Route>
             </Route>
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </MainContainer>
       )}
