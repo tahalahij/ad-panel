@@ -98,14 +98,14 @@ export const scheduleColumns: GridColDef[] = [
     headerName: "ساعت شروع",
     width: 100,
     valueFormatter: (params) =>
-      params.value ? digitsEnToFa(moment(params.value).format("hh:mm")) : "",
+      params.value ? digitsEnToFa(moment(params.value).format("HH:mm")) : "",
   },
   {
     field: "to",
     headerName: "ساعت پایان",
     width: 100,
     valueFormatter: (params) =>
-      params.value ? digitsEnToFa(moment(params.value).format("hh:mm")) : "",
+      params.value ? digitsEnToFa(moment(params.value).format("HH:mm")) : "",
   },
 ];
 
