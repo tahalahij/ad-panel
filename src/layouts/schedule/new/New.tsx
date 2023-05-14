@@ -303,7 +303,6 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                     />
                   </LocalizationProvider>
                 </div>
-                ّ
               </>
             )}
 
