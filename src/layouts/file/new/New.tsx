@@ -52,7 +52,7 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
       }, 2000);
     } else {
       setMessage({
-        title: "خطایی در بارگزاری فایل رخ داده است",
+        title:  response.error?.toString()!,
         type: "error",
       });
     }

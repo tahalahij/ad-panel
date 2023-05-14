@@ -107,7 +107,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
       }, 2000);
     } else {
       setMessage({
-        title: `خطایی در ثبت برنامه ${update ? "" : "جدید "}رخ داده است`,
+        title: response.error!,
         type: "error",
       });
     }

@@ -78,7 +78,7 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ title }) => {
       }, 2000);
     } else {
       setMessage({
-        title: `خطایی در ثبت رمز عبور جدید رخ داده است`,
+        title:  response.error?.toString()!,
         type: "error",
       });
     }

@@ -79,7 +79,7 @@ export const Conductor: FC<ConductorProps> = () => {
       }, 2000);
     } else {
       setMessage({
-        title: "خطایی در ثبت تغییرات رخ داده است",
+        title: response.error?.toString()!,
         type: "error",
       });
     }

@@ -56,7 +56,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
       }, 2000);
     } else {
       setMessage({
-        title: `خطایی در ثبت دستگاه ${update ? "" : "جدید "}رخ داده است`,
+        title: response.error?.toString()!,
         type: "error",
       });
     }
