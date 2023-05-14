@@ -35,6 +35,8 @@ import {
 } from "../../../types/ScheduleTypes";
 import { CellWeekDays } from "../../../components/dataTable/CellWeekDays";
 import { getReadableDay } from "../../../utils/Utils";
+import { useDeviceData } from "../../device/useDeviceData";
+import { useGetConductor } from "../../conductor/data/useConductorData";
 
 const today = new Date();
 
@@ -47,6 +49,11 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   const navigate = useNavigate();
   const { scheduleId } = useParams();
   const { data, loading: scheduleLoading } = useScheduleById(scheduleId);
+
+  const { list: deviceList, loading: deviceLoading } = useDeviceData();
+  const { operatorConductors, loading: conductorLoading } = useGetConductor();
+  // const [currentIndex, setCurrentIndex] = useState(-1);
+
   const [rangeDay, setRangeDay] = useState<DateObject[]>([]);
   const [days, setDays] = useState<WeekDays[]>([]);
   const [startTime, setStartTime] = useState(moment());
@@ -125,7 +132,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   };
 
   // console.log(new Date(rangeDay[0].valueOf()).toISOString())
-
+  console.log(formik.values);
   return (
     <div className="newSchedule">
       <div className="top">
@@ -148,20 +155,26 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
         <div className="right">
           <form action="">
             <div className="formInput">
-              <TextField
-                error={false}
-                id="conductor"
-                name="conductor"
-                label="شناسه سری پخش"
-                value={formik.values.conductor}
-                onChange={formik.handleChange}
-                helperText={""}
-                placeholder="شناسه سری پخش را وارد کنید"
-                sx={{ width: "25ch" }}
-              />
+              <FormControl sx={{ width: "30ch" }}>
+                <InputLabel id="demo-simple-select-label">شناسه سری پخش</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="conductor"
+                  name="conductor"
+                  label="شناسه سری پخش"
+                  value={formik.values.conductor}
+                  onChange={formik.handleChange}
+                >
+                  {operatorConductors?.map((item, index) => (
+                    <MenuItem value={item._id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </div>
             <div className="formInput">
-              <FormControl sx={{ width: "25ch" }}>
+              <FormControl sx={{ width: "30ch" }}>
                 <InputLabel id="demo-simple-select-label">
                   نوع برنامه
                 </InputLabel>
@@ -183,22 +196,28 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
               </FormControl>
             </div>
             <div className="formInput">
-              <TextField
-                error={false}
-                id="ip"
-                name="ip"
-                value={formik.values.ip}
-                onChange={formik.handleChange}
-                label="آدرس IP دستگاه"
-                helperText={""}
-                placeholder="آدرس IP را وارد کنید"
-                sx={{ width: "25ch" }}
-              />
+              <FormControl sx={{ width: "30ch" }}>
+                <InputLabel id="demo-simple-select-label">دستگاه</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="ip"
+                  name="ip"
+                  value={formik.values.ip}
+                  label="دستگاه"
+                  onChange={formik.handleChange}
+                >
+                  {deviceList?.map((item, index) => (
+                    <MenuItem value={item.ip}>
+                      {item.name + " " + item.ip}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </div>
             {formik.values.type === ScheduleTypeEnum.RECURSIVE ? (
               <>
                 <div className="formInput">
-                  <FormControl sx={{ width: "25ch" }}>
+                  <FormControl sx={{ width: "30ch" }}>
                     <InputLabel id="label-days-select">
                       روز های تکرار
                     </InputLabel>
@@ -246,6 +265,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                       value={startTime}
                       ampm={false}
                       onChange={(t) => setStartTime(t!)}
+                      sx={{ width: "30ch" }}
                     />
                   </LocalizationProvider>
                 </div>
@@ -256,6 +276,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                       value={endTime}
                       ampm={false}
                       onChange={(t) => setEndTime(t!)}
+                      sx={{ width: "30ch" }}
                     />
                   </LocalizationProvider>
                 </div>
@@ -278,7 +299,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                         label="تاریخ شروع و پایان"
                         helperText={""}
                         placeholder="تاریخ شروع و پایان را انتخاب کنید"
-                        sx={{ width: "25ch" }}
+                        sx={{ width: "30ch" }}
                       />
                     }
                   />
@@ -290,6 +311,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                       value={startTime}
                       ampm={false}
                       onChange={(t) => setStartTime(t!)}
+                      sx={{ width: "30ch" }}
                     />
                   </LocalizationProvider>
                 </div>
@@ -300,6 +322,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                       value={endTime}
                       ampm={false}
                       onChange={(t) => setEndTime(t!)}
+                      sx={{ width: "30ch" }}
                     />
                   </LocalizationProvider>
                 </div>
