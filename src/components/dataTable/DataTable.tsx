@@ -111,7 +111,14 @@ export const DataTable: FC<IDataTableProps> = ({
         // pageSize={}
         rowsPerPageOptions={[25]}
         // checkboxSelection
-        getRowHeight={resizable ? () => 'auto' : undefined}
+        getRowHeight={
+          resizable
+            ? (params) =>
+                params.model?.type && params.model.type !== "ONE_TIME" && params.model?.day?.length > 2
+                  ? "auto"
+                  : undefined
+            : undefined
+        }
       />
     </div>
   );
