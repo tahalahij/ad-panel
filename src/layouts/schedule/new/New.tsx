@@ -84,21 +84,21 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
     if (requestBody.type === ScheduleTypeEnum.RECURSIVE) {
       requestBody.day = days;
       requestBody.from = {
-        hour: Number(startTime.format("hh")),
+        hour: Number(startTime.format("HH")),
         minute: Number(startTime.format("mm")),
       };
       requestBody.to = {
-        hour: Number(endTime.format("hh")),
+        hour: Number(endTime.format("HH")),
         minute: Number(endTime.format("mm")),
       };
     } else {
       const start = rangeDay[0].set({
-        hour: Number(startTime.format("hh")),
+        hour: Number(startTime.format("HH")),
         minute: Number(startTime.format("mm")),
         millisecond: 0,
       });
       const end = rangeDay[0].set({
-        hour: Number(endTime.format("hh")),
+        hour: Number(endTime.format("HH")),
         minute: Number(endTime.format("mm")),
         millisecond: 0,
       });
@@ -156,7 +156,9 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
           <form action="">
             <div className="formInput">
               <FormControl sx={{ width: "30ch" }}>
-                <InputLabel id="demo-simple-select-label">شناسه سری پخش</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  شناسه سری پخش
+                </InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="conductor"
@@ -166,9 +168,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                   onChange={formik.handleChange}
                 >
                   {operatorConductors?.map((item, index) => (
-                    <MenuItem value={item._id}>
-                      {item.name}
-                    </MenuItem>
+                    <MenuItem value={item._id}>{item.name}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
