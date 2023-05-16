@@ -15,7 +15,7 @@ export const Home = () => {
   const authState = useAuthenticationState();
   return (
     <div className="home homeCenter">
-      <img className="logo" src={require("../../assets/images/icon_title.jpeg")} alt="logo" />
+      <img className="logo" src={require("../../assets/images/icon_title.png")} alt="logo" />
       <Typography variant="h3">خوش آمدید</Typography>
       <br />
       <br />

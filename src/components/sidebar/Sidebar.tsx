@@ -15,6 +15,8 @@ import {
   MdOutlineDevices,
   MdOutlineAutoAwesomeMotion,
   MdOutlineLiveTv,
+  MdOutlineBarChart,
+  MdOutlineSettings,
 } from "react-icons/md";
 
 export const Sidebar = () => {
@@ -26,7 +28,11 @@ export const Sidebar = () => {
     <div className="sidebar">
       <div className="top">
         <Link to={"/"} style={{ textDecoration: "none" }}>
-          <img className="logo" src={require("../../assets/images/icon_title.jpeg")} alt="logo" />
+          <img
+            className="logo"
+            src={require("../../assets/images/icon_title.png")}
+            alt="logo"
+          />
         </Link>
       </div>
       <hr />
@@ -68,6 +74,7 @@ export const Sidebar = () => {
               </li>
             </Link>
           )}
+
           {authState.role === "OPERATOR" && (
             <Link to={"/schedules"} style={{ textDecoration: "none" }}>
               <li>
@@ -99,6 +106,34 @@ export const Sidebar = () => {
                 <Typography component={"span"}>دستگاه های من</Typography>
               </li>
             </Link>
+          )}
+          {/* {authState.role === "ADMIN" && (
+            <>
+              <Typography className="title" component={"p"}>
+                گزارش ها
+              </Typography>
+
+              <Link to={"/statistics"} style={{ textDecoration: "none" }}>
+                <li>
+                  <MdOutlineBarChart className="icon" />
+                  <Typography component={"span"}>آمار دستگاه ها</Typography>
+                </li>
+              </Link>
+            </>
+          )} */}
+          {authState.role === "ADMIN" && (
+            <>
+              <Typography className="title" component={"p"}>
+                تنظیمات
+              </Typography>
+
+              <Link to={"/settings"} style={{ textDecoration: "none" }}>
+                <li>
+                  <MdOutlineSettings className="icon" />
+                  <Typography component={"span"}>تصویر صفحه ورود</Typography>
+                </li>
+              </Link>
+            </>
           )}
           <Typography className="title" component={"p"}>
             کاربر

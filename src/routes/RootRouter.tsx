@@ -16,6 +16,7 @@ import {
   CurrentPlaying,
 } from "../layouts/device";
 import { List as ScheduleList, New as NewSchedule } from "../layouts/schedule";
+import { LoginBackground } from "../layouts/settings";
 
 export const RootRouter = () => {
   const authState = useAuthenticationState();
@@ -128,6 +129,16 @@ export const RootRouter = () => {
                 <Route
                   path="new"
                   element={<NewFileUpload title={"افزودن فایل جدید"} />}
+                />
+              </Route>
+              <Route path="settings">
+                <Route
+                  index
+                  element={
+                    <LoginBackground
+                      title={"تغییر تصویر صفحه ورود"}
+                    />
+                  }
                 />
               </Route>
             </Route>

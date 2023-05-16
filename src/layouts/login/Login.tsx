@@ -13,6 +13,7 @@ import { useAuthenticationDispatch } from "../../context";
 import { loginRequest } from "../../network/requests";
 import { useFormik } from "formik";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
+import { BASE_API_URL } from "../../network/Constants";
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -55,13 +56,13 @@ export const Login = () => {
       setError("خطا در ورود به برنامه");
     }
   };
-
+  const uri = encodeURI(BASE_API_URL + "files/dashboard");
   return (
     <div className="login">
       <div className="cardContainer">
         <img
           className="logo"
-          src={require("../../assets/images/icon_title.jpeg")}
+          src={require("../../assets/images/icon_title.png")}
           alt="logo"
         />
         <TextField
@@ -118,7 +119,8 @@ export const Login = () => {
       </div>
       <div className="background">
         <img
-          src={require("../../assets/images/dashboard.jpeg")}
+          // src={require("../../assets/images/dashboard.jpeg")}
+          src={uri}
           alt="dashboard"
           className="logo"
         />
