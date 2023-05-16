@@ -97,7 +97,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
         minute: Number(startTime.format("mm")),
         millisecond: 0,
       });
-      const end = rangeDay[0].set({
+      const end = rangeDay[1].set({
         hour: Number(endTime.format("HH")),
         minute: Number(endTime.format("mm")),
         millisecond: 0,
@@ -132,7 +132,6 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   };
 
   // console.log(new Date(rangeDay[0].valueOf()).toISOString())
-  console.log(formik.values);
   return (
     <div className="newSchedule">
       <div className="top">
