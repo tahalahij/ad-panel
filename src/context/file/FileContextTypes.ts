@@ -14,5 +14,5 @@ export declare enum ReducerActionType {
 
 export type ActionType = {
   type: keyof typeof ReducerActionType;
-  value: ContextSchema | ContextListItem | undefined;
+  value: ContextSchema | ContextListItem | string | undefined;
 };

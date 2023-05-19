@@ -41,6 +41,9 @@ export function reducer(state: ContextSchema, action: ActionType) {
         return [...state, action.value];
       else return state;
     case "REMOVE_ITEM":
+      if (typeof action.value == 'string') {
+        return state.filter((item) => item._id !== action.value);
+      } else return state;
     default:
       return state;
   }
@@ -51,7 +54,7 @@ export function FilesContextProvider({ children }: PropsWithChildren<{}>) {
     reducer,
     getInitialState()
   );
-  const [loading, setLoading] = useState<boolean>(false);;
+  const [loading, setLoading] = useState<boolean>(false);
 
   // uncomment to persist data
   // useEffect(() => {
