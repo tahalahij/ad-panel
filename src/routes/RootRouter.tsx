@@ -41,7 +41,7 @@ export const RootRouter = () => {
                   element={
                     <List
                       newItemRoute="/users/new"
-                      title="افزودن اپراتور جدید"
+                      title="اپراتورها"
                       columnKey="user"
                     />
                   }
@@ -67,7 +67,7 @@ export const RootRouter = () => {
                       element={
                         <DeviceList
                           columnKey="device"
-                          title={"افزودن دستگاه جدید"}
+                          title={"دستگاه ها"}
                         />
                       }
                     />
@@ -104,7 +104,7 @@ export const RootRouter = () => {
                   element={
                     <ScheduleList
                       columnKey="schedule"
-                      title={"افزودن برنامه جدید"}
+                      title={"برنامه ها"}
                     />
                   }
                 />
@@ -123,7 +123,7 @@ export const RootRouter = () => {
                 <Route
                   index
                   element={
-                    <FileList title="افزودن فایل جدید" columnKey="file" />
+                    <FileList title="فایل ها" columnKey="file" />
                   }
                 />
                 <Route path=":fileId" element={<Single />} />

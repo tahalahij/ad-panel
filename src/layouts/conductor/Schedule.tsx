@@ -65,7 +65,11 @@ export const Conductor: FC<ConductorProps> = () => {
       ?.getOrderedList()
       .map((item) => item._id);
     let response = isPatching
-      ? await updateConductorRequest(patchingId.current, conductorName, tempArray!)
+      ? await updateConductorRequest(
+          patchingId.current,
+          conductorName,
+          tempArray!
+        )
       : await addConductorRequest(conductorName, tempArray!);
     if (response.success) {
       setMessage({ title: "با موفقیت ثبت شد", type: "success" });
@@ -152,9 +156,12 @@ export const Conductor: FC<ConductorProps> = () => {
   return (
     <div className="conductor">
       <div className="header">
-        <Typography variant="h6">{`${
+        <Typography variant="h6">
+          {isOrdering ? "افزودن سری پخش جدید" : "سری های پخش"}
+        </Typography>
+        {/* <Typography variant="h6">{`${
           isPatching ? "ویرایش" : "افزودن"
-        } سری پخش`}</Typography>
+        } سری پخش`}</Typography> */}
 
         <div className="buttonContainer">
           {isOrdering ? (
