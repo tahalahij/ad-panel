@@ -107,7 +107,7 @@ export const Sidebar = () => {
               </li>
             </Link>
           )}
-          {/* {authState.role === "ADMIN" && (
+          {authState.role === "ADMIN" && (
             <>
               <Typography className="title" component={"p"}>
                 گزارش ها
@@ -120,7 +120,7 @@ export const Sidebar = () => {
                 </li>
               </Link>
             </>
-          )} */}
+          )}
           {authState.role === "ADMIN" && (
             <>
               <Typography className="title" component={"p"}>

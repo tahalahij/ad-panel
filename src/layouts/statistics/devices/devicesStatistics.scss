@@ -1,0 +1,27 @@
+.devicesStatistics {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+
+  flex: 6;
+
+  .widgets,
+  .charts {
+    display: flex;
+    // flex: 1;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .charts {
+    padding: 4px 20px;
+  }
+
+  .filters {
+    display: flex;
+    flex-direction: 'row';
+    padding: 20px;
+    gap: 20px;
+  }
+
+}

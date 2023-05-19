@@ -17,6 +17,7 @@ import {
 } from "../layouts/device";
 import { List as ScheduleList, New as NewSchedule } from "../layouts/schedule";
 import { LoginBackground } from "../layouts/settings";
+import { DeviceStatistics } from "../layouts/statistics/devices/DevicesStatistics";
 
 export const RootRouter = () => {
   const authState = useAuthenticationState();
@@ -134,12 +135,11 @@ export const RootRouter = () => {
               <Route path="settings">
                 <Route
                   index
-                  element={
-                    <LoginBackground
-                      title={"تغییر تصویر صفحه ورود"}
-                    />
-                  }
+                  element={<LoginBackground title={"تغییر تصویر صفحه ورود"} />}
                 />
+              </Route>
+              <Route path="statistics">
+                <Route index element={<DeviceStatistics />} />
               </Route>
             </Route>
             <Route path="*" element={<PageNotFound />} />
