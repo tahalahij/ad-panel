@@ -66,6 +66,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   const formik = useFormik({
     // enableReinitialize: true,
     initialValues: {
+      name: data?.name ?? "",
       conductor: data?.conductor ?? "",
       ip: data?.ip ?? "",
       type: data?.type ?? ScheduleTypeEnum.ONE_TIME,
@@ -153,6 +154,19 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
         </div> */}
         <div className="right">
           <form action="">
+            <div className="formInput">
+              <TextField
+                error={false}
+                id="name"
+                name="name"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                label="نام برنامه"
+                helperText={""}
+                placeholder="نام"
+                sx={{ width: "30ch" }}
+              />
+            </div>
             <div className="formInput">
               <FormControl sx={{ width: "30ch" }}>
                 <InputLabel id="demo-simple-select-label">

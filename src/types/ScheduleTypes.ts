@@ -17,6 +17,7 @@ export type SchedulePure = {
   conductor: string;
   ip: string;
   type: ScheduleTypeEnum;
+  name: string;
   day?: WeekDays[];
   from?: {
     hour: number;
@@ -39,6 +40,7 @@ export class Schedule {
     public updatedAt: Date | string | null,
     public conductor: string,
     public ip: string,
+    public name: string,
     public type: ScheduleTypeEnum,
     public day?: WeekDays[],
     public from?: {
