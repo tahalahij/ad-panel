@@ -127,8 +127,9 @@ export const deviceColumns: GridColDef[] = [
   },
   {
     field: "operatorId",
-    headerName: "شناسه اپراتور",
+    headerName: "نام اپراتور",
     width: 230,
     sortable: false,
+    valueFormatter: (params) => params.value.name
   },
 ];

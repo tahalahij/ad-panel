@@ -9,7 +9,6 @@ export const useOperatorData = () => {
   const fetchData = async (page: number = 0) => {
     setLoading(true);
     const response = await getOperatorListRequest({ page, limit: 100 });
-    console.log(response);
     if (response.success) {
       setUserList(response.payload);
     }

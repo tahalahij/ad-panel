@@ -2,8 +2,10 @@ import "./new.scss";
 import { useState, FC } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -15,6 +17,7 @@ import {
 } from "../../../network/requests";
 import { useDeviceById } from "../useDeviceData";
 import { useAuthenticationState } from "../../../context";
+import { useOperatorData } from "../../list/useOperatorData";
 
 type NewProps = {
   title: string;
@@ -25,6 +28,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   const navigate = useNavigate();
   const { deviceId } = useParams();
   const { data: deviceData, loading: deviceLoading } = useDeviceById(deviceId);
+  const { userList } = useOperatorData();
   const auth = useAuthenticationState();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{
@@ -114,17 +118,21 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
               />
             </div>
             <div className="formInput">
-              <TextField
-                error={false}
-                id="operatorId"
-                name="operatorId"
-                label="id اپراتور"
-                value={formik.values.operatorId}
-                onChange={formik.handleChange}
-                helperText={""}
-                placeholder="id اپراتور را وارد کنید"
-                sx={{ width: "25ch" }}
-              />
+              <FormControl sx={{ width: "25ch" }}>
+                <InputLabel id="operator-id-label">شناسه اپراتور</InputLabel>
+                <Select
+                  labelId="operator-id-label"
+                  id="operatorId"
+                  name="operatorId"
+                  label="شناسه اپراتور"
+                  value={formik.values.operatorId}
+                  onChange={formik.handleChange}
+                >
+                  {userList?.map((item, index) => (
+                    <MenuItem value={item._id}>{item.name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </div>
             {/* <div className="formInput">
               <TextField
