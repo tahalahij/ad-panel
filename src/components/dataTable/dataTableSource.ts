@@ -108,8 +108,6 @@ export const scheduleColumns: GridColDef[] = [
     width: 100,
     valueFormatter: (params) =>
       params.value ? digitsEnToFa(moment(params.value).format("HH:mm")) : "",
-    type: "dateTime",
-    valueGetter: ({ value }) => value && new Date(value),
   },
   {
     field: "to",
@@ -117,8 +115,6 @@ export const scheduleColumns: GridColDef[] = [
     width: 100,
     valueFormatter: (params) =>
       params.value ? digitsEnToFa(moment(params.value).format("HH:mm")) : "",
-    type: "dateTime",
-    valueGetter: ({ value }) => value && new Date(value),
   },
 ];
 
