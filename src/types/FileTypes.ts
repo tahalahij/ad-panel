@@ -6,7 +6,10 @@ export class FileUploadItem {
     public createdAt: string,
     public updatedAt: Date | string | null,
     public ownerId: string,
-    public type: "image" | "video" | "audio"
+    public type: "image" | "video" | "audio",
+    public name: string,
+    public delay?: number,
+    public resetKey?: string,
   ) {}
 }
 

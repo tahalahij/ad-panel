@@ -1,4 +1,6 @@
 import { Device } from "../../types/DeviceType";
+import { FileUploadItem } from "../../types/FileTypes";
+import { Schedule } from "../../types/ScheduleTypes";
 import NetworkHandler, { listParamsReq } from "../NetworkHandler";
 
 type newDeviceParams = {
@@ -21,7 +23,10 @@ export const addDeviceRequest = async (data: newDeviceParams) => {
   return NetworkHandler.post<any>(`devices/admin`, data);
 };
 
-export const updateDeviceRequest = async ({_id, ...data}: newDeviceParams) => {
+export const updateDeviceRequest = async ({
+  _id,
+  ...data
+}: newDeviceParams) => {
   return NetworkHandler.patch<any>(`devices/admin/${_id}`, data);
 };
 
@@ -38,5 +43,7 @@ export const getDeviceByIdRequest = async (deviceId: string) => {
 };
 
 export const getDeviceCurrentScheduleRequest = async (deviceId: string) => {
-  return NetworkHandler.get<Device[]>(`devices/admin/schedule/${deviceId}`);
+  return NetworkHandler.get<{ file: FileUploadItem; schedule: Schedule }>(
+    `devices/admin/schedule/${deviceId}`
+  );
 };
