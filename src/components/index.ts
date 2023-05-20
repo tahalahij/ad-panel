@@ -5,3 +5,4 @@ export * from "./featured/Featured";
 export * from "./table/Table";
 export * from "./dataTable/DataTable";
 export * from "./mainContainer/MainContainer";
+export { FileTypeDetector } from "./scheduleModule";
