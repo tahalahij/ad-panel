@@ -10,7 +10,6 @@ import moment from "moment-jalaali";
 import { digitsEnToFa } from "@persian-tools/persian-tools";
 
 import { useDeviceData } from "../useDeviceData";
-import { Device } from "../../../types/DeviceType";
 import { getDeviceCurrentScheduleRequest } from "../../../network/requests";
 import { FileTypeDetector } from "../../../components";
 import { FileUploadItem } from "../../../types/FileTypes";
@@ -19,7 +18,7 @@ import { getReadableDay } from "../../../utils/Utils";
 
 type CurrentPlayingProps = {};
 
-export const CurrentPlaying: FC<CurrentPlayingProps> = ({}) => {
+export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
   const { list, loading } = useDeviceData();
 
   const [currentIndex, setCurrentIndex] = useState(-1);
@@ -58,6 +57,7 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = ({}) => {
     if (currentIndex > -1 && list?.length > 0) {
       fetchData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex]);
 
   return (

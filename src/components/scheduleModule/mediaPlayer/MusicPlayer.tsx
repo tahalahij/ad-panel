@@ -1,9 +1,5 @@
 import { FC, useEffect, useState, useRef } from "react";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
-import PlayArrow from "@mui/icons-material/PlayArrow";
-import PauseCircle from "@mui/icons-material/PauseCircle";
 
 type MusicPlayerType = {
   uri: string;
@@ -47,7 +43,7 @@ export const MusicPlayer: FC<MusicPlayerType> = ({ uri, resetKey, onEnd }) => {
   );
 };
 
-const useAudio = (url: string) => {
+export const useAudio = (url: string) => {
   const [audio] = useState(new Audio(url));
   const [playing, setPlaying] = useState(true);
 

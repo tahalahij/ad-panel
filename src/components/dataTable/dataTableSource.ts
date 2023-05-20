@@ -1,7 +1,7 @@
 import { GridColDef } from "@mui/x-data-grid";
 import { CellImage } from "./CellImage";
-import { CellLink } from "./CellLink";
-import { ScheduleTypeEnum, WeekDays } from "../../types/ScheduleTypes";
+// import { CellLink } from "./CellLink";
+import { ScheduleTypeEnum } from "../../types/ScheduleTypes";
 import moment from "moment-jalaali";
 import { digitsEnToFa } from "@persian-tools/persian-tools";
 import { CellWeekDays } from "./CellWeekDays";
