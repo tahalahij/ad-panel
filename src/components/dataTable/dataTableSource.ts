@@ -43,22 +43,27 @@ export const userRows = [
 export const fileColumns: GridColDef[] = [
   { field: "_id", headerName: "شناسه فایل", width: 230, sortable: false },
   {
-    field: "path",
-    headerName: "آدرس فایل",
+    field: "originalName",
+    headerName: "نام فایل",
     width: 330,
-    renderCell: CellLink,
+    // renderCell: CellLink,
   },
   { field: "type", headerName: "نوع فایل", width: 100, sortable: false },
   {
     field: "createdAt",
     headerName: "تاریخ ایجاد",
     width: 200,
-    sortable: false,
+    sortable: true,
+    type: "dateTime",
+    valueGetter: ({ value }) => value && new Date(value),
+    valueFormatter: ({ value }) =>
+      digitsEnToFa(moment(value).format("HH:mm jYYYY-jMM-jDD")),
   },
 ];
 
 export const scheduleColumns: GridColDef[] = [
   { field: "_id", headerName: "شناسه برنامه", width: 210, sortable: false },
+  { field: "name", headerName: "نام برنامه", width: 160 },
   {
     field: "deviceId",
     headerName: "شناسه دستگاه",
@@ -78,6 +83,8 @@ export const scheduleColumns: GridColDef[] = [
     width: 100,
     valueFormatter: (params) =>
       digitsEnToFa(moment(params.value).format("jYYYY-jMM-jDD")),
+    type: "dateTime",
+    valueGetter: ({ value }) => value && new Date(value),
   },
   {
     field: "end",
@@ -85,6 +92,8 @@ export const scheduleColumns: GridColDef[] = [
     width: 100,
     valueFormatter: (params) =>
       digitsEnToFa(moment(params.value).format("jYYYY-jMM-jDD")),
+    type: "dateTime",
+    valueGetter: ({ value }) => value && new Date(value),
   },
   {
     field: "day",
@@ -99,6 +108,8 @@ export const scheduleColumns: GridColDef[] = [
     width: 100,
     valueFormatter: (params) =>
       params.value ? digitsEnToFa(moment(params.value).format("HH:mm")) : "",
+    type: "dateTime",
+    valueGetter: ({ value }) => value && new Date(value),
   },
   {
     field: "to",
@@ -106,6 +117,8 @@ export const scheduleColumns: GridColDef[] = [
     width: 100,
     valueFormatter: (params) =>
       params.value ? digitsEnToFa(moment(params.value).format("HH:mm")) : "",
+    type: "dateTime",
+    valueGetter: ({ value }) => value && new Date(value),
   },
 ];
 
@@ -130,6 +143,6 @@ export const deviceColumns: GridColDef[] = [
     headerName: "نام اپراتور",
     width: 230,
     sortable: false,
-    valueFormatter: (params) => params.value.name
+    valueFormatter: (params) => params.value.name,
   },
 ];
