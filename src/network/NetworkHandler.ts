@@ -21,6 +21,7 @@ import type {
   NetworkHandlerType,
 } from "./types";
 import { store } from "../context/authentication";
+import { generateReadableError } from "../utils/Utils";
 
 function buildUrl(parameters: object) {
   let qs = "";
@@ -110,7 +111,7 @@ async function requestRunner<T>(
       success: ok,
       httpStatus: status,
       payload: ok ? data : undefined,
-      error: !ok ? data?.message : undefined,
+      error: !ok ? data.message ?? generateReadableError(data.errors) : undefined,
     };
   } catch (error: any) {
     return {

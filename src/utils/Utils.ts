@@ -83,3 +83,24 @@ export const getReadableDay = (item: WeekDays) => {
       return "";
   }
 };
+
+export function generateReadableError(
+  error: { property: string; errors: string[] }[] | string
+) {
+  if (typeof error === "string") {
+    return error;
+  }
+
+  if (Array.isArray(error)) {
+    let readableString = "";
+    error.forEach((e, index) => {
+      readableString += e.property + ": ";
+      readableString += e.errors.join(", ");
+      if (index < error.length - 1) readableString += "\n";
+    });
+
+    return readableString;
+  }
+
+  return "";
+}
