@@ -63,7 +63,7 @@ export const fileColumns: GridColDef[] = [
 
 export const scheduleColumns: GridColDef[] = [
   { field: "_id", headerName: "شناسه برنامه", width: 210, sortable: false },
-  { field: "name", headerName: "نام برنامه", width: 160 },
+  { field: "name", headerName: "نام برنامه", width: 130 },
   {
     field: "deviceId",
     headerName: "شناسه دستگاه",
@@ -80,7 +80,7 @@ export const scheduleColumns: GridColDef[] = [
   {
     field: "start",
     headerName: "تاریخ شروع",
-    width: 100,
+    width: 90,
     valueFormatter: (params) =>
       digitsEnToFa(moment(params.value).format("jYYYY-jMM-jDD")),
     type: "dateTime",
@@ -89,7 +89,7 @@ export const scheduleColumns: GridColDef[] = [
   {
     field: "end",
     headerName: "تاریخ پایان",
-    width: 100,
+    width: 90,
     valueFormatter: (params) =>
       digitsEnToFa(moment(params.value).format("jYYYY-jMM-jDD")),
     type: "dateTime",
@@ -98,21 +98,21 @@ export const scheduleColumns: GridColDef[] = [
   {
     field: "day",
     headerName: "روز های تکرار",
-    width: 200,
+    width: 160,
     // @ts-ignore
     renderCell: CellWeekDays,
   },
   {
     field: "from",
     headerName: "ساعت شروع",
-    width: 100,
+    width: 85,
     valueFormatter: (params) =>
       params.value ? digitsEnToFa(moment(params.value).format("HH:mm")) : "",
   },
   {
     field: "to",
     headerName: "ساعت پایان",
-    width: 100,
+    width: 85,
     valueFormatter: (params) =>
       params.value ? digitsEnToFa(moment(params.value).format("HH:mm")) : "",
   },
