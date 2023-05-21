@@ -53,7 +53,7 @@ export const Login = () => {
       });
     } else {
       setLoading(false);
-      setError("خطا در ورود به برنامه");
+      setError(response.error?.toString() ?? "خطا در ورود به برنامه");
     }
   };
   const uri = encodeURI(BASE_API_URL + "files/dashboard");
