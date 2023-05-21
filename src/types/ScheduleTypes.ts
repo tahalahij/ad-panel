@@ -15,7 +15,7 @@ export enum WeekDays {
 
 export type SchedulePure = {
   conductor: string;
-  ip: string;
+  deviceId: string;
   type: ScheduleTypeEnum;
   name: string;
   day?: WeekDays[];

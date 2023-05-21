@@ -2,9 +2,6 @@ import "./new.scss";
 import { useState, FC } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import { useTheme } from "@mui/material/styles";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -12,12 +9,9 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Chip from "@mui/material/Chip";
-import Box from "@mui/material/Box";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
@@ -27,7 +21,6 @@ import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { addScheduleRequest } from "../../../network/requests";
 import { useScheduleById } from "../useScheduleData";
-import { useAuthenticationState } from "../../../context";
 import {
   SchedulePure,
   ScheduleTypeEnum,
@@ -38,7 +31,6 @@ import { getReadableDay } from "../../../utils/Utils";
 import { useDeviceData } from "../../device/useDeviceData";
 import { useGetConductor } from "../../conductor/data/useConductorData";
 
-const today = new Date();
 
 type NewProps = {
   title: string;
@@ -68,7 +60,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
     initialValues: {
       name: data?.name ?? "",
       conductor: data?.conductor ?? "",
-      ip: data?.ip ?? "",
+      deviceId: "",
       type: data?.type ?? ScheduleTypeEnum.ONE_TIME,
     },
     onSubmit: (values) => {
@@ -169,30 +161,30 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
             </div>
             <div className="formInput">
               <FormControl sx={{ width: "30ch" }}>
-                <InputLabel id="demo-simple-select-label">
-                  شناسه سری پخش
+                <InputLabel id="conductor-select-label">
+                  نام سری پخش
                 </InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
+                  labelId="conductor-select-label"
                   id="conductor"
                   name="conductor"
-                  label="شناسه سری پخش"
+                  label="نام سری پخش"
                   value={formik.values.conductor}
                   onChange={formik.handleChange}
                 >
                   {operatorConductors?.map((item, index) => (
-                    <MenuItem value={item._id}>{item.name}</MenuItem>
+                    <MenuItem value={item._id} key={item._id}>{item.name}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
             </div>
             <div className="formInput">
               <FormControl sx={{ width: "30ch" }}>
-                <InputLabel id="demo-simple-select-label">
+                <InputLabel id="type-select-label">
                   نوع برنامه
                 </InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
+                  labelId="type-select-label"
                   id="type"
                   name="type"
                   value={formik.values.type}
@@ -210,17 +202,17 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
             </div>
             <div className="formInput">
               <FormControl sx={{ width: "30ch" }}>
-                <InputLabel id="demo-simple-select-label">دستگاه</InputLabel>
+                <InputLabel id="device-select-label">دستگاه</InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="ip"
-                  name="ip"
-                  value={formik.values.ip}
+                  labelId="device-select-label"
+                  id="deviceId"
+                  name="deviceId"
+                  value={formik.values.deviceId}
                   label="دستگاه"
                   onChange={formik.handleChange}
                 >
                   {deviceList?.map((item, index) => (
-                    <MenuItem value={item.ip}>
+                    <MenuItem value={item._id} key={item._id}>
                       {item.name + " " + item.ip}
                     </MenuItem>
                   ))}

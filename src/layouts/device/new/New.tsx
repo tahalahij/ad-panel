@@ -119,12 +119,12 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
             </div>
             <div className="formInput">
               <FormControl sx={{ width: "25ch" }}>
-                <InputLabel id="operator-id-label">شناسه اپراتور</InputLabel>
+                <InputLabel id="operator-id-label">نام اپراتور</InputLabel>
                 <Select
                   labelId="operator-id-label"
                   id="operatorId"
                   name="operatorId"
-                  label="شناسه اپراتور"
+                  label="نام اپراتور"
                   value={formik.values.operatorId}
                   onChange={formik.handleChange}
                 >
