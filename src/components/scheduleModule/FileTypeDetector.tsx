@@ -7,6 +7,7 @@ import {
   VideoPlayer,
 } from "./index";
 import { BASE_API_URL } from "../../network/Constants";
+import { getToken } from "../../network/NetworkHandler";
 
 type FileTypeDetectorProps = {
   onEnd: () => void;
@@ -23,7 +24,7 @@ export const FileTypeDetector: FC<FileTypeDetectorProps> = ({
 }) => {
   //@ts-ignore
   const _fileType: "image" | "video" | "audio" = type!;
-  const uri = encodeURI(BASE_API_URL + "files/download/stream/" + name);
+  const uri = encodeURI(BASE_API_URL + "files/admin/download/stream/" + name + '?auth_token=' + getToken());
 
   if (_fileType === "image") {
     return (

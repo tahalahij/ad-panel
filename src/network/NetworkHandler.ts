@@ -39,7 +39,7 @@ function buildUrl(parameters: object) {
   return qs;
 }
 
-function getToken() {
+export function getToken() {
   const state = localStorage.getItem("Authentication");
   return state ? JSON.parse(state).token : "no-token";
 }
