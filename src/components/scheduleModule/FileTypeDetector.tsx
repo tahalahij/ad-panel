@@ -21,6 +21,7 @@ export const FileTypeDetector: FC<FileTypeDetectorProps> = ({
   delay,
   resetKey,
   onEnd,
+  animationName,
 }) => {
   //@ts-ignore
   const _fileType: "image" | "video" | "audio" = type!;
@@ -29,7 +30,7 @@ export const FileTypeDetector: FC<FileTypeDetectorProps> = ({
   if (_fileType === "image") {
     return (
       <ScheduledComponent duration={delay!} resetKey={resetKey!} onEnd={onEnd}>
-        <ImageViewer uri={uri} />
+        <ImageViewer uri={uri} animation={animationName ?? 'none'}/>
       </ScheduledComponent>
     );
   }

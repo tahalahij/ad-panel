@@ -5,9 +5,14 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import { uploadFileRequest } from "../../../network/requests/FileRequests";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineCloudUpload } from "react-icons/md";
+import { Animator, ImageAnimation } from "../../../components/scheduleModule";
 type NewProps = {
   title: string;
 };
@@ -15,6 +20,7 @@ type NewProps = {
 export const NewFileUpload: FC<NewProps> = ({ title }) => {
   const [file, setFile] = useState<File>();
   const [delay, setDelay] = useState("");
+  const [animation, setAnimation] = useState<ImageAnimation>("none");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{
     title: string;
@@ -41,8 +47,8 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
     data.append(`file`, file);
     if (file.type.startsWith("image")) {
       data.append("delay", delay.toString());
+      data.append("animationName", animation);
     }
-    // data.append("animationName", "flip");
 
     const response = await uploadFileRequest(data);
     if (response.success) {
@@ -52,11 +58,15 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
       }, 2000);
     } else {
       setMessage({
-        title:  response.error?.toString()!,
+        title: response.error?.toString()!,
         type: "error",
       });
     }
     setLoading(false);
+  };
+
+  const onAnimationChange = (event: SelectChangeEvent<ImageAnimation>) => {
+    setAnimation(event.target.value as ImageAnimation);
   };
 
   const delayErrorText =
@@ -114,18 +124,92 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
               />
             </div>
             {!!file && file.type.startsWith("image") && (
-              <TextField
-                error={!!delayErrorText}
-                type="number"
-                id="delay"
-                name="delay"
-                label="مدت زمان نمایش تصویر"
-                value={delay}
-                onChange={(e) => setDelay(e.target.value)}
-                helperText={delayErrorText}
-                placeholder="مدت زمان نمایش تصویر را به 'ثانیه' وارد کنید"
-                sx={{ width: "40%", marginLeft: "24px" }}
-              />
+              <div className="imageBox">
+                <div className="inputs">
+                  <TextField
+                    error={!!delayErrorText}
+                    type="number"
+                    id="delay"
+                    name="delay"
+                    label="مدت زمان نمایش تصویر"
+                    value={delay}
+                    onChange={(e) => setDelay(e.target.value)}
+                    helperText={delayErrorText}
+                    placeholder="مدت زمان نمایش تصویر را به 'ثانیه' وارد کنید"
+                    sx={{ width: "30ch", marginLeft: "24px" }}
+                  />
+                  <FormControl sx={{ width: "30ch", marginLeft: "24px" }}>
+                    <InputLabel id="animation-label">انیمیشن ورود</InputLabel>
+                    <Select
+                      labelId="animation-label"
+                      id="animation"
+                      name="animation"
+                      label="انیمیشن ورود"
+                      value={animation}
+                      onChange={onAnimationChange}
+                    >
+                      <MenuItem value={"none"}>{"بدون انیمیشن"}</MenuItem>
+                      <MenuItem value={"rotate"}>
+                        {"rotate".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"zoom"}>
+                        {"zoom".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"fade"}>
+                        {"fade".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"fade-left"}>
+                        {"fade-left".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"fade-right"}>
+                        {"fade-right".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"fade-top"}>
+                        {"fade-top".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"fade-bottom"}>
+                        {"fade-bottom".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"flip-left"}>
+                        {"flip-left".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"flip-right"}>
+                        {"flip-right".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"flip-top"}>
+                        {"flip-top".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"flip-bottom"}>
+                        {"flip-bottom".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"bounce"}>
+                        {"bounce".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"bounce-left"}>
+                        {"bounce-left".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"bounce-right"}>
+                        {"bounce-right".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"bounce-top"}>
+                        {"bounce-top".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                      <MenuItem value={"bounce-bottom"}>
+                        {"bounce-bottom".replace("-", " ").toUpperCase()}
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+                <div className="wrapper">
+                  <Animator animation={animation}>
+                    <img
+                      className="tempImg"
+                      src={require("../../../assets/images/temp_image.jpg")}
+                      alt="temp"
+                    />
+                  </Animator>
+                </div>
+              </div>
             )}
             <div className="formInput">
               <LoadingButton

@@ -1,3 +1,5 @@
+import { ImageAnimation } from "../components/scheduleModule";
+
 export class FileUploadItem {
   constructor(
     public _id: string,
@@ -9,7 +11,8 @@ export class FileUploadItem {
     public type: "image" | "video" | "audio",
     public name: string,
     public delay?: number,
-    public resetKey?: string,
+    public animationName?: ImageAnimation,
+    public resetKey?: string
   ) {}
 }
 

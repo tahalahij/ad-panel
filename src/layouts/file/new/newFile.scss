@@ -65,6 +65,34 @@
             width: 150px;
           }
         }
+
+        .imageBox {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          .inputs {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 16px;
+          }
+          .wrapper {
+            display: flex;
+            flex: 1;
+            justify-content: flex-end;
+
+            img {
+              margin-left: 24px;
+              margin-right: 24px;
+              border: 1px solid gray;
+              width: 160px;
+              height: 160px;
+            }
+          }
+        }
       }
     }
   }
