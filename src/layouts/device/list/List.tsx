@@ -18,7 +18,7 @@ export const List: FC<ListProps> = ({
   newItemRoute,
   columnKey = "device",
 }) => {
-  const { fetchData, list, loading } = useDeviceData();
+  const { list, loading } = useDeviceData();
   const auth = useAuthenticationState();
   return (
     <div className="list">

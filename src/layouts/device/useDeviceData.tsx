@@ -6,50 +6,26 @@ import {
 } from "../../network/requests";
 import { Device } from "../../types/DeviceType";
 import { useAuthenticationState } from "../../context";
+import { useQuery } from "@tanstack/react-query";
 
 export const useDeviceData = () => {
-  const [list, setList] = useState<Device[]>([]);
-  const [loading, setLoading] = useState(false);
   const auth = useAuthenticationState();
+  const queryKey = auth.role === "ADMIN" ? "devices" : "my-devices";
+  const {data, isLoading: loading} = useQuery({
+    queryKey: [queryKey],
+    queryFn: () => queryKey === "devices" ? getDeviceListRequest() : getMyDevicesListRequest(),
+    placeholderData: {payload: [], error: '', httpStatus: 200, success: true},
+  });
 
-  const fetchData = async (page: number = 0) => {
-    setLoading(true);
-    let response =
-      auth.role === "ADMIN"
-        ? await getDeviceListRequest({ page, limit: 100 })
-        : await getMyDevicesListRequest({ page, limit: 100 });
-    console.log(response);
-    if (response.success) {
-      setList(response.payload!);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  return { fetchData, list, loading };
+  return { list: data?.payload || [], loading };
 };
 
-export const useDeviceById = (id?: string) => {
-  const [data, setData] = useState<Device>();
-  const [loading, setLoading] = useState(false);
+export const useDeviceById = (id: string) => {
+  const {data, isLoading: loading} = useQuery({
+    queryKey: ['device', id],
+    queryFn: () => getDeviceByIdRequest(id),
+    // placeholderData: {payload: undefined, error: '', httpStatus: 200, success: true},
+  });
 
-  const fetchData = async () => {
-    if (!id) return;
-    setLoading(true);
-    let response = await getDeviceByIdRequest(id)
-    console.log(response);
-    if (response.success) {
-      setData(response.payload);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  return {data, loading}
-}
+  return { data: data?.payload, loading };
+};

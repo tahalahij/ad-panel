@@ -27,7 +27,7 @@ type NewProps = {
 export const New: FC<NewProps> = ({ title, update = false }) => {
   const navigate = useNavigate();
   const { deviceId } = useParams();
-  const { data: deviceData, loading: deviceLoading } = useDeviceById(deviceId);
+  const { data: deviceData, loading: deviceLoading } = useDeviceById(deviceId!);
   const { userList } = useOperatorData();
   const auth = useAuthenticationState();
   const [loading, setLoading] = useState(false);
@@ -128,8 +128,8 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                   value={formik.values.operatorId}
                   onChange={formik.handleChange}
                 >
-                  {userList?.map((item, index) => (
-                    <MenuItem value={item._id}>{item.name}</MenuItem>
+                  {userList?.map((item) => (
+                    <MenuItem value={item._id} key={item._id}>{item.name}</MenuItem>
                   ))}
                 </Select>
               </FormControl>

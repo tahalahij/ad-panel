@@ -31,10 +31,9 @@ import { useFileData } from "../../file/useFileData";
 // ];
 
 export const useConductorData = () => {
-  const data = useFilesState();
-  useFileData();
+  const {data} = useFileData();
 
-  return data;
+  return data || [];
 };
 
 export const useGetConductor = () => {

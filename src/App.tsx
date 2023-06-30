@@ -5,9 +5,12 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { prefixer } from "stylis";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RootRouter } from "./routes/RootRouter";
 import { ContextStoreProvider } from "./context/ContextStoreProvider";
 import { faIR } from "@mui/material/locale";
+
+export const queryClient = new QueryClient();
 
 const theme = createTheme(
   {
@@ -27,13 +30,15 @@ const cacheRtl = createCache({
 
 function App() {
   return (
-    <CacheProvider value={cacheRtl}>
-      <ContextStoreProvider>
-        <ThemeProvider theme={theme}>
-          <RootRouter />
-        </ThemeProvider>
-      </ContextStoreProvider>
-    </CacheProvider>
+    <QueryClientProvider client={queryClient}>
+      <CacheProvider value={cacheRtl}>
+        <ContextStoreProvider>
+          <ThemeProvider theme={theme}>
+            <RootRouter />
+          </ThemeProvider>
+        </ContextStoreProvider>
+      </CacheProvider>
+    </QueryClientProvider>
   );
 }
 
