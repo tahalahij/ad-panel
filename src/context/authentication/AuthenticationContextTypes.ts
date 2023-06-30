@@ -1,7 +1,9 @@
+import { USER_ROLE } from "../../types/UserTypes";
+
 export type ContextSchema = {
   isLogin: boolean;
   token: string;
-  role: string;
+  role: USER_ROLE;
 };
 
 export declare enum ReducerActionType {

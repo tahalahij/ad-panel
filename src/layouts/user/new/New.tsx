@@ -14,6 +14,7 @@ import {
   updateOperatorRequest,
 } from "../../../network/requests";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
+import { USER_ROLE } from "../../../types/UserTypes";
 
 type NewProps = {
   title: string;
@@ -37,6 +38,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
       password: "",
       ip: ip ?? "",
       mac: map ?? "",
+      role: 'OPERATOR' as USER_ROLE
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -52,9 +54,9 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   };
 
   const submitUser = async () => {
-    const { password, ...requestBody } = formik.values;
+    const { password, role, ...requestBody } = formik.values;
     if (!!password) {
-      Object.assign(requestBody, {password});
+      Object.assign(requestBody, {password, role});
     }
     const response = update
       ? await updateOperatorRequest({ ...requestBody, _id: userId })

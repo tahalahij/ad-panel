@@ -1,4 +1,4 @@
-import { User } from "../../types/UserTypes";
+import { USER_ROLE, User } from "../../types/UserTypes";
 import NetworkHandler, { listParamsReq } from "../NetworkHandler";
 
 type newUserParams = {
@@ -8,6 +8,7 @@ type newUserParams = {
   password?: string;
   ip: string;
   mac: string;
+  role?: USER_ROLE;
 };
 
 export const getOperatorListRequest = async (
@@ -22,16 +23,19 @@ export const addOperatorRequest = async (data: newUserParams) => {
   return NetworkHandler.post<any>(`users/admin`, data);
 };
 
-export const updateOperatorRequest = async ({_id, ...data}: newUserParams) => {
+export const updateOperatorRequest = async ({
+  _id,
+  ...data
+}: newUserParams) => {
   return NetworkHandler.patch<any>(`users/admin/${_id}`, data);
 };
 
-export const updateAdminRequest = async ({_id, ...data}: newUserParams) => {
+export const updateAdminRequest = async ({ _id, ...data }: newUserParams) => {
   return NetworkHandler.patch<any>(`users/admin`, data);
 };
 
 export const resetPasswordAdminRequest = async (password: string) => {
-  return NetworkHandler.patch<any>(`users/admin`, {password});
+  return NetworkHandler.patch<any>(`users/admin`, { password });
 };
 
 export const resetPasswordRequest = async (

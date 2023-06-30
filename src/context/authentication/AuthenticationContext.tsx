@@ -53,6 +53,7 @@ export function AuthenticationContextProvider({
   children,
 }: PropsWithChildren<{}>) {
   const [state, dispatch] = useReducer<Reducer<ContextSchema, ActionType>>(
+    //@ts-ignore
     reducer,
     getInitialState()
   );
@@ -72,6 +73,7 @@ export function AuthenticationContextProvider({
   */
   if (!store.isReady) {
     store.init({
+      //@ts-ignore
       dispatch: (params) => dispatch(params),
       getState: () => ({ ...stateRef.current }),
     });
