@@ -65,10 +65,7 @@ export const RootRouter = () => {
                     <Route
                       index
                       element={
-                        <DeviceList
-                          columnKey="device"
-                          title={"دستگاه ها"}
-                        />
+                        <DeviceList columnKey="device" title={"دستگاه ها"} />
                       }
                     />
                     <Route
@@ -84,10 +81,14 @@ export const RootRouter = () => {
                     <Route path="current" element={<CurrentPlaying />} />
                   </>
                 ) : (
-                  <Route
-                    path="me"
-                    element={<DeviceList columnKey="device" />}
-                  />
+                  <>
+                    <Route
+                      path="me"
+                      element={<DeviceList columnKey="device" />}
+                    />
+                    {/* TODO: duplicate */}
+                    <Route path="current" element={<CurrentPlaying />} /> 
+                  </>
                 )}
               </Route>
               <Route path="conductors">
@@ -102,10 +103,7 @@ export const RootRouter = () => {
                 <Route
                   index
                   element={
-                    <ScheduleList
-                      columnKey="schedule"
-                      title={"برنامه ها"}
-                    />
+                    <ScheduleList columnKey="schedule" title={"برنامه ها"} />
                   }
                 />
                 <Route
@@ -122,9 +120,7 @@ export const RootRouter = () => {
               <Route path="uploads">
                 <Route
                   index
-                  element={
-                    <FileList title="فایل ها" columnKey="file" />
-                  }
+                  element={<FileList title="فایل ها" columnKey="file" />}
                 />
                 <Route path=":fileId" element={<Single />} />
                 <Route

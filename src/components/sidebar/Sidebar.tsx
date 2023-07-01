@@ -66,14 +66,6 @@ export const Sidebar = () => {
               </li>
             </Link>
           )}
-          {authState.role === "ADMIN" && (
-            <Link to={"/devices/current"} style={{ textDecoration: "none" }}>
-              <li>
-                <MdOutlineLiveTv className="icon" />
-                <Typography component={"span"}>برنامه در حال پخش</Typography>
-              </li>
-            </Link>
-          )}
 
           {authState.role === "OPERATOR" && (
             <Link to={"/schedules"} style={{ textDecoration: "none" }}>
@@ -104,6 +96,14 @@ export const Sidebar = () => {
               <li>
                 <MdOutlineDevices className="icon" />
                 <Typography component={"span"}>دستگاه های من</Typography>
+              </li>
+            </Link>
+          )}
+          {(authState.role === "ADMIN" || authState.role === "OPERATOR") && (
+            <Link to={"/devices/current"} style={{ textDecoration: "none" }}>
+              <li>
+                <MdOutlineLiveTv className="icon" />
+                <Typography component={"span"}>برنامه در حال پخش</Typography>
               </li>
             </Link>
           )}

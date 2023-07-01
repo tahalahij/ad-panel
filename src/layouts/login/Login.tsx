@@ -1,5 +1,6 @@
 import "./login.scss";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
@@ -19,6 +20,7 @@ export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const authDispatch = useAuthenticationDispatch();
   const formik = useFormik({
     initialValues: {
@@ -51,6 +53,11 @@ export const Login = () => {
           role: response.payload?.role!,
         },
       });
+      if (response.payload?.role === "OPERATOR") {
+        setTimeout(() => {
+          navigate("/devices/current");
+        }, 200);
+      }
     } else {
       setLoading(false);
       setError(response.error?.toString() ?? "خطا در ورود به برنامه");
@@ -112,7 +119,7 @@ export const Login = () => {
           loading={loading}
           variant="contained"
           onClick={onLoginClick}
-          sx={{width: '100%'}}
+          sx={{ width: "100%" }}
         >
           ورود
         </LoadingButton>

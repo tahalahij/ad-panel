@@ -10,16 +10,21 @@ import moment from "moment-jalaali";
 import { digitsEnToFa } from "@persian-tools/persian-tools";
 
 import { useDeviceData } from "../useDeviceData";
-import { getDeviceCurrentScheduleRequest } from "../../../network/requests";
+import {
+  getDeviceCurrentScheduleByAdminRequest,
+  getDeviceCurrentScheduleByOperatorRequest,
+} from "../../../network/requests";
 import { FileTypeDetector } from "../../../components";
 import { FileUploadItem } from "../../../types/FileTypes";
 import { Schedule, ScheduleTypeEnum } from "../../../types/ScheduleTypes";
 import { getReadableDay } from "../../../utils/Utils";
+import { useAuthenticationState } from "../../../context";
 
 type CurrentPlayingProps = {};
 
 export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
   const { list, loading } = useDeviceData();
+  const auth = useAuthenticationState();
 
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [currentItem, setCurrentItem] = useState<{
@@ -35,7 +40,12 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
   };
 
   const fetchData = async () => {
-    getDeviceCurrentScheduleRequest(list[currentIndex]._id)
+    const getCurrentScheduleRequest =
+      auth.role === "ADMIN"
+        ? getDeviceCurrentScheduleByAdminRequest
+        : getDeviceCurrentScheduleByOperatorRequest;
+
+    getCurrentScheduleRequest(list[currentIndex]._id)
       .then((res) => {
         if (res.success)
           setCurrentItem({

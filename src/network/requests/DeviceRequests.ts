@@ -42,8 +42,14 @@ export const getDeviceByIdRequest = async (deviceId: string) => {
   return NetworkHandler.get<Device>(`devices/${deviceId}`);
 };
 
-export const getDeviceCurrentScheduleRequest = async (deviceId: string) => {
+export const getDeviceCurrentScheduleByAdminRequest = async (deviceId: string) => {
   return NetworkHandler.get<{ file: FileUploadItem; schedule: Schedule }>(
     `devices/admin/schedule/${deviceId}`
+  );
+};
+
+export const getDeviceCurrentScheduleByOperatorRequest = async (deviceId: string) => {
+  return NetworkHandler.get<{ file: FileUploadItem; schedule: Schedule }>(
+    `devices/operator/schedule/${deviceId}`
   );
 };
