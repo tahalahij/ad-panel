@@ -1,5 +1,6 @@
 import "./new.scss";
 import { useState, FC } from "react";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
@@ -9,15 +10,20 @@ import MenuItem from "@mui/material/MenuItem";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   addDeviceRequest,
+  updateDeviceEnableRequest,
   updateDeviceRequest,
 } from "../../../network/requests";
 import { useDeviceById } from "../useDeviceData";
 import { useAuthenticationState } from "../../../context";
 import { useOperatorData } from "../../list/useOperatorData";
+import { SwitchButton } from "../../../components";
+import { userHasAccess } from "../../../utils/UserAccess";
 
 type NewProps = {
   title: string;
@@ -42,6 +48,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
       ip: deviceData?.ip ?? "",
       mac: deviceData?.mac ?? "",
       operatorId: deviceData?.operatorId ?? "",
+      enabled: deviceData?.enabled ?? true,
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -50,9 +57,12 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
 
   const submitDevice = async () => {
     const { ...requestBody } = formik.values;
-    const response = update
-      ? await updateDeviceRequest({ ...requestBody, _id: deviceId })
-      : await addDeviceRequest(formik.values);
+    const response =
+      auth.role === "CONTROLLER"
+        ? await updateDeviceEnableRequest(deviceId!, formik.values.enabled)
+        : update
+        ? await updateDeviceRequest({ ...requestBody, _id: deviceId })
+        : await addDeviceRequest(formik.values);
     if (response.success) {
       setMessage({ title: "با موفقیت اضافه شد", type: "success" });
       setTimeout(() => {
@@ -106,6 +116,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
             </div> */}
             <div className="formInput">
               <TextField
+                disabled={auth.role === "CONTROLLER"}
                 error={false}
                 id="name"
                 name="name"
@@ -121,6 +132,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
               <FormControl sx={{ width: "25ch" }}>
                 <InputLabel id="operator-id-label">نام اپراتور</InputLabel>
                 <Select
+                  disabled={auth.role === "CONTROLLER"}
                   labelId="operator-id-label"
                   id="operatorId"
                   name="operatorId"
@@ -129,7 +141,9 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                   onChange={formik.handleChange}
                 >
                   {userList?.map((item) => (
-                    <MenuItem value={item._id} key={item._id}>{item.name}</MenuItem>
+                    <MenuItem value={item._id} key={item._id}>
+                      {item.name}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -147,6 +161,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
             </div> */}
             <div className="formInput">
               <TextField
+                disabled={auth.role === "CONTROLLER"}
                 error={false}
                 id="ip"
                 name="ip"
@@ -160,6 +175,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
             </div>
             <div className="formInput">
               <TextField
+                disabled={auth.role === "CONTROLLER"}
                 error={false}
                 id="mac"
                 name="mac"
@@ -171,21 +187,29 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 sx={{ width: "25ch" }}
               />
             </div>
-            {/* <div className="formInput">
-              <TextField
-                error={false}
-                id="outlined-error-helper-text"
-                label="آدرس"
-                defaultValue=""
-                helperText={""}
-                placeholder="آدرس را وارد کنید"
-                sx={{ width: "25ch" }}
-                multiline={true}
-                // fullWidth
-              />
-            </div> */}
+            <div className="formInput">
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Typography>غیرفعال</Typography>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      disabled={auth.role === "OPERATOR"}
+                      // inputProps={{ "aria-label": "ant design" }}
+                      checked={formik.values.enabled}
+                      onChange={formik.handleChange}
+                    />
+                  }
+                  name="enabled"
+                  id="enabled"
+                  label=""
+                />
+
+                <Typography>فعال</Typography>
+              </Stack>
+            </div>
+
             {/* <div className="formInput"></div> */}
-            {auth.role === "ADMIN" && (
+            {userHasAccess(auth.role, ["ADMIN", "CONTROLLER"]) && (
               <div className="formInput">
                 <LoadingButton
                   variant="contained"

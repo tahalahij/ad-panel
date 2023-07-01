@@ -53,3 +53,10 @@ export const getDeviceCurrentScheduleByOperatorRequest = async (deviceId: string
     `devices/operator/schedule/${deviceId}`
   );
 };
+
+export const updateDeviceEnableRequest = async (deviceId: string, enabled: boolean) => {
+  return NetworkHandler.patch<any>(
+    `devices/controller/${deviceId}`,
+    {enabled}
+  );
+};

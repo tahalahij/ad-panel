@@ -147,13 +147,18 @@ export const deviceColumns: GridColDef[] = [
     headerName: "آدرس IP",
     width: 190,
     sortable: false,
-    valueFormatter: (params) => params.value.name,
   },
   {
     field: "mac",
     headerName: "آدرس mac",
     width: 190,
     sortable: false,
-    valueFormatter: (params) => params.value.name,
+  },
+  {
+    field: "enabled",
+    headerName: "وضعیت",
+    width: 80,
+    sortable: true,
+    valueFormatter: (params) => params.value ? 'فعال' : 'غیرفعال',
   },
 ];

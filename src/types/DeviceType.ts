@@ -8,5 +8,6 @@ export class Device {
       public ip: string,
       public mac: string,
       public operatorId: string,
+      public enabled: boolean,
     ) {}
   }

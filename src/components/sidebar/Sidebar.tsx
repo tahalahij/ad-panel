@@ -18,6 +18,7 @@ import {
   MdOutlineBarChart,
   MdOutlineSettings,
 } from "react-icons/md";
+import { userHasAccess } from "../../utils/UserAccess";
 
 export const Sidebar = () => {
   const authDispatch = useAuthenticationDispatch();
@@ -58,7 +59,7 @@ export const Sidebar = () => {
               </li>
             </Link>
           )}
-          {authState.role === "ADMIN" && (
+          {userHasAccess(authState.role, ["ADMIN", "CONTROLLER"]) && (
             <Link to={"/devices"} style={{ textDecoration: "none" }}>
               <li>
                 <MdOutlineDevices className="icon" />
@@ -99,7 +100,7 @@ export const Sidebar = () => {
               </li>
             </Link>
           )}
-          {(authState.role === "ADMIN" || authState.role === "OPERATOR") && (
+          {userHasAccess(authState.role, ["ADMIN", "OPERATOR"]) && (
             <Link to={"/devices/current"} style={{ textDecoration: "none" }}>
               <li>
                 <MdOutlineLiveTv className="icon" />

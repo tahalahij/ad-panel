@@ -60,7 +60,14 @@ export const RootRouter = () => {
                 />
               </Route>
               <Route path="devices">
-                {authState.role === "ADMIN" ? (
+                {authState.role === "CONTROLLER" ? (
+                  <Route
+                    index
+                    element={
+                      <DeviceList columnKey="device" title={"دستگاه ها"} />
+                    }
+                  />
+                ) : authState.role === "ADMIN" ? (
                   <>
                     <Route
                       index
@@ -87,7 +94,7 @@ export const RootRouter = () => {
                       element={<DeviceList columnKey="device" />}
                     />
                     {/* TODO: duplicate */}
-                    <Route path="current" element={<CurrentPlaying />} /> 
+                    <Route path="current" element={<CurrentPlaying />} />
                   </>
                 )}
               </Route>
