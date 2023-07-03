@@ -17,6 +17,7 @@ import {
   MdOutlineLiveTv,
   MdOutlineBarChart,
   MdOutlineSettings,
+  MdOutlineMosque,
 } from "react-icons/md";
 import { userHasAccess } from "../../utils/UserAccess";
 
@@ -105,6 +106,14 @@ export const Sidebar = () => {
               <li>
                 <MdOutlineLiveTv className="icon" />
                 <Typography component={"span"}>برنامه در حال پخش</Typography>
+              </li>
+            </Link>
+          )}
+          {userHasAccess(authState.role, ["ADMIN"]) && (
+            <Link to={"/uploads/azan"} style={{ textDecoration: "none" }}>
+              <li>
+                <MdOutlineMosque className="icon" />
+                <Typography component={"span"}>اذان</Typography>
               </li>
             </Link>
           )}

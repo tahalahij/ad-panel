@@ -14,6 +14,14 @@ export const uploadFileRequest = async (file: FormData) => {
   return NetworkHandler.post<any>(`files/upload`, file);
 };
 
+export const uploadAzanMediaFileRequest = async (file: FormData) => {
+  return NetworkHandler.post<any>(`files/admin/azan-file`, file);
+};
+
+export const uploadAzanTimeStampsRequest = async (file: FormData) => {
+  return NetworkHandler.post<any>(`files/admin/azan-time-xlsx`, file);
+};
+
 export const deleteFileRequest = async (id: string) => {
   return NetworkHandler.delete<any>(`files/${id}`, {});
 };

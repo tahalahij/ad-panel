@@ -18,6 +18,7 @@ import {
 import { List as ScheduleList, New as NewSchedule } from "../layouts/schedule";
 import { LoginBackground } from "../layouts/settings";
 import { DeviceStatistics } from "../layouts/statistics/devices/DevicesStatistics";
+import {FileUpload as UploadAzan} from "../layouts/azan"
 
 export const RootRouter = () => {
   const authState = useAuthenticationState();
@@ -133,6 +134,10 @@ export const RootRouter = () => {
                 <Route
                   path="new"
                   element={<NewFileUpload title={"افزودن فایل جدید"} />}
+                />
+                <Route
+                  path="azan"
+                  element={<UploadAzan title={"افزودن فایل جدید"} />}
                 />
               </Route>
               <Route path="settings">
