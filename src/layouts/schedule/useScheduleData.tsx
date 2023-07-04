@@ -1,14 +1,26 @@
 import { useEffect, useState } from "react";
-import { getScheduleByIdRequest, getSchedulesRequest } from "../../network/requests";
+import {
+  getScheduleByIdRequest,
+  getSchedulesByAdminRequest,
+  getSchedulesByControllerRequest,
+  getSchedulesByOperatorRequest,
+} from "../../network/requests";
 import { Schedule } from "../../types/ScheduleTypes";
+import { useAuthenticationState } from "../../context";
 
 export const useScheduleData = () => {
   const [list, setList] = useState<Schedule[]>([]);
   const [loading, setLoading] = useState(false);
+  const auth = useAuthenticationState();
 
   const fetchData = async (page: number = 0) => {
     setLoading(true);
-    let response = await getSchedulesRequest({ limit: 100, page });
+    let response =
+      auth.role === "OPERATOR"
+        ? await getSchedulesByOperatorRequest({ limit: 100, page })
+        : auth.role === "ADMIN"
+        ? await getSchedulesByAdminRequest({ limit: 100, page })
+        : await getSchedulesByControllerRequest({ limit: 100, page });
     if (response.success) {
       setList(response.payload!);
     }
@@ -39,7 +51,7 @@ export const useScheduleById = (id?: string) => {
   const fetchData = async () => {
     if (!id) return;
     setLoading(true);
-    const response = await getScheduleByIdRequest(id)
+    const response = await getScheduleByIdRequest(id);
     if (response.success) {
       setData(response.payload);
     }
