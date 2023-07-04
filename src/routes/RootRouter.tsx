@@ -18,7 +18,7 @@ import {
 import { List as ScheduleList, New as NewSchedule } from "../layouts/schedule";
 import { LoginBackground } from "../layouts/settings";
 import { DeviceStatistics } from "../layouts/statistics/devices/DevicesStatistics";
-import {FileUpload as UploadAzan} from "../layouts/azan"
+import { FileUpload as UploadAzan } from "../layouts/azan";
 
 export const RootRouter = () => {
   const authState = useAuthenticationState();
@@ -62,12 +62,21 @@ export const RootRouter = () => {
               </Route>
               <Route path="devices">
                 {authState.role === "CONTROLLER" ? (
-                  <Route
-                    index
-                    element={
-                      <DeviceList columnKey="device" title={"دستگاه ها"} />
-                    }
-                  />
+                  <>
+                    <Route
+                      index
+                      element={
+                        <DeviceList columnKey="device" title={"دستگاه ها"} />
+                      }
+                    />
+                    <Route
+                      path=":deviceId"
+                      element={
+                        <NewDevice title={"ویرایش دستگاه"} update={true} />
+                      }
+                    />
+                    <Route path="current" element={<CurrentPlaying />} />
+                  </>
                 ) : authState.role === "ADMIN" ? (
                   <>
                     <Route

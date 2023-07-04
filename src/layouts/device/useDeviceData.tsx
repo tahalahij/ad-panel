@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useDeviceData = () => {
   const auth = useAuthenticationState();
-  const queryKey = auth.role === "ADMIN" ? "devices" : "my-devices";
+  const queryKey = auth.role === "OPERATOR" ? "my-devices" : "devices";
   const {data, isLoading: loading} = useQuery({
     queryKey: [queryKey],
     queryFn: () => queryKey === "devices" ? getDeviceListRequest() : getMyDevicesListRequest(),

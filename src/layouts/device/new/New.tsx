@@ -64,7 +64,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
         ? await updateDeviceRequest({ ...requestBody, _id: deviceId })
         : await addDeviceRequest(formik.values);
     if (response.success) {
-      setMessage({ title: "با موفقیت اضافه شد", type: "success" });
+      setMessage({ title: auth.role === "CONTROLLER" ? "با موفقیت تغییر کرد" : "با موفقیت اضافه شد", type: "success" });
       setTimeout(() => {
         navigate(-1);
       }, 2000);

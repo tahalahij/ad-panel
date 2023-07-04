@@ -33,7 +33,7 @@ export const List: FC<ListProps> = ({
       {loading ? <CircularProgress /> : null}
       <DataTable
         columnKey={"device"}
-        actionVisible={auth.role === "ADMIN"}
+        actionVisible={auth.role !== "OPERATOR"}
         data={list}
       />
     </div>
