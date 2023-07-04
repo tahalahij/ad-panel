@@ -131,16 +131,28 @@ export const Sidebar = () => {
               </Link>
             </>
           )}
-          {authState.role === "ADMIN" && (
+          {userHasAccess(authState.role, ["ADMIN"]) && (
             <>
               <Typography className="title" component={"p"}>
                 تنظیمات
               </Typography>
 
-              <Link to={"/settings"} style={{ textDecoration: "none" }}>
+              <Link
+                to={"/settings/loginBackground"}
+                style={{ textDecoration: "none" }}
+              >
                 <li>
                   <MdOutlineSettings className="icon" />
                   <Typography component={"span"}>تصویر صفحه ورود</Typography>
+                </li>
+              </Link>
+              <Link
+                to={"/settings/fileLimits"}
+                style={{ textDecoration: "none" }}
+              >
+                <li>
+                  <MdOutlineSettings className="icon" />
+                  <Typography component={"span"}>محدودیت فایل ها</Typography>
                 </li>
               </Link>
             </>

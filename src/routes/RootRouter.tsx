@@ -16,9 +16,10 @@ import {
   CurrentPlaying,
 } from "../layouts/device";
 import { List as ScheduleList, New as NewSchedule } from "../layouts/schedule";
-import { LoginBackground } from "../layouts/settings";
+import { FileLimits, LoginBackground } from "../layouts/settings";
 import { DeviceStatistics } from "../layouts/statistics/devices/DevicesStatistics";
 import { FileUpload as UploadAzan } from "../layouts/azan";
+import { userHasAccess } from "../utils/UserAccess";
 
 export const RootRouter = () => {
   const authState = useAuthenticationState();
@@ -149,15 +150,25 @@ export const RootRouter = () => {
                   element={<UploadAzan title={"افزودن فایل جدید"} />}
                 />
               </Route>
-              <Route path="settings">
-                <Route
-                  index
-                  element={<LoginBackground title={"تغییر تصویر صفحه ورود"} />}
-                />
-              </Route>
-              <Route path="statistics">
-                <Route index element={<DeviceStatistics />} />
-              </Route>
+              {userHasAccess(authState.role, ["ADMIN"]) && (
+                <>
+                  <Route path="settings">
+                    <Route
+                      path="loginBackground"
+                      element={
+                        <LoginBackground title={"تغییر تصویر صفحه ورود"} />
+                      }
+                    />
+                    <Route
+                      path="fileLimits"
+                      element={<FileLimits title={"تنظیمات فایل ها"} />}
+                    />
+                  </Route>
+                  <Route path="statistics">
+                    <Route index element={<DeviceStatistics />} />
+                  </Route>
+                </>
+              )}
             </Route>
             <Route path="*" element={<PageNotFound />} />
           </Routes>

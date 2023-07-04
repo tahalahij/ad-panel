@@ -5,3 +5,4 @@ export * from "./DeviceRequests";
 export * from "./ConductorRequests";
 export * from './ScheduleRequests';
 export * from './StatisticsRequests';
+export * from './SettingsRequests';
