@@ -98,7 +98,7 @@ export const SortingList = forwardRef<SortListMethods, SortingListProps>(
             <SortableList.Item id={item.id!}>
               <div className="item">
                 <div className="part id">{item.id}</div>
-                <div className="part">
+                <div className="part thumbnail">
                   <div className="thumbnail">
                     {getFileIcon(item.type, item.path)}
                     {/* <img src="" alt="thumbnail" className="img" /> */}
@@ -107,7 +107,7 @@ export const SortingList = forwardRef<SortListMethods, SortingListProps>(
                 <div className="part">
                   <Typography>
                     <a href={item.path} target="_blank" rel="noreferrer">
-                      {item.path}
+                      {item.originalName}
                     </a>
                   </Typography>
                 </div>

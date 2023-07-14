@@ -7,10 +7,19 @@
     width: 100%;
 
     .part {
-      flex: 3;
-
       &.id {
-        flex: 1
+        width: 50px;
+      }
+
+      &.thumbnail {
+        width: 80px;
+      }
+
+      &.path {
+        flex: 1;
+        // overflow: hidden;
+        // white-space: nowrap;
+        // text-overflow: ellipsis;
       }
     }
 
