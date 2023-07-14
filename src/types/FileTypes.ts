@@ -10,6 +10,7 @@ export class FileUploadItem {
     public ownerId: string,
     public type: "image" | "video" | "audio",
     public name: string,
+    public originalName: string,
     public delay?: number,
     public animationName?: ImageAnimation,
     public resetKey?: string

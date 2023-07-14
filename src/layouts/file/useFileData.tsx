@@ -2,22 +2,30 @@ import { useEffect, useState } from "react";
 import { useFilesDispatch, useFilesLoadingDispatch } from "../../context/file";
 import {
   deleteFileRequest,
-  getFilesListRequest,
+  getFilesListByAdminRequest,
+  getFilesListByOperatorRequest,
 } from "../../network/requests/FileRequests";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient } from "../../App";
 import { FileUploadItem } from "../../types/FileTypes";
+import { useAuthenticationState } from "../../context";
 
 export const useFileData = () => {
+  const auth = useAuthenticationState();
   const [message, setMessage] = useState<{
     title: string;
     type?: "success" | "error";
   }>({ title: "" });
 
+  const queryKey = auth.role === "OPERATOR" ? "my-files" : "files";
   const { data, isLoading: loading } = useQuery({
-    queryKey: ["files"],
+    queryKey: [queryKey],
     queryFn: async () => {
-      const response = await getFilesListRequest();
+      const apiRequest =
+        queryKey === "my-files"
+          ? getFilesListByOperatorRequest
+          : getFilesListByAdminRequest;
+      const response = await apiRequest();
       if (response.success) {
         return response.payload;
       } else throw response.error;
@@ -43,8 +51,8 @@ export const useFileData = () => {
   });
 
   const removeItem = async (_id: string) => {
-    mutate(_id)
+    mutate(_id);
   };
 
-  return { data, removeItem, message, setMessage };
+  return { data, removeItem, message, setMessage, loading };
 };

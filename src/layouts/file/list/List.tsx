@@ -20,9 +20,7 @@ export const FileList: FC<ListProps> = ({
   singleItemRoute,
   columnKey = "user",
 }) => {
-  const { removeItem, message, setMessage } = useFileData();
-  const loading = useFilesLoadingState();
-  const data = useFilesState();
+  const { removeItem, message, setMessage, data, loading } = useFileData();
 
   const onDeleteClick = (_id: string) => {
     removeItem(_id);

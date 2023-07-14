@@ -2,7 +2,15 @@
 import { FileUploadItem, ScheduleConductor } from "../../types/FileTypes";
 import NetworkHandler, { listParamsReq } from "../NetworkHandler";
 
-export const getFilesListRequest = async (
+export const getFilesListByOperatorRequest = async (
+  params: listParamsReq = { page: 0, limit: 100 }
+) => {
+  return NetworkHandler.get<FileUploadItem[]>(`files/operator`, {
+    params,
+  });
+};
+
+export const getFilesListByAdminRequest = async (
   params: listParamsReq = { page: 0, limit: 100 }
 ) => {
   return NetworkHandler.get<FileUploadItem[]>(`files`, {
