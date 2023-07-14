@@ -69,7 +69,7 @@ export const Sidebar = () => {
             </Link>
           )}
 
-          {authState.role === "OPERATOR" && (
+          {userHasAccess(authState.role, ["ADMIN", "OPERATOR"]) && (
             <Link to={"/schedules"} style={{ textDecoration: "none" }}>
               <li>
                 <MdOutlineUpdate className="icon" />
@@ -77,7 +77,7 @@ export const Sidebar = () => {
               </li>
             </Link>
           )}
-          {authState.role === "OPERATOR" && (
+          {userHasAccess(authState.role, ["ADMIN", "OPERATOR"]) && (
             <Link to={"/conductors"} style={{ textDecoration: "none" }}>
               <li>
                 <MdOutlineAutoAwesomeMotion className="icon" />
@@ -85,7 +85,7 @@ export const Sidebar = () => {
               </li>
             </Link>
           )}
-          {authState.role === "OPERATOR" && (
+          {userHasAccess(authState.role, ["ADMIN", "OPERATOR"]) && (
             <Link to={"/uploads"} style={{ textDecoration: "none" }}>
               <li>
                 <MdOutlineCloud className="icon" />
