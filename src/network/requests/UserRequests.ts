@@ -19,6 +19,14 @@ export const getOperatorListRequest = async (
   });
 };
 
+export const getControllerListRequest = async (
+  params: listParamsReq = { page: 0, limit: 100 }
+) => {
+  return NetworkHandler.get<User[]>(`users/admin/controllers`, {
+    params,
+  });
+};
+
 export const addOperatorRequest = async (data: newUserParams) => {
   return NetworkHandler.post<any>(`users/admin`, data);
 };

@@ -53,10 +53,18 @@ export const Sidebar = () => {
             لیست ها
           </Typography>
           {authState.role === "ADMIN" && (
-            <Link to={"/users"} style={{ textDecoration: "none" }}>
+            <Link to={"/users/operator"} style={{ textDecoration: "none" }}>
               <li>
                 <MdOutlineGroup className="icon" />
                 <Typography component={"span"}>اپراتور ها</Typography>
+              </li>
+            </Link>
+          )}
+          {authState.role === "ADMIN" && (
+            <Link to={"/users/controller"} style={{ textDecoration: "none" }}>
+              <li>
+                <MdOutlineGroup className="icon" />
+                <Typography component={"span"}>کنترلر ها</Typography>
               </li>
             </Link>
           )}

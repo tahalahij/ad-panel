@@ -40,26 +40,25 @@ export const RootRouter = () => {
               {/* <Route path="login" element={<Login />} /> */}
               <Route path="users">
                 <Route
-                  index
-                  element={
-                    <List
-                      newItemRoute="/users/new"
-                      title="اپراتورها"
-                      columnKey="user"
-                    />
-                  }
-                />
-                <Route
                   path="resetPassword"
                   element={<ResetPassword title={"تغییر رمز عبور"} />}
                 />
                 <Route
-                  path=":userId/:username/:name/:ip/:map"
-                  element={<NewUser title={"ویرایش اپراتور"} update={true} />}
+                  path=":type/:userId/:username/:name/:ip/:map"
+                  element={<NewUser update={true} />}
                 />
                 <Route
-                  path="new"
-                  element={<NewUser title={"افزودن اپراتور جدید"} />}
+                  path="new/:type"
+                  element={<NewUser />}
+                />
+                <Route
+                  path=":type"
+                  element={
+                    <List
+                      newItemRoute="/users/new"
+                      columnKey="user"
+                    />
+                  }
                 />
               </Route>
               <Route path="devices">

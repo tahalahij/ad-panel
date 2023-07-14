@@ -34,7 +34,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   const navigate = useNavigate();
   const { deviceId } = useParams();
   const { data: deviceData, loading: deviceLoading } = useDeviceById(deviceId!);
-  const { userList } = useOperatorData();
+  const { userList } = useOperatorData('OPERATOR');
   const auth = useAuthenticationState();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{

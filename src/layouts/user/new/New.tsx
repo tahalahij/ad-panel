@@ -17,15 +17,14 @@ import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { USER_ROLE } from "../../../types/UserTypes";
 
 type NewProps = {
-  title: string;
+  title?: string;
   update?: boolean;
 };
 
 export const New: FC<NewProps> = ({ title, update = false }) => {
   const navigate = useNavigate();
-  const { userId, username, name, ip, map } = useParams();
+  const { userId, username, name, ip, map, type } = useParams();
   const [showPassword, setShowPassword] = useState(false);
-  const [file, setFile] = useState<Blob | MediaSource>();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{
     title: string;
@@ -38,7 +37,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
       password: "",
       ip: ip ?? "",
       mac: map ?? "",
-      role: 'OPERATOR' as USER_ROLE
+      role: type === "operator" ? "OPERATOR" : ("CONTROLLER" as USER_ROLE),
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -56,7 +55,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   const submitUser = async () => {
     const { password, role, ...requestBody } = formik.values;
     if (!!password) {
-      Object.assign(requestBody, {password, role});
+      Object.assign(requestBody, { password, role });
     }
     const response = update
       ? await updateOperatorRequest({ ...requestBody, _id: userId })
@@ -68,7 +67,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
       }, 2000);
     } else {
       setMessage({
-        title:  response.error?.toString()!,
+        title: response.error?.toString()!,
         type: "error",
       });
     }
@@ -79,7 +78,9 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
     <div className="newUser">
       <div className="top">
         <Typography variant="h5" className="title">
-          {title}
+          {`${update ? "ویرایش" : "افزودن"} ${
+            type === "operator" ? "اپراتور" : "کنترلر"
+          } ${update ? "" : "جدید"}`}
         </Typography>
       </div>
       <div className="bottom">
@@ -130,11 +131,13 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 error={false}
                 id="name"
                 name="name"
-                label="نام اپراتور"
+                label={`نام ${type === "operator" ? "اپراتور" : "کنترلر"}`}
                 value={formik.values.name}
                 onChange={formik.handleChange}
                 helperText={""}
-                placeholder="نام اپراتور را وارد کنید"
+                placeholder={`نام ${
+                  type === "operator" ? "اپراتور" : "کنترلر"
+                } را وارد کنید`}
                 sx={{ width: "25ch" }}
               />
             </div>
