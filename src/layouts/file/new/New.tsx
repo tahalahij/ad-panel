@@ -52,7 +52,7 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
 
     const response = await uploadFileRequest(data);
     if (response.success) {
-      setMessage({ title: "با موفقیت بارگزاری شد", type: "success" });
+      setMessage({ title: "با موفقیت باگذاری شد", type: "success" });
       setTimeout(() => {
         navigate(-1);
       }, 2000);
