@@ -9,7 +9,10 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import { uploadAzanMediaFileRequest, uploadAzanTimeStampsRequest } from "../../../network/requests/FileRequests";
+import {
+  uploadAzanMediaFileRequest,
+  uploadAzanTimeStampsRequest,
+} from "../../../network/requests/FileRequests";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineCloudUpload } from "react-icons/md";
 import { Animator, ImageAnimation } from "../../../components/scheduleModule";
@@ -19,7 +22,7 @@ type UploadProps = {
 };
 
 export const FileUpload: FC<UploadProps> = ({ title }) => {
-  const [fileTimeStamp, setFileTimeStamp] = useState<File>();
+  const [fileTimeStamp, setFileTimeStamp] = useState<FileList | null>(null);
   const [fileMedia, setFileMedia] = useState<File>();
   // const [delay, setDelay] = useState("");
   // const [animation, setAnimation] = useState<ImageAnimation>("none");
@@ -43,7 +46,14 @@ export const FileUpload: FC<UploadProps> = ({ title }) => {
     setLoading(true);
     const data = new FormData();
     const uploadFile = fileType === "media" ? fileMedia : fileTimeStamp;
-    data.append(`file`, uploadFile!);
+    if (uploadFile instanceof FileList) {
+      for (let i = 0; i < uploadFile.length; i++) {
+        const file = uploadFile[i];
+        data.append("file", file, file.name);
+      }
+    } else {
+      data.append(`file`, uploadFile!);
+    }
 
     const response =
       fileType === "media"
@@ -87,8 +97,13 @@ export const FileUpload: FC<UploadProps> = ({ title }) => {
             <div className="formInput fileInput">
               <label htmlFor="fileXLSX" className="fileInput">
                 {!!fileTimeStamp && (
-                  <Typography component={"span"}>
-                    {fileTimeStamp.name}
+                  <Typography component={"span"} style={{ width: "70%" }}>
+                    {Array(fileTimeStamp.length)
+                      .fill(0)
+                      .map(
+                        (_, index) => "‏" + fileTimeStamp[index]?.name + "‏"
+                      )
+                      .join("  ")}
                   </Typography>
                 )}
 
@@ -102,9 +117,10 @@ export const FileUpload: FC<UploadProps> = ({ title }) => {
                 accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .csv"
                 id="fileXLSX"
                 style={{ display: "none" }}
+                multiple
                 onChange={(e) => {
                   if (e.target.files !== null) {
-                    setFileTimeStamp(e.target.files[0]);
+                    setFileTimeStamp(e.target.files);
                   }
                 }}
               />
@@ -125,7 +141,7 @@ export const FileUpload: FC<UploadProps> = ({ title }) => {
             <div className="formInput fileInput">
               <label htmlFor="fileMedia" className="fileInput">
                 {!!fileMedia && (
-                  <Typography component={"span"}>{fileMedia.name}</Typography>
+                  <Typography component={"span"}>{"‏" + fileMedia.name + "‏"}</Typography>
                 )}
 
                 <div className="placeholder">
