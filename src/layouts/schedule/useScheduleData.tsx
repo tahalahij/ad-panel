@@ -8,7 +8,7 @@ import {
 import { Schedule } from "../../types/ScheduleTypes";
 import { useAuthenticationState } from "../../context";
 
-export const useScheduleData = () => {
+export const useScheduleData = (operatorId?: string) => {
   const [list, setList] = useState<Schedule[]>([]);
   const [loading, setLoading] = useState(false);
   const auth = useAuthenticationState();
@@ -19,8 +19,16 @@ export const useScheduleData = () => {
       auth.role === "OPERATOR"
         ? await getSchedulesByOperatorRequest({ limit: 100, page })
         : auth.role === "ADMIN"
-        ? await getSchedulesByAdminRequest({ limit: 100, page })
-        : await getSchedulesByControllerRequest({ limit: 100, page });
+        ? await getSchedulesByAdminRequest({
+            limit: 100,
+            page,
+            operator: operatorId!,
+          })
+        : await getSchedulesByControllerRequest({
+            limit: 100,
+            page,
+            operator: operatorId!,
+          });
     if (response.success) {
       setList(response.payload!);
     }
@@ -39,7 +47,8 @@ export const useScheduleData = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [operatorId]);
 
   return { fetchData, list, loading, removeSchedule };
 };

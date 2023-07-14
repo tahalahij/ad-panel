@@ -1,6 +1,8 @@
 import { Schedule, SchedulePure } from "../../types/ScheduleTypes";
 import NetworkHandler, { listParamsReq } from "../NetworkHandler";
 
+type paramsWithList = { operator: string } & listParamsReq;
+
 export const getSchedulesByOperatorRequest = async (
   params: listParamsReq = { page: 0, limit: 100 }
 ) => {
@@ -10,18 +12,18 @@ export const getSchedulesByOperatorRequest = async (
 };
 
 export const getSchedulesByAdminRequest = async (
-  params: listParamsReq = { page: 0, limit: 100 }
+  params: paramsWithList
 ) => {
   return NetworkHandler.get<Schedule[]>(`schedule/admin`, {
-    params,
+    params: {page: 0, limit: 100, ...params},
   });
 };
 
 export const getSchedulesByControllerRequest = async (
-  params: listParamsReq = { page: 0, limit: 100 }
+  params: paramsWithList
 ) => {
   return NetworkHandler.get<Schedule[]>(`schedule/controller`, {
-    params,
+    params: {page: 0, limit: 100, ...params},
   });
 };
 
