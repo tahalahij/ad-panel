@@ -22,6 +22,7 @@ import type {
 } from "./types";
 import { store } from "../context/authentication";
 import { generateReadableError } from "../utils/Utils";
+import { logoutUnAuthorized } from "./useLogout";
 
 function buildUrl(parameters: object) {
   let qs = "";
@@ -105,7 +106,7 @@ async function requestRunner<T>(
     const data = await response.json();
     const { ok } = response;
     if (status === 401 || status === 403) {
-      store.dispatch({ type: "LOGOUT" });
+      logoutUnAuthorized()
     }
     return {
       success: ok,

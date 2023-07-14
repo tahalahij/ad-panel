@@ -20,6 +20,7 @@ import { FileLimits, LoginBackground } from "../layouts/settings";
 import { DeviceStatistics } from "../layouts/statistics/devices/DevicesStatistics";
 import { FileUpload as UploadAzan } from "../layouts/azan";
 import { userHasAccess } from "../utils/UserAccess";
+import { WithLogout } from "../network/useLogout";
 
 export const RootRouter = () => {
   const authState = useAuthenticationState();
@@ -28,8 +29,8 @@ export const RootRouter = () => {
     <BrowserRouter>
       {!authState.isLogin ? (
         <Routes>
-          <Route index element={<Login />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route path="*" index element={<Login />} />
+          {/* <Route path="*" element={<PageNotFound />} /> */}
         </Routes>
       ) : (
         <MainContainer>
@@ -102,7 +103,9 @@ export const RootRouter = () => {
                   <>
                     <Route
                       path="me"
-                      element={<DeviceList columnKey="device" title="دستگاه های من"/>}
+                      element={
+                        <DeviceList columnKey="device" title="دستگاه های من" />
+                      }
                     />
                     {/* TODO: duplicate */}
                     <Route path="current" element={<CurrentPlaying />} />
@@ -174,6 +177,7 @@ export const RootRouter = () => {
           </Routes>
         </MainContainer>
       )}
+      <WithLogout />
     </BrowserRouter>
   );
 };
