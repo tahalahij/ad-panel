@@ -102,7 +102,7 @@ export const RootRouter = () => {
                   <>
                     <Route
                       path="me"
-                      element={<DeviceList columnKey="device" />}
+                      element={<DeviceList columnKey="device" title="دستگاه های من"/>}
                     />
                     {/* TODO: duplicate */}
                     <Route path="current" element={<CurrentPlaying />} />
