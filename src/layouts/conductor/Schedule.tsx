@@ -15,10 +15,12 @@ import {
   addConductorRequest,
   updateConductorRequest,
   deleteConductorRequest,
+  addConductorByAdminRequest,
 } from "../../network/requests";
 // import { validateIPAddress } from "../../utils/Validator";
 import { FileUploadItem } from "../../types/FileTypes";
 import { MdAdd, MdReorder } from "react-icons/md";
+import { useAuthenticationState } from "../../context";
 
 type ConductorProps = {};
 
@@ -32,6 +34,7 @@ export const Conductor: FC<ConductorProps> = () => {
     addOperatorConductor,
     removeOperatorConductor,
   } = useGetConductor(operatorId);
+  const authState = useAuthenticationState();
 
   const [isOrdering, setOrdering] = useState(false);
   const [conductorName, setConductorName] = useState("");
@@ -65,13 +68,17 @@ export const Conductor: FC<ConductorProps> = () => {
     const tempArray = sortListRef.current
       ?.getOrderedList()
       .map((item) => item._id);
+    const createConductor =
+      authState.role === "OPERATOR"
+        ? addConductorRequest
+        : addConductorByAdminRequest;
     let response = isPatching
       ? await updateConductorRequest(
           patchingId.current,
           conductorName,
           tempArray!
         )
-      : await addConductorRequest(conductorName, tempArray!);
+      : await createConductor(conductorName, tempArray!, operatorId);
     if (response.success) {
       setMessage({ title: "با موفقیت ثبت شد", type: "success" });
       setTimeout(() => {

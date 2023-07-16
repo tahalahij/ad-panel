@@ -6,11 +6,24 @@ import NetworkHandler, {
 
 export const addConductorRequest = async (
   name: string,
-  conductor: string[]
+  conductor: string[],
+  operatorId?: string,
 ) => {
   return NetworkHandler.post<ScheduleConductor>(`conductors`, {
     conductor,
     name,
+  });
+};
+
+export const addConductorByAdminRequest = async (
+  name: string,
+  conductor: string[],
+  operatorId?: string,
+) => {
+  return NetworkHandler.post<ScheduleConductor>(`conductors/admin`, {
+    conductor,
+    name,
+    operatorId
   });
 };
 
