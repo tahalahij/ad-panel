@@ -16,6 +16,7 @@ import {
   updateConductorRequest,
   deleteConductorRequest,
   addConductorByAdminRequest,
+  deleteConductorByAdminRequest,
 } from "../../network/requests";
 // import { validateIPAddress } from "../../utils/Validator";
 import { FileUploadItem } from "../../types/FileTypes";
@@ -51,7 +52,7 @@ export const Conductor: FC<ConductorProps> = () => {
 
   useEffect(() => {
     setOrderList(conductorList);
-  }, [conductorList])
+  }, [conductorList]);
 
   const submitSort = async () => {
     // if (!validateIPAddress(ip)) {
@@ -106,13 +107,16 @@ export const Conductor: FC<ConductorProps> = () => {
   const onDeleteClick = async (_id: string) => {
     try {
       setLoading(true);
-      const response = await deleteConductorRequest(_id);
+      const response =
+        authState.role === "OPERATOR"
+          ? await deleteConductorRequest(_id)
+          : await deleteConductorByAdminRequest(_id);
       if (response.success) {
         setMessage({ title: "با موفقیت حذف شد", type: "success" });
         removeOperatorConductor(_id);
       } else {
         setMessage({
-          title: "خطایی در حذف اطلاعات رخ داده است",
+          title: response.error?.toString()!,
           type: "error",
         });
       }

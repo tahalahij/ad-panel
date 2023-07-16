@@ -42,6 +42,10 @@ export const deleteConductorRequest = async (id: string) => {
   return NetworkHandler.delete<ScheduleConductor>(`conductors/${id}`, {});
 };
 
+export const deleteConductorByAdminRequest = async (id: string) => {
+  return NetworkHandler.delete<ScheduleConductor>(`conductors/admin/${id}`, {});
+};
+
 export const getConductorsListRequest = async (params: withListParam) => {
   return NetworkHandler.get<ScheduleConductor[]>(`conductors`, {
     params: { page: 0, limit: 100, ...params },
