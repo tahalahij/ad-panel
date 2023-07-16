@@ -1,6 +1,9 @@
 // import type {ExpertCardType} from './../types';
 import { FileUploadItem, ScheduleConductor } from "../../types/FileTypes";
-import NetworkHandler, { listParamsReq, withListParam } from "../NetworkHandler";
+import NetworkHandler, {
+  listParamsReq,
+  withListParam,
+} from "../NetworkHandler";
 
 export const getFilesListByOperatorRequest = async (params: withListParam) => {
   return NetworkHandler.get<FileUploadItem[]>(`files/operator`, {
@@ -14,8 +17,13 @@ export const getFilesListByAdminRequest = async (params: withListParam) => {
   });
 };
 
-export const uploadFileRequest = async (file: FormData) => {
-  return NetworkHandler.post<any>(`files/upload`, file);
+export const uploadFileRequest = async (
+  file: FormData,
+  operatorId?: string
+) => {
+  return NetworkHandler.post<any>(`files/upload`, file, {
+    params: { operatorId },
+  });
 };
 
 export const uploadAzanMediaFileRequest = async (file: FormData) => {
