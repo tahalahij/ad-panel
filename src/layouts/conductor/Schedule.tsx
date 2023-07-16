@@ -23,7 +23,7 @@ import { MdAdd, MdReorder } from "react-icons/md";
 type ConductorProps = {};
 
 export const Conductor: FC<ConductorProps> = () => {
-  const [operatorId, setOperatorId] = useState('');
+  const [operatorId, setOperatorId] = useState("");
   const navigate = useNavigate();
   const conductorList = useConductorData(operatorId);
   const {
@@ -203,10 +203,12 @@ export const Conductor: FC<ConductorProps> = () => {
           )}
         </div>
       </div>
-      <OperatorSelector
-        operatorId={operatorId}
-        onOperatorChanged={setOperatorId}
-      />
+      <div>
+        <OperatorSelector
+          operatorId={operatorId}
+          onOperatorChanged={setOperatorId}
+        />
+      </div>
       {/* <SortingList listData={conductorList} ref={sortListRef} /> */}
       {isOrdering ? (
         <>
@@ -219,7 +221,7 @@ export const Conductor: FC<ConductorProps> = () => {
             label="نام سری پخش"
             helperText={""}
             placeholder="نام"
-            sx={{ width: "25ch", marginLeft: "16px", marginTop: "8px" }}
+            sx={{ width: "30ch", marginLeft: "16px", marginTop: "8px" }}
           />
           <SortingList
             listData={orderList}
