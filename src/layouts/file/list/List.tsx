@@ -1,10 +1,10 @@
 import "./list.scss";
-import { FC } from "react";
+import { FC, useState } from "react";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { DataTable } from "../../../components";
+import { DataTable, OperatorSelector } from "../../../components";
 import { Link } from "react-router-dom";
 import { useFileData } from "../useFileData";
 import { useFilesLoadingState, useFilesState } from "../../../context/file";
@@ -20,7 +20,8 @@ export const FileList: FC<ListProps> = ({
   singleItemRoute,
   columnKey = "user",
 }) => {
-  const { removeItem, message, setMessage, data, loading } = useFileData();
+  const [operatorId, setOperatorId] = useState('');
+  const { removeItem, message, setMessage, data, loading } = useFileData(operatorId);
 
   const onDeleteClick = (_id: string) => {
     removeItem(_id);
@@ -35,6 +36,10 @@ export const FileList: FC<ListProps> = ({
         </Link>
       </div>
       {loading ? <CircularProgress /> : null}
+      <OperatorSelector
+        operatorId={operatorId}
+        onOperatorChanged={setOperatorId}
+      />
       <DataTable
         columnKey={"file"}
         singleItemRoute={singleItemRoute}

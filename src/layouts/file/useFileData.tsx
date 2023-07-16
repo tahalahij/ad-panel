@@ -10,7 +10,7 @@ import { queryClient } from "../../App";
 import { FileUploadItem } from "../../types/FileTypes";
 import { useAuthenticationState } from "../../context";
 
-export const useFileData = () => {
+export const useFileData = (operatorId?: string) => {
   const auth = useAuthenticationState();
   const [message, setMessage] = useState<{
     title: string;
@@ -19,13 +19,13 @@ export const useFileData = () => {
 
   const queryKey = auth.role === "OPERATOR" ? "my-files" : "files";
   const { data, isLoading: loading } = useQuery({
-    queryKey: [queryKey],
+    queryKey: [queryKey, operatorId],
     queryFn: async () => {
       const apiRequest =
         queryKey === "my-files"
           ? getFilesListByOperatorRequest
           : getFilesListByAdminRequest;
-      const response = await apiRequest();
+      const response = await apiRequest({ operator: operatorId! });
       if (response.success) {
         return response.payload;
       } else throw response.error;

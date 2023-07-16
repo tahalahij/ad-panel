@@ -1,7 +1,7 @@
 import "./conductor.scss";
 import { FC, useState, useRef } from "react";
 import Typography from "@mui/material/Typography";
-import { DataTable } from "../../components";
+import { DataTable, OperatorSelector } from "../../components";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
@@ -23,14 +23,15 @@ import { MdAdd, MdReorder } from "react-icons/md";
 type ConductorProps = {};
 
 export const Conductor: FC<ConductorProps> = () => {
+  const [operatorId, setOperatorId] = useState('');
   const navigate = useNavigate();
-  const conductorList = useConductorData();
+  const conductorList = useConductorData(operatorId);
   const {
     operatorConductors,
     loading: listLoading,
     addOperatorConductor,
     removeOperatorConductor,
-  } = useGetConductor();
+  } = useGetConductor(operatorId);
 
   const [isOrdering, setOrdering] = useState(false);
   const [conductorName, setConductorName] = useState("");
@@ -202,6 +203,10 @@ export const Conductor: FC<ConductorProps> = () => {
           )}
         </div>
       </div>
+      <OperatorSelector
+        operatorId={operatorId}
+        onOperatorChanged={setOperatorId}
+      />
       {/* <SortingList listData={conductorList} ref={sortListRef} /> */}
       {isOrdering ? (
         <>

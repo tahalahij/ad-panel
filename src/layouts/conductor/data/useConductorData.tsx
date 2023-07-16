@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { useFilesState } from "../../../context/file";
-import { getConductorsListRequest } from "../../../network/requests";
+import {
+  getConductorsListByAdminRequest,
+  getConductorsListRequest,
+} from "../../../network/requests";
 import { ScheduleConductor } from "../../../types/FileTypes";
 import { Schedule } from "../../../types/ScheduleTypes";
 import { useFileData } from "../../file/useFileData";
+import { useAuthenticationState } from "../../../context";
 
 // const FAKE_DATA: Array<Schedule> = [
 //   {
@@ -30,21 +34,25 @@ import { useFileData } from "../../file/useFileData";
 //   },
 // ];
 
-export const useConductorData = () => {
-  const {data} = useFileData();
+export const useConductorData = (operatorId?: string) => {
+  const { data } = useFileData(operatorId);
 
   return data || [];
 };
 
-export const useGetConductor = () => {
+export const useGetConductor = (operatorId?: string) => {
   const [operatorConductors, setOperatorConductors] = useState<
     ScheduleConductor[]
   >([]);
   const [loading, setLoading] = useState(false);
+  const authState = useAuthenticationState();
 
   const fetchData = async (page: number = 0) => {
     setLoading(true);
-    const response = await getConductorsListRequest();
+    const response =
+      authState.role === "OPERATOR"
+        ? await getConductorsListRequest({ operator: "" })
+        : await getConductorsListByAdminRequest({ operator: operatorId! });
     if (response.success) {
       setOperatorConductors(response.payload!);
     }
@@ -67,7 +75,8 @@ export const useGetConductor = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [operatorId]);
 
   return {
     fetchData,
