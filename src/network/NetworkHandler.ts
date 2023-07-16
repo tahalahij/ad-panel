@@ -105,7 +105,7 @@ async function requestRunner<T>(
     const status = response.status;
     const data = await response.json();
     const { ok } = response;
-    if (status === 401 || status === 403) {
+    if (status === 401) {
       logoutUnAuthorized()
     }
     return {
