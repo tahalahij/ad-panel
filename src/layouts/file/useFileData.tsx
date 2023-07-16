@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFilesDispatch, useFilesLoadingDispatch } from "../../context/file";
 import {
+  deleteFileByAdminRequest,
   deleteFileRequest,
   getFilesListByAdminRequest,
   getFilesListByOperatorRequest,
@@ -34,11 +35,14 @@ export const useFileData = (operatorId?: string) => {
   });
 
   const { mutate } = useMutation({
-    mutationFn: (_id: string) => deleteFileRequest(_id),
+    mutationFn: (_id: string) =>
+      auth.role === "OPERATOR"
+        ? deleteFileRequest(_id)
+        : deleteFileByAdminRequest(_id),
     onSuccess(response, _id, context) {
       if (response.success) {
         setMessage({ title: "با موفقیت حذف شد", type: "success" });
-        queryClient.setQueryData<FileUploadItem[]>(["files"], (oldData) =>
+        queryClient.setQueryData<FileUploadItem[]>(["files", operatorId], (oldData) =>
           oldData?.filter((file) => file._id !== _id)
         );
       } else {

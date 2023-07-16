@@ -47,6 +47,10 @@ export const deleteFileRequest = async (id: string) => {
   return NetworkHandler.delete<any>(`files/${id}`, {});
 };
 
+export const deleteFileByAdminRequest = async (id: string) => {
+  return NetworkHandler.delete<any>(`files/admin/${id}`, {});
+};
+
 export const uploadDashboardBackgroundRequest = async (file: FormData) => {
   return NetworkHandler.post<any>(`files/admin/dashboard/upload`, file);
 };
