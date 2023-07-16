@@ -7,7 +7,10 @@ import Alert from "@mui/material/Alert";
 import { DataTable, OperatorSelector } from "../../../components";
 import { Link } from "react-router-dom";
 import { useScheduleData } from "../useScheduleData";
-import { deleteScheduleRequest } from "../../../network/requests";
+import {
+  deleteScheduleByAdminRequest,
+  deleteScheduleRequest,
+} from "../../../network/requests";
 import { userHasAccess } from "../../../utils/UserAccess";
 import { useAuthenticationState } from "../../../context";
 
@@ -33,7 +36,10 @@ export const List: FC<ListProps> = ({ title, newItemRoute, columnKey }) => {
   const onDelete = async (_id: string) => {
     try {
       setDeleteLoading(true);
-      const response = await deleteScheduleRequest(_id);
+      const response =
+        authState.role === "OPERATOR"
+          ? await deleteScheduleRequest(_id)
+          : await deleteScheduleByAdminRequest(_id);
       if (response.success) {
         setMessage({ title: "با موفقیت حذف شد", type: "success" });
         removeSchedule(_id);

@@ -46,3 +46,7 @@ export const addScheduleByAdminRequest = async (
 export const deleteScheduleRequest = async (id: string) => {
   return NetworkHandler.delete<Schedule>(`schedule/${id}`, {});
 };
+
+export const deleteScheduleByAdminRequest = async (id: string) => {
+  return NetworkHandler.delete<Schedule>(`schedule/admin/${id}`, {});
+};
