@@ -9,16 +9,21 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import { uploadFileRequest } from "../../../network/requests/FileRequests";
+import {
+  uploadFileByAdminRequest,
+  uploadFileRequest,
+} from "../../../network/requests/FileRequests";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineCloudUpload } from "react-icons/md";
 import { Animator, ImageAnimation } from "../../../components/scheduleModule";
 import { OperatorSelector } from "../../../components";
+import { useAuthenticationState } from "../../../context";
 type NewProps = {
   title: string;
 };
 
 export const NewFileUpload: FC<NewProps> = ({ title }) => {
+  const authState = useAuthenticationState();
   const [operatorId, setOperatorId] = useState("");
   const [file, setFile] = useState<File>();
   const [delay, setDelay] = useState("");
@@ -52,7 +57,10 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
       data.append("animationName", animation);
     }
 
-    const response = await uploadFileRequest(data, operatorId);
+    const response =
+      authState.role === "OPERATOR"
+        ? await uploadFileRequest(data, operatorId)
+        : await uploadFileByAdminRequest(data, operatorId);
     if (response.success) {
       setMessage({ title: "با موفقیت باگذاری شد", type: "success" });
       setTimeout(() => {

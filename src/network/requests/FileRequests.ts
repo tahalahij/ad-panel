@@ -26,6 +26,15 @@ export const uploadFileRequest = async (
   });
 };
 
+export const uploadFileByAdminRequest = async (
+  file: FormData,
+  operatorId?: string
+) => {
+  return NetworkHandler.post<any>(`files/admin/${operatorId}/upload`, file, {
+    params: { operatorId },
+  });
+};
+
 export const uploadAzanMediaFileRequest = async (file: FormData) => {
   return NetworkHandler.post<any>(`files/admin/azan-file`, file);
 };
