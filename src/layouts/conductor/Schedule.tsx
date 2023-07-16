@@ -1,5 +1,5 @@
 import "./conductor.scss";
-import { FC, useState, useRef } from "react";
+import { FC, useState, useRef, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import { DataTable, OperatorSelector } from "../../components";
 import { useNavigate } from "react-router-dom";
@@ -48,6 +48,10 @@ export const Conductor: FC<ConductorProps> = () => {
 
   const patchingId = useRef("");
   const sortListRef = useRef<SortListMethods>(null);
+
+  useEffect(() => {
+    setOrderList(conductorList);
+  }, [conductorList])
 
   const submitSort = async () => {
     // if (!validateIPAddress(ip)) {
