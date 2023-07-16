@@ -18,7 +18,7 @@ export type listParamsReq = {
   _order?: "desc" | "asc";
 };
 
-export type withListParam = { operator: string } & listParamsReq;
+export type withListParam = { operator?: string } & listParamsReq;
 
 export type ResponseType<T> = {
   success: boolean;

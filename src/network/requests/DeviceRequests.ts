@@ -1,7 +1,7 @@
 import { Device } from "../../types/DeviceType";
 import { FileUploadItem } from "../../types/FileTypes";
 import { Schedule } from "../../types/ScheduleTypes";
-import NetworkHandler, { listParamsReq } from "../NetworkHandler";
+import NetworkHandler, { listParamsReq, withListParam } from "../NetworkHandler";
 
 type newDeviceParams = {
   _id?: string;
@@ -12,10 +12,10 @@ type newDeviceParams = {
 };
 
 export const getDeviceListRequest = async (
-  params: listParamsReq = { page: 0, limit: 100 }
+  params: withListParam,
 ) => {
   return NetworkHandler.get<Device[]>(`devices/admin`, {
-    params,
+    params: { page: 0, limit: 100, operatorId: params.operator },
   });
 };
 

@@ -45,7 +45,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   const { scheduleId } = useParams();
   const { data, loading: scheduleLoading } = useScheduleById(scheduleId);
 
-  const { list: deviceList, loading: deviceLoading } = useDeviceData();
+  const { list: deviceList, loading: deviceLoading } = useDeviceData(operatorId);
   const { operatorConductors, loading: conductorLoading } = useGetConductor(operatorId);
   // const [currentIndex, setCurrentIndex] = useState(-1);
   const authState = useAuthenticationState();
