@@ -37,7 +37,10 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
       password: "",
       ip: ip ?? "",
       mac: map ?? "",
-      role: type === "operator" ? "OPERATOR" : ("CONTROLLER" as USER_ROLE),
+      role:
+        type === "operator"
+          ? ("OPERATOR" as USER_ROLE)
+          : ("CONTROLLER" as USER_ROLE),
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
