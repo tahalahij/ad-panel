@@ -77,30 +77,27 @@ export const Sidebar = () => {
             </Link>
           )}
 
-          {userHasAccess(authState.role, ["ADMIN", "OPERATOR"]) && (
-            <Link to={"/schedules"} style={{ textDecoration: "none" }}>
-              <li>
-                <MdOutlineUpdate className="icon" />
-                <Typography component={"span"}>برنامه ها</Typography>
-              </li>
-            </Link>
-          )}
-          {userHasAccess(authState.role, ["ADMIN", "OPERATOR"]) && (
-            <Link to={"/conductors"} style={{ textDecoration: "none" }}>
-              <li>
-                <MdOutlineAutoAwesomeMotion className="icon" />
-                <Typography component={"span"}>سری های پخش</Typography>
-              </li>
-            </Link>
-          )}
-          {userHasAccess(authState.role, ["ADMIN", "OPERATOR"]) && (
-            <Link to={"/uploads"} style={{ textDecoration: "none" }}>
-              <li>
-                <MdOutlineCloud className="icon" />
-                <Typography component={"span"}>بارگذاری ها</Typography>
-              </li>
-            </Link>
-          )}
+          <Link to={"/schedules"} style={{ textDecoration: "none" }}>
+            <li>
+              <MdOutlineUpdate className="icon" />
+              <Typography component={"span"}>برنامه ها</Typography>
+            </li>
+          </Link>
+
+          <Link to={"/conductors"} style={{ textDecoration: "none" }}>
+            <li>
+              <MdOutlineAutoAwesomeMotion className="icon" />
+              <Typography component={"span"}>سری های پخش</Typography>
+            </li>
+          </Link>
+
+          <Link to={"/uploads"} style={{ textDecoration: "none" }}>
+            <li>
+              <MdOutlineCloud className="icon" />
+              <Typography component={"span"}>بارگذاری ها</Typography>
+            </li>
+          </Link>
+
           {authState.role === "OPERATOR" && (
             <Link to={"/devices/me"} style={{ textDecoration: "none" }}>
               <li>
@@ -109,14 +106,13 @@ export const Sidebar = () => {
               </li>
             </Link>
           )}
-          {userHasAccess(authState.role, ["ADMIN", "OPERATOR"]) && (
-            <Link to={"/devices/current"} style={{ textDecoration: "none" }}>
-              <li>
-                <MdOutlineLiveTv className="icon" />
-                <Typography component={"span"}>برنامه در حال پخش</Typography>
-              </li>
-            </Link>
-          )}
+          <Link to={"/devices/current"} style={{ textDecoration: "none" }}>
+            <li>
+              <MdOutlineLiveTv className="icon" />
+              <Typography component={"span"}>برنامه در حال پخش</Typography>
+            </li>
+          </Link>
+
           {userHasAccess(authState.role, ["ADMIN"]) && (
             <Link to={"/uploads/azan"} style={{ textDecoration: "none" }}>
               <li>

@@ -41,9 +41,9 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
 
   const fetchData = async () => {
     const getCurrentScheduleRequest =
-      auth.role === "ADMIN"
-        ? getDeviceCurrentScheduleByAdminRequest
-        : getDeviceCurrentScheduleByOperatorRequest;
+      auth.role === "OPERATOR"
+        ? getDeviceCurrentScheduleByOperatorRequest
+        : getDeviceCurrentScheduleByAdminRequest;
 
     getCurrentScheduleRequest(list[currentIndex]._id)
       .then((res) => {
