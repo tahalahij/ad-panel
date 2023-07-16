@@ -65,7 +65,7 @@ export const scheduleColumns: GridColDef[] = [
   { field: "_id", headerName: "شناسه برنامه", width: 210, sortable: false },
   { field: "name", headerName: "نام برنامه", width: 130 },
   {
-    field: "deviceId",
+    field: "device",
     headerName: "نام دستگاه",
     width: 150,
     sortable: false,

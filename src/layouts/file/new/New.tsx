@@ -13,11 +13,13 @@ import { uploadFileRequest } from "../../../network/requests/FileRequests";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineCloudUpload } from "react-icons/md";
 import { Animator, ImageAnimation } from "../../../components/scheduleModule";
+import { OperatorSelector } from "../../../components";
 type NewProps = {
   title: string;
 };
 
 export const NewFileUpload: FC<NewProps> = ({ title }) => {
+  const [operatorId, setOperatorId] = useState("");
   const [file, setFile] = useState<File>();
   const [delay, setDelay] = useState("");
   const [animation, setAnimation] = useState<ImageAnimation>("none");
@@ -50,7 +52,7 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
       data.append("animationName", animation);
     }
 
-    const response = await uploadFileRequest(data);
+    const response = await uploadFileRequest(data, operatorId);
     if (response.success) {
       setMessage({ title: "با موفقیت باگذاری شد", type: "success" });
       setTimeout(() => {
@@ -98,6 +100,10 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
           />
         </div> */}
         <div className="right">
+          <OperatorSelector
+            operatorId={operatorId}
+            onOperatorChanged={setOperatorId}
+          />
           <form action="">
             <div className="formInput fileInput">
               <label htmlFor="file" className="fileInput">
