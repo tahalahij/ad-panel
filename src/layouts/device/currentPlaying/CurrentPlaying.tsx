@@ -89,7 +89,7 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
             onChange={onDeviceChange}
           >
             {list?.map((item, index) => (
-              <MenuItem value={index}>{item.name + " " + item.ip}</MenuItem>
+              <MenuItem key={item.ip} value={index}>{item.name + " " + item.ip}</MenuItem>
             ))}
           </Select>
         </FormControl>

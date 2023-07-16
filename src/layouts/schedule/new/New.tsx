@@ -40,16 +40,16 @@ type NewProps = {
 };
 
 export const New: FC<NewProps> = ({ title, update = false }) => {
+  const [operatorId, setOperatorId] = useState("");
   const navigate = useNavigate();
   const { scheduleId } = useParams();
   const { data, loading: scheduleLoading } = useScheduleById(scheduleId);
 
   const { list: deviceList, loading: deviceLoading } = useDeviceData();
-  const { operatorConductors, loading: conductorLoading } = useGetConductor();
+  const { operatorConductors, loading: conductorLoading } = useGetConductor(operatorId);
   // const [currentIndex, setCurrentIndex] = useState(-1);
   const authState = useAuthenticationState();
 
-  const [operatorId, setOperatorId] = useState("");
   const [rangeDay, setRangeDay] = useState<DateObject[]>([]);
   const [days, setDays] = useState<WeekDays[]>([]);
   const [startTime, setStartTime] = useState(moment());
