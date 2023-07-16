@@ -19,7 +19,7 @@ export const OperatorSelector = ({
   const { userList } = useOperatorData("OPERATOR");
 
   return userHasAccess(authState.role, ["ADMIN", "CONTROLLER"]) ? (
-    <FormControl sx={{ width: "30ch", marginTop: 2 }}>
+    <FormControl sx={{ width: "30ch", marginTop: 2, marginRight: '20px', marginLeft: '20px' }}>
       <InputLabel id="schedule-operator-id-label">نام اپراتور</InputLabel>
       <Select
         // disabled={auth.role === "CONTROLLER"}
