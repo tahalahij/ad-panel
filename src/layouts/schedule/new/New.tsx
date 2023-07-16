@@ -30,7 +30,9 @@ import { CellWeekDays } from "../../../components/dataTable/CellWeekDays";
 import { getReadableDay } from "../../../utils/Utils";
 import { useDeviceData } from "../../device/useDeviceData";
 import { useGetConductor } from "../../conductor/data/useConductorData";
-
+import { OperatorSelector } from "../../../components";
+import { useAuthenticationState } from "../../../context";
+import { userHasAccess } from "../../../utils/UserAccess";
 
 type NewProps = {
   title: string;
@@ -45,7 +47,9 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   const { list: deviceList, loading: deviceLoading } = useDeviceData();
   const { operatorConductors, loading: conductorLoading } = useGetConductor();
   // const [currentIndex, setCurrentIndex] = useState(-1);
+  const authState = useAuthenticationState();
 
+  const [operatorId, setOperatorId] = useState("");
   const [rangeDay, setRangeDay] = useState<DateObject[]>([]);
   const [days, setDays] = useState<WeekDays[]>([]);
   const [startTime, setStartTime] = useState(moment());
@@ -99,7 +103,10 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
       requestBody.end = new Date(end.valueOf()).toISOString();
     }
 
-    const response = await addScheduleRequest(requestBody);
+    const response =
+      authState.role === "OPERATOR"
+        ? await addScheduleRequest(requestBody)
+        : await addScheduleRequest(requestBody, operatorId);
     if (response.success) {
       setMessage({ title: "با موفقیت اضافه شد", type: "success" });
       setTimeout(() => {
@@ -144,8 +151,17 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
             className="image"
           />
         </div> */}
+
         <div className="right">
           <form action="">
+            {userHasAccess(authState.role, ["ADMIN"]) && (
+              <div className="formInput operatorSelector">
+                <OperatorSelector
+                  operatorId={operatorId}
+                  onOperatorChanged={setOperatorId}
+                />
+              </div>
+            )}
             <div className="formInput">
               <TextField
                 error={false}
@@ -161,9 +177,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
             </div>
             <div className="formInput">
               <FormControl sx={{ width: "30ch" }}>
-                <InputLabel id="conductor-select-label">
-                  نام سری پخش
-                </InputLabel>
+                <InputLabel id="conductor-select-label">نام سری پخش</InputLabel>
                 <Select
                   labelId="conductor-select-label"
                   id="conductor"
@@ -173,16 +187,16 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                   onChange={formik.handleChange}
                 >
                   {operatorConductors?.map((item, index) => (
-                    <MenuItem value={item._id} key={item._id}>{item.name}</MenuItem>
+                    <MenuItem value={item._id} key={item._id}>
+                      {item.name}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
             </div>
             <div className="formInput">
               <FormControl sx={{ width: "30ch" }}>
-                <InputLabel id="type-select-label">
-                  نوع برنامه
-                </InputLabel>
+                <InputLabel id="type-select-label">نوع برنامه</InputLabel>
                 <Select
                   labelId="type-select-label"
                   id="type"

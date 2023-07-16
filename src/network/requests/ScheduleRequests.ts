@@ -11,11 +11,9 @@ export const getSchedulesByOperatorRequest = async (
   });
 };
 
-export const getSchedulesByAdminRequest = async (
-  params: paramsWithList
-) => {
+export const getSchedulesByAdminRequest = async (params: paramsWithList) => {
   return NetworkHandler.get<Schedule[]>(`schedule/admin`, {
-    params: {page: 0, limit: 100, ...params},
+    params: { page: 0, limit: 100, ...params },
   });
 };
 
@@ -23,7 +21,7 @@ export const getSchedulesByControllerRequest = async (
   params: paramsWithList
 ) => {
   return NetworkHandler.get<Schedule[]>(`schedule/controller`, {
-    params: {page: 0, limit: 100, ...params},
+    params: { page: 0, limit: 100, ...params },
   });
 };
 
@@ -31,8 +29,18 @@ export const getScheduleByIdRequest = async (id: string) => {
   return NetworkHandler.get<Schedule>(`schedule/${id}`);
 };
 
-export const addScheduleRequest = async (data: SchedulePure) => {
+export const addScheduleRequest = async (
+  data: SchedulePure,
+    operatorId?: string
+) => {
   return NetworkHandler.post<Schedule>(`schedule`, data);
+};
+
+export const addScheduleByAdminRequest = async (
+  data: SchedulePure,
+    operatorId?: string
+) => {
+  return NetworkHandler.post<Schedule>(`schedule/admin/${operatorId}`, data);
 };
 
 export const deleteScheduleRequest = async (id: string) => {
