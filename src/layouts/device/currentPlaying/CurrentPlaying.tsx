@@ -89,7 +89,9 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
             onChange={onDeviceChange}
           >
             {list?.map((item, index) => (
-              <MenuItem key={item.ip} value={index}>{item.name + " " + item.ip}</MenuItem>
+              <MenuItem key={item.ip} value={index}>
+                {item.name + " " + item.ip}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -97,41 +99,332 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
         {currentItem?.file && currentItem.schedule && (
           <>
             <div className="scheduleDetails">
-              <Typography variant="body2">{`در حال پخش فایل ${
-                currentItem.file.name
-              } در برنامه "${currentItem.schedule.name}" بر روی دستگاه ${
-                list[currentIndex].name + " " + list[currentIndex].ip
-              }.`}</Typography>
-              <Typography variant="h6">جزییات برنامه</Typography>
-              <Typography>{`
-              نوع برنامه: ${
-                currentItem.schedule.type === ScheduleTypeEnum.ONE_TIME
-                  ? "یکبار پخش"
-                  : "دوره ای"
-              }
-              `}</Typography>
-              {currentItem.schedule.day &&
-                currentItem.schedule.day.length > 0 && (
-                  <Typography>
-                    {`روز های پخش: ${[
-                      currentItem.schedule.day?.map((d) => getReadableDay(d)),
-                    ].join(" ,")}`}
-                  </Typography>
+              <div className="tableDetails">
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "row",
+                    borderWidth: "0px 0px 1px 0px",
+                    borderColor: "rgba(0, 0, 0, 0.87)",
+                    // borderRadius: "4px",
+                    borderStyle: "solid",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      borderLeftWidth: "1px",
+                      borderTopWidth: 0,
+                      borderBottomWidth: 0,
+                      borderRightWidth: 0,
+                      width: "30%",
+                      paddingTop: "4px",
+                      paddingBottom: "4px",
+                      paddingRight: "6px",
+                      borderStyle: "solid",
+                      borderLeftColor: "rgba(0, 0, 0, 0.87)",
+                    }}
+                  >
+                    نام فایل
+                  </div>
+                  <div className="divider"></div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      paddingRight: "4px",
+                      flex: 1,
+                    }}
+                  >
+                    {"‏" + currentItem.file.name + "‏"}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "row",
+                    borderWidth: "0px 0px 1px 0px",
+                    borderColor: "rgba(0, 0, 0, 0.87)",
+                    // borderRadius: "4px",
+                    borderStyle: "solid",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      borderLeftWidth: "1px",
+                      borderTopWidth: 0,
+                      borderBottomWidth: 0,
+                      borderRightWidth: 0,
+                      width: "30%",
+                      paddingTop: "4px",
+                      paddingBottom: "4px",
+                      paddingRight: "6px",
+                      borderStyle: "solid",
+                      borderLeftColor: "rgba(0, 0, 0, 0.87)",
+                    }}
+                  >
+                    نام دستگاه
+                  </div>
+                  <div className="divider"></div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      paddingRight: "4px",
+                      flex: 1,
+                    }}
+                  >
+                    {"‏" +
+                      list[currentIndex].name +
+                      " " +
+                      list[currentIndex].ip +
+                      "‏"}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "row",
+                    borderWidth: "0px 0px 1px 0px",
+                    borderColor: "rgba(0, 0, 0, 0.87)",
+                    // borderRadius: "4px",
+                    borderStyle: "solid",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      borderLeftWidth: "1px",
+                      borderTopWidth: 0,
+                      borderBottomWidth: 0,
+                      borderRightWidth: 0,
+                      width: "30%",
+                      paddingTop: "4px",
+                      paddingBottom: "4px",
+                      paddingRight: "6px",
+                      borderStyle: "solid",
+                      borderLeftColor: "rgba(0, 0, 0, 0.87)",
+                    }}
+                  >
+                    برنامه
+                  </div>
+                  <div className="divider"></div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      paddingRight: "4px",
+                      flex: 1,
+                    }}
+                  >
+                    {"‏" + currentItem.schedule.name + "‏"}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "row",
+                    borderWidth: "0px 0px 1px 0px",
+                    borderColor: "rgba(0, 0, 0, 0.87)",
+                    // borderRadius: "4px",
+                    borderStyle: "solid",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      borderLeftWidth: "1px",
+                      borderTopWidth: 0,
+                      borderBottomWidth: 0,
+                      borderRightWidth: 0,
+                      width: "30%",
+                      paddingTop: "4px",
+                      paddingBottom: "4px",
+                      paddingRight: "6px",
+                      borderStyle: "solid",
+                      borderLeftColor: "rgba(0, 0, 0, 0.87)",
+                    }}
+                  >
+                    نوع برنامه
+                  </div>
+                  <div className="divider"></div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      paddingRight: "4px",
+                      flex: 1,
+                    }}
+                  >
+                    {"‏" +
+                      (currentItem.schedule.type === ScheduleTypeEnum.ONE_TIME
+                        ? "یکبار پخش"
+                        : "دوره ای") +
+                      "‏"}
+                  </div>
+                </div>
+                {currentItem.schedule.day &&
+                  currentItem.schedule.day.length > 0 && (
+                    <div
+                      style={{
+                        flex: 1,
+                        display: "flex",
+                        flexDirection: "row",
+                        borderWidth: "0px 0px 1px 0px",
+                        borderColor: "rgba(0, 0, 0, 0.87)",
+                        // borderRadius: "4px",
+                        borderStyle: "solid",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          borderLeftWidth: "1px",
+                          borderTopWidth: 0,
+                          borderBottomWidth: 0,
+                          borderRightWidth: 0,
+                          width: "30%",
+                          paddingTop: "4px",
+                          paddingBottom: "4px",
+                          paddingRight: "6px",
+                          borderStyle: "solid",
+                          borderLeftColor: "rgba(0, 0, 0, 0.87)",
+                        }}
+                      >
+                        روز های پخش
+                      </div>
+                      <div className="divider"></div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+
+                          flex: 1,
+                        }}
+                      >
+                        {"‏" +
+                          [
+                            currentItem.schedule.day?.map((d) =>
+                              getReadableDay(d)
+                            ),
+                          ].join(" ,") +
+                          "‏"}
+                      </div>
+                    </div>
+                  )}
+                {currentItem.schedule.from && (
+                  <div
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      borderWidth: "0px 0px 1px 0px",
+                      borderColor: "rgba(0, 0, 0, 0.87)",
+                      // borderRadius: "4px",
+                      borderStyle: "solid",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        borderLeftWidth: "1px",
+                        borderTopWidth: 0,
+                        borderBottomWidth: 0,
+                        borderRightWidth: 0,
+                        width: "30%",
+                        paddingTop: "4px",
+                        paddingBottom: "4px",
+                        paddingRight: "6px",
+                        borderStyle: "solid",
+                        borderLeftColor: "rgba(0, 0, 0, 0.87)",
+                      }}
+                    >
+                      زمان شروع
+                    </div>
+                    <div className="divider"></div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+
+                        flex: 1,
+                      }}
+                    >
+                      {"‏" +
+                        digitsEnToFa(
+                          moment(currentItem.schedule.start).format(
+                            "jYYYY-jMM-jDD"
+                          ) +
+                            " " +
+                            moment(currentItem.schedule.from).format("HH:mm")
+                        ) +
+                        "‏"}
+                    </div>
+                  </div>
                 )}
-              {currentItem.schedule.from && (
-                <Typography>
-                  {`زمان شروع: ${digitsEnToFa(
-                    moment(currentItem.schedule.start).format("jYYYY-jMM-jDD") +
-                      " " +
-                      moment(currentItem.schedule.from).format("HH:mm")
-                  )}`}{" "}
-                  {`زمان پایان: ${digitsEnToFa(
-                    moment(currentItem.schedule.end).format("jYYYY-jMM-jDD") +
-                      " " +
-                      moment(currentItem.schedule.to).format("HH:mm")
-                  )}`}
-                </Typography>
-              )}
+                {currentItem.schedule.from && (
+                  <div
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      borderWidth: "0px 0px 1px 0px",
+                      borderColor: "rgba(0, 0, 0, 0.87)",
+                      // borderRadius: "4px",
+                      borderStyle: "solid",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        borderLeftWidth: "1px",
+                        borderTopWidth: 0,
+                        borderBottomWidth: 0,
+                        borderRightWidth: 0,
+                        width: "30%",
+                        paddingTop: "4px",
+                        paddingBottom: "4px",
+                        paddingRight: "6px",
+                        borderStyle: "solid",
+                        borderLeftColor: "rgba(0, 0, 0, 0.87)",
+                      }}
+                    >
+                      زمان پایان
+                    </div>
+                    <div className="divider"></div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+
+                        flex: 1,
+                      }}
+                    >
+                      {"‏" +
+                        digitsEnToFa(
+                          moment(currentItem.schedule.end).format(
+                            "jYYYY-jMM-jDD"
+                          ) +
+                            " " +
+                            moment(currentItem.schedule.to).format("HH:mm")
+                        ) +
+                        "‏"}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="mediaPlayer">
               <FileTypeDetector onEnd={onEnd} {...currentItem?.file} />
