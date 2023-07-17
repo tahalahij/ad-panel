@@ -121,12 +121,12 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
               {currentItem.schedule.from && (
                 <Typography>
                   {`زمان شروع: ${digitsEnToFa(
-                    moment(currentItem.schedule.start).format("jYYYY=jMM-jDD") +
+                    moment(currentItem.schedule.start).format("jYYYY-jMM-jDD") +
                       " " +
                       moment(currentItem.schedule.from).format("HH:mm")
                   )}`}{" "}
                   {`زمان پایان: ${digitsEnToFa(
-                    moment(currentItem.schedule.end).format("jYYYY=jMM-jDD") +
+                    moment(currentItem.schedule.end).format("jYYYY-jMM-jDD") +
                       " " +
                       moment(currentItem.schedule.to).format("HH:mm")
                   )}`}
