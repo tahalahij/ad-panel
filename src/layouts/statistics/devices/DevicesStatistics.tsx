@@ -32,7 +32,7 @@ export const DeviceStatistics = () => {
   const formik = useFormik({
     initialValues: {
       ip: "",
-      // fileType: "",
+      fileType: "",
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -64,23 +64,35 @@ export const DeviceStatistics = () => {
       start,
       end,
       ip: formik.values.ip ?? undefined,
-      // fileType: "image",
+      fileType: formik.values.fileType ?? undefined,
     };
     getDevicesStatisticsRequest(requestParams)
       .then((res) => setChartData(res.payload?.statistics!))
       .catch(console.log);
-  }, [rangeDay, formik.values.ip]);
+  }, [rangeDay, formik.values.ip, formik.values.fileType]);
 
   const data = useMemo(() => {
-    const _d: { name: string; duration: number }[] = [];
+    const _d: { name: string; duration: number }[] = [
+      { name: "audio", duration: 0 },
+      { name: "video", duration: 0 },
+      { name: "image", duration: 0 },
+      { name: "false", duration: 0 },
+    ];
     if (chartData)
       chartData.forEach((item) => {
-        _d.push({
+        // @ts-ignore
+        const index = _d.findIndex((c) => c.name === item.fileType);
+        if (index > -1) {
           // @ts-ignore
-          name: item.fileType.split("/")[1],
-          // @ts-ignore
-          duration: item.duration,
-        });
+          _d[index].duration = _d[index].duration + item.duration;
+        } else {
+          _d.push({
+            // @ts-ignore
+            name: item.fileType,
+            // @ts-ignore
+            duration: item.duration,
+          });
+        }
       });
     return _d;
   }, [chartData]);
@@ -132,7 +144,7 @@ export const DeviceStatistics = () => {
             ))}
           </Select>
         </FormControl>
-        {/* <FormControl sx={{ width: "30ch" }}>
+        <FormControl sx={{ width: "30ch" }}>
           <InputLabel id="demo-simple-select-label">نوع فایل</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -142,17 +154,12 @@ export const DeviceStatistics = () => {
             label="دستگاه"
             onChange={formik.handleChange}
           >
-            <MenuItem value={'image'}>
-              {"تصویر"}
-            </MenuItem>
-            <MenuItem value={'video'}>
-              {"ویدیو"}
-            </MenuItem>
-            <MenuItem value={'audio'}>
-              {"صدا"}
-            </MenuItem>
+            <MenuItem value={"image"}>{"تصویر"}</MenuItem>
+            <MenuItem value={"video"}>{"ویدیو"}</MenuItem>
+            <MenuItem value={"audio"}>{"صدا"}</MenuItem>
+            <MenuItem value={"false"}>{"false"}</MenuItem>
           </Select>
-        </FormControl> */}
+        </FormControl>
       </div>
       <div className="charts">
         {/* <Featured /> */}
