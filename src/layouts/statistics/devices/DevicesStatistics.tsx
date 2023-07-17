@@ -76,7 +76,6 @@ export const DeviceStatistics = () => {
       { name: "audio", duration: 0 },
       { name: "video", duration: 0 },
       { name: "image", duration: 0 },
-      { name: "false", duration: 0 },
     ];
     if (chartData)
       chartData.forEach((item) => {
@@ -157,7 +156,6 @@ export const DeviceStatistics = () => {
             <MenuItem value={"image"}>{"تصویر"}</MenuItem>
             <MenuItem value={"video"}>{"ویدیو"}</MenuItem>
             <MenuItem value={"audio"}>{"صدا"}</MenuItem>
-            <MenuItem value={"false"}>{"false"}</MenuItem>
           </Select>
         </FormControl>
       </div>
