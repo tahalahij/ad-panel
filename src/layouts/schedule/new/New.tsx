@@ -19,7 +19,7 @@ import moment from "moment";
 
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
-import { addScheduleRequest } from "../../../network/requests";
+import { addScheduleByAdminRequest, addScheduleRequest } from "../../../network/requests";
 import { useScheduleById } from "../useScheduleData";
 import {
   SchedulePure,
@@ -106,7 +106,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
     const response =
       authState.role === "OPERATOR"
         ? await addScheduleRequest(requestBody)
-        : await addScheduleRequest(requestBody, operatorId);
+        : await addScheduleByAdminRequest(requestBody, operatorId);
     if (response.success) {
       setMessage({ title: "با موفقیت اضافه شد", type: "success" });
       setTimeout(() => {
