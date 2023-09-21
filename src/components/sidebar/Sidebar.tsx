@@ -1,10 +1,7 @@
 import "./Sidebar.scss";
 import Typography from "@mui/material/Typography";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  useAuthenticationDispatch,
-  useAuthenticationState,
-} from "../../context";
+import { Link } from "react-router-dom";
+import { useAuthenticationState } from "../../context";
 import {
   MdOutlineDashboard,
   MdOutlineGroup,
@@ -20,11 +17,10 @@ import {
   MdOutlineMosque,
 } from "react-icons/md";
 import { userHasAccess } from "../../utils/UserAccess";
+import { logoutUnAuthorized } from "../../network/useLogout";
 
 export const Sidebar = () => {
-  const authDispatch = useAuthenticationDispatch();
   const authState = useAuthenticationState();
-  const navigate = useNavigate();
 
   return (
     <div className="sidebar">
@@ -174,12 +170,7 @@ export const Sidebar = () => {
             <AccountCircleOutlinedIcon className="icon" />
             <Typography component={"span"}>پروفایل</Typography>
           </li> */}
-          <li
-            onClick={() => {
-              authDispatch({ type: "LOGOUT" });
-              navigate("/");
-            }}
-          >
+          <li onClick={() => logoutUnAuthorized()}>
             <MdOutlineLogout className="icon" />
             <Typography component={"span"}>خروج</Typography>
           </li>

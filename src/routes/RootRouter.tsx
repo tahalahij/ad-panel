@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useIdleTimer } from "react-idle-timer";
 import { Home } from "../layouts/home";
 import { Login } from "../layouts/login";
 import { List } from "../layouts/list";
@@ -20,11 +21,17 @@ import { FileLimits, LoginBackground } from "../layouts/settings";
 import { DeviceStatistics } from "../layouts/statistics/devices/DevicesStatistics";
 import { FileUpload as UploadAzan } from "../layouts/azan";
 import { userHasAccess } from "../utils/UserAccess";
-import { WithLogout } from "../network/useLogout";
+import { WithLogout, logoutUnAuthorized } from "../network/useLogout";
 
 export const RootRouter = () => {
   const authState = useAuthenticationState();
-
+  useIdleTimer({
+    timeout: 1000 * 60 * 15,
+    onIdle: () => logoutUnAuthorized(),
+    disabled: !authState.isLogin,
+    // crossTab: true,
+    // name: 'az-ad-schedule'
+  });
   return (
     <BrowserRouter>
       {!authState.isLogin ? (
@@ -47,18 +54,10 @@ export const RootRouter = () => {
                   path=":type/:userId/:username/:name/:ip/:map"
                   element={<NewUser update={true} />}
                 />
-                <Route
-                  path="new/:type"
-                  element={<NewUser />}
-                />
+                <Route path="new/:type" element={<NewUser />} />
                 <Route
                   path=":type"
-                  element={
-                    <List
-                      newItemRoute="/users/new"
-                      columnKey="user"
-                    />
-                  }
+                  element={<List newItemRoute="/users/new" columnKey="user" />}
                 />
               </Route>
               <Route path="devices">

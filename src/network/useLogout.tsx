@@ -10,6 +10,7 @@ export const WithLogout = () => {
   logoutUnAuthorized = () => {
     
     authDispatch({ type: "LOGOUT" });
+    localStorage.removeItem("Authentication");
     navigate('/');
   };
 
