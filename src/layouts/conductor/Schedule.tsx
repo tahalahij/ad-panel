@@ -208,9 +208,9 @@ export const Conductor: FC<ConductorProps> = () => {
                 تغییر ترتیب
               </Button> */}
               <Button
-                variant="contained"
+                className="link"
+                variant="outlined"
                 onClick={() => onAddScheduleClick()}
-                startIcon={<MdAdd />}
               >
                 افزودن
               </Button>
