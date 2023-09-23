@@ -74,25 +74,6 @@ export const Sidebar = () => {
             />
           )}
 
-          <LinkItem
-            link="/schedules"
-            title="برنامه ها"
-            icon={<MdOutlineUpdate className="icon" />}
-            // exactActivate=
-          />
-
-          <LinkItem
-            link="/conductors"
-            title="سری های پخش"
-            icon={<MdOutlineAutoAwesomeMotion className="icon" />}
-          />
-
-          <LinkItem
-            link="/uploads"
-            title="بارگذاری ها"
-            icon={<MdOutlineCloud className="icon" />}
-          />
-
           {authState.role === "OPERATOR" && (
             <LinkItem
               link="/devices/me"
@@ -113,6 +94,30 @@ export const Sidebar = () => {
               icon={<MdOutlineMosque className="icon" />}
             />
           )}
+
+          <Typography className="title" component={"p"}>
+            برنامه
+          </Typography>
+
+          <LinkItem
+            link="/uploads"
+            title="بارگذاری ها"
+            icon={<MdOutlineCloud className="icon" />}
+          />
+
+          <LinkItem
+            link="/conductors"
+            title="سری های پخش"
+            icon={<MdOutlineAutoAwesomeMotion className="icon" />}
+          />
+
+          <LinkItem
+            link="/schedules"
+            title="برنامه ها"
+            icon={<MdOutlineUpdate className="icon" />}
+            // exactActivate=
+          />
+
           {authState.role === "ADMIN" && (
             <>
               <Typography className="title" component={"p"}>
