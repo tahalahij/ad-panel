@@ -52,3 +52,7 @@ export const resetPasswordRequest = async (
 ) => {
   return NetworkHandler.patch<any>(`users/operator`, { password });
 };
+
+export const getUserInfoRequest = async (id: string) => {
+  return NetworkHandler.get<User>(`users/admin/operators/${id}`);
+};

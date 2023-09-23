@@ -51,7 +51,7 @@ export const RootRouter = () => {
                   element={<ResetPassword title={"تغییر رمز عبور"} />}
                 />
                 <Route
-                  path=":type/:userId/:username/:name/:ip/:map"
+                  path=":type/:userId"
                   element={<NewUser update={true} />}
                 />
                 <Route path="new/:type" element={<NewUser />} />

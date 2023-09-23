@@ -15,6 +15,7 @@ import {
 } from "../../../network/requests";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { USER_ROLE } from "../../../types/UserTypes";
+import { useUserData } from "../data/useOperator";
 
 type NewProps = {
   title?: string;
@@ -23,7 +24,8 @@ type NewProps = {
 
 export const New: FC<NewProps> = ({ title, update = false }) => {
   const navigate = useNavigate();
-  const { userId, username, name, ip, map, type } = useParams();
+  const { userId, type } = useParams();
+  const userInfo = useUserData(userId!);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{
@@ -32,16 +34,17 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   }>({ title: "" });
   const formik = useFormik({
     initialValues: {
-      username: username ?? "",
-      name: name ?? "",
+      username: userInfo?.username ?? "",
+      name: userInfo?.name ?? "",
       password: "",
-      ip: ip ?? "",
-      mac: map ?? "",
+      ip: userInfo?.ip ?? "",
+      mac: userInfo?.mac ?? "",
       role:
         type === "operator"
           ? ("OPERATOR" as USER_ROLE)
           : ("CONTROLLER" as USER_ROLE),
     },
+    enableReinitialize: true,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },

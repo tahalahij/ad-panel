@@ -47,7 +47,7 @@ export const DataTable: FC<IDataTableProps> = ({
         if (!actionVisible) return null;
         const patchLink =
           columnKey === "user"
-            ? `${params.row._id}/${params.row.username}/${params.row.name}/${params.row.ip}/${params.row.mac}`
+            ? `${params.row._id}`
             : columnKey === "device"
             ? `${params.row._id}`
             : singleItemRoute;
