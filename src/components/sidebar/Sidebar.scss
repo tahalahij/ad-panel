@@ -57,9 +57,13 @@
 
         span {
           font-size: 14px;
-          color: #888;
+          // color: #888;
           font-weight: 600;
           margin-right: 10px;
+        }
+
+        #logout {
+          color: #888;
         }
       }
     }

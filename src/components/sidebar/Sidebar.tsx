@@ -18,6 +18,7 @@ import {
 } from "react-icons/md";
 import { userHasAccess } from "../../utils/UserAccess";
 import { logoutUnAuthorized } from "../../network/useLogout";
+import { LinkItem } from "./Item";
 
 export const Sidebar = () => {
   const authState = useAuthenticationState();
@@ -39,83 +40,78 @@ export const Sidebar = () => {
           <Typography className="title" component={"p"}>
             اصلی
           </Typography>
-          <Link to={"/"} style={{ textDecoration: "none" }}>
-            <li>
-              <MdOutlineDashboard className="icon" />
-              <Typography component={"span"}>داشبورد</Typography>
-            </li>
-          </Link>
+          <LinkItem
+            link="/"
+            title="داشبورد"
+            icon={<MdOutlineDashboard className="icon" />}
+          />
           <Typography className="title" component={"p"}>
             لیست ها
           </Typography>
           {authState.role === "ADMIN" && (
-            <Link to={"/users/operator"} style={{ textDecoration: "none" }}>
-              <li>
-                <MdOutlineGroup className="icon" />
-                <Typography component={"span"}>اپراتور ها</Typography>
-              </li>
-            </Link>
+            <LinkItem
+              link="/users/operator"
+              title="اپراتور ها"
+              icon={<MdOutlineGroup className="icon" />}
+              exactActivate={false}
+            />
           )}
           {authState.role === "ADMIN" && (
-            <Link to={"/users/controller"} style={{ textDecoration: "none" }}>
-              <li>
-                <MdOutlineGroup className="icon" />
-                <Typography component={"span"}>کنترلر ها</Typography>
-              </li>
-            </Link>
+            <LinkItem
+              link="/users/controller"
+              title="کنترلر ها"
+              icon={<MdOutlineGroup className="icon" />}
+              exactActivate={false}
+            />
           )}
           {userHasAccess(authState.role, ["ADMIN", "CONTROLLER"]) && (
-            <Link to={"/devices"} style={{ textDecoration: "none" }}>
-              <li>
-                <MdOutlineDevices className="icon" />
-                <Typography component={"span"}>دستگاه ها</Typography>
-              </li>
-            </Link>
+            <LinkItem
+              link="/devices"
+              title="دستگاه ها"
+              icon={<MdOutlineDevices className="icon" />}
+              exactActivate={false}
+              pattern="/devices/:deviceId"
+            />
           )}
 
-          <Link to={"/schedules"} style={{ textDecoration: "none" }}>
-            <li>
-              <MdOutlineUpdate className="icon" />
-              <Typography component={"span"}>برنامه ها</Typography>
-            </li>
-          </Link>
+          <LinkItem
+            link="/schedules"
+            title="برنامه ها"
+            icon={<MdOutlineUpdate className="icon" />}
+            // exactActivate=
+          />
 
-          <Link to={"/conductors"} style={{ textDecoration: "none" }}>
-            <li>
-              <MdOutlineAutoAwesomeMotion className="icon" />
-              <Typography component={"span"}>سری های پخش</Typography>
-            </li>
-          </Link>
+          <LinkItem
+            link="/conductors"
+            title="سری های پخش"
+            icon={<MdOutlineAutoAwesomeMotion className="icon" />}
+          />
 
-          <Link to={"/uploads"} style={{ textDecoration: "none" }}>
-            <li>
-              <MdOutlineCloud className="icon" />
-              <Typography component={"span"}>بارگذاری ها</Typography>
-            </li>
-          </Link>
+          <LinkItem
+            link="/uploads"
+            title="بارگذاری ها"
+            icon={<MdOutlineCloud className="icon" />}
+          />
 
           {authState.role === "OPERATOR" && (
-            <Link to={"/devices/me"} style={{ textDecoration: "none" }}>
-              <li>
-                <MdOutlineDevices className="icon" />
-                <Typography component={"span"}>دستگاه های من</Typography>
-              </li>
-            </Link>
+            <LinkItem
+              link="/devices/me"
+              title="دستگاه های من"
+              icon={<MdOutlineDevices className="icon" />}
+            />
           )}
-          <Link to={"/devices/current"} style={{ textDecoration: "none" }}>
-            <li>
-              <MdOutlineLiveTv className="icon" />
-              <Typography component={"span"}>برنامه در حال پخش</Typography>
-            </li>
-          </Link>
+          <LinkItem
+            link="/devices/current"
+            title="برنامه در حال پخش"
+            icon={<MdOutlineLiveTv className="icon" />}
+          />
 
           {userHasAccess(authState.role, ["ADMIN"]) && (
-            <Link to={"/uploads/azan"} style={{ textDecoration: "none" }}>
-              <li>
-                <MdOutlineMosque className="icon" />
-                <Typography component={"span"}>اذان</Typography>
-              </li>
-            </Link>
+            <LinkItem
+              link="/uploads/azan"
+              title="اذان"
+              icon={<MdOutlineMosque className="icon" />}
+            />
           )}
           {authState.role === "ADMIN" && (
             <>
@@ -123,12 +119,11 @@ export const Sidebar = () => {
                 گزارش ها
               </Typography>
 
-              <Link to={"/statistics"} style={{ textDecoration: "none" }}>
-                <li>
-                  <MdOutlineBarChart className="icon" />
-                  <Typography component={"span"}>آمار دستگاه ها</Typography>
-                </li>
-              </Link>
+              <LinkItem
+                link="/statistics"
+                title="آمار دستگاه ها"
+                icon={<MdOutlineBarChart className="icon" />}
+              />
             </>
           )}
           {userHasAccess(authState.role, ["ADMIN"]) && (
@@ -136,43 +131,36 @@ export const Sidebar = () => {
               <Typography className="title" component={"p"}>
                 تنظیمات
               </Typography>
-
-              <Link
-                to={"/settings/loginBackground"}
-                style={{ textDecoration: "none" }}
-              >
-                <li>
-                  <MdOutlineSettings className="icon" />
-                  <Typography component={"span"}>تصویر صفحه ورود</Typography>
-                </li>
-              </Link>
-              <Link
-                to={"/settings/fileLimits"}
-                style={{ textDecoration: "none" }}
-              >
-                <li>
-                  <MdOutlineSettings className="icon" />
-                  <Typography component={"span"}>محدودیت فایل ها</Typography>
-                </li>
-              </Link>
+              <LinkItem
+                link="/settings/loginBackground"
+                title="تصویر صفحه ورود"
+                icon={<MdOutlineSettings className="icon" />}
+              />
+              <LinkItem
+                link="/settings/fileLimits"
+                title="محدودیت فایل ها"
+                icon={<MdOutlineSettings className="icon" />}
+              />
             </>
           )}
           <Typography className="title" component={"p"}>
             کاربر
           </Typography>
-          <Link to={"/users/resetPassword"} style={{ textDecoration: "none" }}>
-            <li>
-              <MdLockReset className="icon" />
-              <Typography component={"span"}>تغییر رمز عبور</Typography>
-            </li>
-          </Link>
+          <LinkItem
+            link="/users/resetPassword"
+            title="تغییر رمز عبور"
+            icon={<MdLockReset className="icon" />}
+          />
+
           {/* <li>
             <AccountCircleOutlinedIcon className="icon" />
             <Typography component={"span"}>پروفایل</Typography>
           </li> */}
           <li onClick={() => logoutUnAuthorized()}>
             <MdOutlineLogout className="icon" />
-            <Typography component={"span"}>خروج</Typography>
+            <Typography id="logout" component={"span"}>
+              خروج
+            </Typography>
           </li>
         </ul>
       </div>
