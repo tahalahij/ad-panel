@@ -11,7 +11,7 @@ import { queryClient } from "../../App";
 import { FileUploadItem } from "../../types/FileTypes";
 import { useAuthenticationState } from "../../context";
 
-export const useFileData = (operatorId?: string) => {
+export const useFileData = (operatorId?: string, page: number = 0, limit: number = 100) => {
   const auth = useAuthenticationState();
   const [message, setMessage] = useState<{
     title: string;
@@ -20,13 +20,13 @@ export const useFileData = (operatorId?: string) => {
 
   const queryKey = auth.role === "OPERATOR" ? "my-files" : "files";
   const { data, isLoading: loading } = useQuery({
-    queryKey: [queryKey, operatorId],
+    queryKey: [queryKey, operatorId, page],
     queryFn: async () => {
       const apiRequest =
         queryKey === "my-files"
           ? getFilesListByOperatorRequest
           : getFilesListByAdminRequest;
-      const response = await apiRequest({ operator: operatorId! });
+      const response = await apiRequest({ operator: operatorId!, page, limit });
       if (response.success) {
         return response.payload;
       } else throw response.error;
@@ -42,7 +42,7 @@ export const useFileData = (operatorId?: string) => {
     onSuccess(response, _id, context) {
       if (response.success) {
         setMessage({ title: "با موفقیت حذف شد", type: "success" });
-        queryClient.setQueryData<FileUploadItem[]>(["files", operatorId], (oldData) =>
+        queryClient.setQueryData<FileUploadItem[]>([queryKey, operatorId, page], (oldData) =>
           oldData?.filter((file) => file._id !== _id)
         );
       } else {

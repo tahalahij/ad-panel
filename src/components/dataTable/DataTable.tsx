@@ -1,7 +1,6 @@
 import "./dataTable.scss";
 import { FC } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import Typography from "@mui/material/Typography";
 import {
   userColumns,
   userRows,
@@ -27,16 +26,24 @@ interface IDataTableProps {
   onDeleteClick?: (_id: string) => void;
   actionVisible?: boolean;
   resizable?: boolean;
+  rowCount?: number;
+  page?: number;
+  pageSize?: number;
+  onPageChange?: (pageIndex: number) => void;
 }
 
 export const DataTable: FC<IDataTableProps> = ({
   columnKey,
   singleItemRoute,
-  data,
+  data = [],
   onViewClick,
   onDeleteClick,
   actionVisible = true,
   resizable = false,
+  rowCount,
+  page = 0,
+  pageSize = 5,
+  onPageChange,
 }) => {
   const actionColumn = [
     {
@@ -127,7 +134,8 @@ export const DataTable: FC<IDataTableProps> = ({
     }
   };
 
-  if (!data || !data?.length) return <EmptyList title={getEmptyListTitle()} />;
+  if ((!data || !data?.length) && page === 0)
+    return <EmptyList title={getEmptyListTitle()} />;
 
   return (
     <div className="dataTable">
@@ -135,9 +143,9 @@ export const DataTable: FC<IDataTableProps> = ({
         rows={data}
         columns={getColumns()}
         getRowId={(row) => row._id}
-        // pageSize={}
         rowsPerPageOptions={[25]}
-        // checkboxSelection
+        rowCount={rowCount}
+        pageSize={pageSize}
         getRowHeight={
           resizable
             ? (params) =>
@@ -148,6 +156,9 @@ export const DataTable: FC<IDataTableProps> = ({
                   : undefined
             : undefined
         }
+        paginationMode="server"
+        page={page}
+        onPageChange={onPageChange}
       />
     </div>
   );

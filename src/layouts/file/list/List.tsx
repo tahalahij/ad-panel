@@ -7,7 +7,6 @@ import Alert from "@mui/material/Alert";
 import { DataTable, OperatorSelector } from "../../../components";
 import { Link } from "react-router-dom";
 import { useFileData } from "../useFileData";
-import { useFilesLoadingState, useFilesState } from "../../../context/file";
 
 type ListProps = {
   title?: string;
@@ -15,13 +14,20 @@ type ListProps = {
   columnKey: "user" | "schedule" | "file";
 };
 
+const PAGE_SIZE = 25;
+
 export const FileList: FC<ListProps> = ({
   title,
   singleItemRoute,
   columnKey = "user",
 }) => {
-  const [operatorId, setOperatorId] = useState('');
-  const { removeItem, message, setMessage, data, loading } = useFileData(operatorId);
+  const [operatorId, setOperatorId] = useState("");
+  const [page, setPage] = useState(0);
+  const { removeItem, message, setMessage, data, loading } = useFileData(
+    operatorId,
+    page,
+    PAGE_SIZE
+  );
 
   const onDeleteClick = (_id: string) => {
     removeItem(_id);
@@ -45,6 +51,10 @@ export const FileList: FC<ListProps> = ({
         singleItemRoute={singleItemRoute}
         onDeleteClick={onDeleteClick}
         data={data}
+        rowCount={1000}
+        pageSize={PAGE_SIZE}
+        page={page}
+        onPageChange={setPage}
       />
       <Snackbar
         open={!!message.title}
