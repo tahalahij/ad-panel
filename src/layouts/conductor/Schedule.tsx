@@ -10,7 +10,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
 import { useGetConductor, useConductorData } from "./data/useConductorData";
-import { SortingList, SortListMethods, WithOrderId } from "./SortingList";
+import { SortingList, SortListMethods } from "./SortingList";
 import {
   addConductorRequest,
   updateConductorRequest,
@@ -18,15 +18,16 @@ import {
   addConductorByAdminRequest,
   deleteConductorByAdminRequest,
 } from "../../network/requests";
-// import { validateIPAddress } from "../../utils/Validator";
 import { FileUploadItem } from "../../types/FileTypes";
-import { MdAdd, MdReorder } from "react-icons/md";
 import { useAuthenticationState } from "../../context";
 
 type ConductorProps = {};
 
+const PAGE_SIZE = 4;
+
 export const Conductor: FC<ConductorProps> = () => {
   const [operatorId, setOperatorId] = useState("");
+  const [page, setPage] = useState(0);
   const navigate = useNavigate();
   const conductorList = useConductorData(operatorId);
   const {
@@ -34,7 +35,7 @@ export const Conductor: FC<ConductorProps> = () => {
     loading: listLoading,
     addOperatorConductor,
     removeOperatorConductor,
-  } = useGetConductor(operatorId);
+  } = useGetConductor(operatorId, page, PAGE_SIZE);
   const authState = useAuthenticationState();
 
   const [isOrdering, setOrdering] = useState(false);
@@ -101,7 +102,6 @@ export const Conductor: FC<ConductorProps> = () => {
       });
     }
     setLoading(false);
-    console.log(tempArray);
   };
 
   const onDeleteClick = async (_id: string) => {
@@ -252,6 +252,10 @@ export const Conductor: FC<ConductorProps> = () => {
             data={operatorConductors}
             // actionVisible={false}
             onDeleteClick={onDeleteClick}
+            rowCount={1000}
+            page={page}
+            onPageChange={setPage}
+            pageSize={PAGE_SIZE}
             // onViewClick={onViewClick}
           />
         </>
