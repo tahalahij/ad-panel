@@ -8,24 +8,24 @@ import {
 import { Schedule } from "../../types/ScheduleTypes";
 import { useAuthenticationState } from "../../context";
 
-export const useScheduleData = (operatorId?: string) => {
+export const useScheduleData = (operatorId?: string, page: number = 0, limit: number = 100) => {
   const [list, setList] = useState<Schedule[]>([]);
   const [loading, setLoading] = useState(false);
   const auth = useAuthenticationState();
 
-  const fetchData = async (page: number = 0) => {
+  const fetchData = async () => {
     setLoading(true);
     let response =
       auth.role === "OPERATOR"
-        ? await getSchedulesByOperatorRequest({ limit: 100, page })
+        ? await getSchedulesByOperatorRequest({ limit, page })
         : auth.role === "ADMIN"
         ? await getSchedulesByAdminRequest({
-            limit: 100,
+            limit,
             page,
             operator: operatorId!,
           })
         : await getSchedulesByControllerRequest({
-            limit: 100,
+            limit,
             page,
             operator: operatorId!,
           });
@@ -36,19 +36,20 @@ export const useScheduleData = (operatorId?: string) => {
   };
 
   const removeSchedule = (id: string) => {
-    const cloneList = [...list];
-    const index = cloneList.findIndex((item) => item._id === id);
-    if (index > -1) {
-      cloneList.splice(index, 1);
-    }
+    // const cloneList = [...list];
+    // const index = cloneList.findIndex((item) => item._id === id);
+    // if (index > -1) {
+    //   cloneList.splice(index, 1);
+    // }
 
-    setList(cloneList);
+    // setList(cloneList);
+    fetchData()
   };
 
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [operatorId]);
+  }, [operatorId, page, limit]);
 
   return { fetchData, list, loading, removeSchedule };
 };

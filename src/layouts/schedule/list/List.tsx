@@ -14,6 +14,8 @@ import {
 import { userHasAccess } from "../../../utils/UserAccess";
 import { useAuthenticationState } from "../../../context";
 
+const PAGE_SIZE = 25;
+
 type ListProps = {
   title?: string;
   newItemRoute?: string;
@@ -22,9 +24,10 @@ type ListProps = {
 
 export const List: FC<ListProps> = ({ title, newItemRoute, columnKey }) => {
   const [operatorId, setOperatorId] = useState("");
+  const [page, setPage] = useState(0)
 
   const { fetchData, removeSchedule, list, loading } =
-    useScheduleData(operatorId);
+    useScheduleData(operatorId, page, PAGE_SIZE);
   const authState = useAuthenticationState();
 
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -79,6 +82,10 @@ export const List: FC<ListProps> = ({ title, newItemRoute, columnKey }) => {
         data={list}
         onDeleteClick={onDelete}
         resizable={true}
+        rowCount={1000}
+        pageSize={PAGE_SIZE}
+        page={page}
+        onPageChange={setPage}
       />
       <Snackbar
         open={!!message.title}
