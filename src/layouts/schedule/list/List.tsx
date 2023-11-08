@@ -14,7 +14,7 @@ import {
 import { userHasAccess } from "../../../utils/UserAccess";
 import { useAuthenticationState } from "../../../context";
 
-const PAGE_SIZE = 25;
+const PAGE_SIZE = parseInt(process.env.REACT_APP_PAGE_SIZE!);
 
 type ListProps = {
   title?: string;

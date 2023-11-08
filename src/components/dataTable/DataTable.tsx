@@ -143,7 +143,7 @@ export const DataTable: FC<IDataTableProps> = ({
         rows={data}
         columns={getColumns()}
         getRowId={(row) => row._id}
-        rowsPerPageOptions={[25]}
+        rowsPerPageOptions={[pageSize]}
         rowCount={rowCount}
         pageSize={pageSize}
         getRowHeight={

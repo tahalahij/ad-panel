@@ -23,7 +23,7 @@ import { useAuthenticationState } from "../../context";
 
 type ConductorProps = {};
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = parseInt(process.env.REACT_APP_PAGE_SIZE!);
 
 export const Conductor: FC<ConductorProps> = () => {
   const [operatorId, setOperatorId] = useState("");

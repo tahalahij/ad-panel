@@ -8,13 +8,13 @@ import { DataTable, OperatorSelector } from "../../../components";
 import { Link } from "react-router-dom";
 import { useFileData } from "../useFileData";
 
+const PAGE_SIZE = parseInt(process.env.REACT_APP_PAGE_SIZE!);
+
 type ListProps = {
   title?: string;
   singleItemRoute?: string;
   columnKey: "user" | "schedule" | "file";
 };
-
-const PAGE_SIZE = 25;
 
 export const FileList: FC<ListProps> = ({
   title,
