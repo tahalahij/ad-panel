@@ -8,19 +8,24 @@ import { ScheduleConductor } from "../../../types/FileTypes";
 import { Schedule } from "../../../types/ScheduleTypes";
 import { useFileData } from "../../file/useFileData";
 import { useAuthenticationState } from "../../../context";
+import { WithPagination } from "../../../types/Pagination";
 
 //
 export const useConductorData = (operatorId?: string) => {
   const { data } = useFileData(operatorId);
 
-  return data || [];
+  return data?.data || [];
 };
 
 // TODO: rewrite with react-query
-export const useGetConductor = (operatorId?: string, page: number = 0, limit: number = 100) => {
+export const useGetConductor = (
+  operatorId?: string,
+  page: number = 0,
+  limit: number = 100
+) => {
   const [operatorConductors, setOperatorConductors] = useState<
-    ScheduleConductor[]
-  >([]);
+    WithPagination<ScheduleConductor[]>
+  >({data: [], total: 0});
   const [loading, setLoading] = useState(false);
   const authState = useAuthenticationState();
 
@@ -29,7 +34,11 @@ export const useGetConductor = (operatorId?: string, page: number = 0, limit: nu
     const response =
       authState.role === "OPERATOR"
         ? await getConductorsListRequest({ operator: "", page, limit })
-        : await getConductorsListByAdminRequest({ operator: operatorId!, page, limit });
+        : await getConductorsListByAdminRequest({
+            operator: operatorId!,
+            page,
+            limit,
+          });
     if (response.success) {
       setOperatorConductors(response.payload!);
     }
@@ -38,7 +47,7 @@ export const useGetConductor = (operatorId?: string, page: number = 0, limit: nu
 
   const addOperatorConductor = (item: ScheduleConductor) => {
     // setOperatorConductors((prev) => [...prev, item]);
-    fetchData()
+    fetchData();
   };
 
   const removeOperatorConductor = (id: string) => {
@@ -49,7 +58,7 @@ export const useGetConductor = (operatorId?: string, page: number = 0, limit: nu
     // }
 
     // setOperatorConductors(list);
-    fetchData()
+    fetchData();
   };
 
   useEffect(() => {

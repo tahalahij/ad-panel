@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useFilesDispatch, useFilesLoadingDispatch } from "../../context/file";
+import { useState } from "react";
 import {
   deleteFileByAdminRequest,
   deleteFileRequest,
@@ -8,7 +7,6 @@ import {
 } from "../../network/requests/FileRequests";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient } from "../../App";
-import { FileUploadItem } from "../../types/FileTypes";
 import { useAuthenticationState } from "../../context";
 
 export const useFileData = (operatorId?: string, page: number = 0, limit: number = 100) => {
@@ -31,7 +29,7 @@ export const useFileData = (operatorId?: string, page: number = 0, limit: number
         return response.payload;
       } else throw response.error;
     },
-    placeholderData: [],
+    placeholderData: {data: [], total: 0},
   });
 
   const { mutate } = useMutation({
@@ -42,9 +40,12 @@ export const useFileData = (operatorId?: string, page: number = 0, limit: number
     onSuccess(response, _id, context) {
       if (response.success) {
         setMessage({ title: "با موفقیت حذف شد", type: "success" });
-        queryClient.setQueryData<FileUploadItem[]>([queryKey, operatorId, page], (oldData) =>
-          oldData?.filter((file) => file._id !== _id)
-        );
+        // queryClient.setQueryData<WithPagination<FileUploadItem[]>>([queryKey, operatorId, page], (oldData) =>
+        //   oldData?.data?.filter((file) => file._id !== _id)
+        // );
+        queryClient.invalidateQueries({
+          queryKey: [queryKey, operatorId, page]
+        })
       } else {
         setMessage({
           title: response.error?.toString()!,

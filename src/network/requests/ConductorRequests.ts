@@ -1,4 +1,5 @@
 import { ScheduleConductor } from "../../types/FileTypes";
+import { WithPagination } from "../../types/Pagination";
 import NetworkHandler, {
   listParamsReq,
   withListParam,
@@ -47,7 +48,7 @@ export const deleteConductorByAdminRequest = async (id: string) => {
 };
 
 export const getConductorsListRequest = async (params: withListParam) => {
-  return NetworkHandler.get<ScheduleConductor[]>(`conductors`, {
+  return NetworkHandler.get<WithPagination<ScheduleConductor[]>>(`conductors`, {
     params: { page: 0, limit: 100, ...params },
   });
 };
@@ -55,7 +56,7 @@ export const getConductorsListRequest = async (params: withListParam) => {
 export const getConductorsListByAdminRequest = async (
   params: withListParam
 ) => {
-  return NetworkHandler.get<ScheduleConductor[]>(`conductors/admin`, {
+  return NetworkHandler.get<WithPagination<ScheduleConductor[]>>(`conductors/admin`, {
     params: { page: 0, limit: 100, ...params },
   });
 };

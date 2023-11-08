@@ -186,7 +186,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                   value={formik.values.conductor}
                   onChange={formik.handleChange}
                 >
-                  {operatorConductors?.map((item, index) => (
+                  {operatorConductors?.data?.length && operatorConductors?.data?.map((item, index) => (
                     <MenuItem value={item._id} key={item._id}>
                       {item.name}
                     </MenuItem>

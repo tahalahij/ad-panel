@@ -7,9 +7,10 @@ import {
 } from "../../network/requests";
 import { Schedule } from "../../types/ScheduleTypes";
 import { useAuthenticationState } from "../../context";
+import { WithPagination } from "../../types/Pagination";
 
 export const useScheduleData = (operatorId?: string, page: number = 0, limit: number = 100) => {
-  const [list, setList] = useState<Schedule[]>([]);
+  const [list, setList] = useState<WithPagination<Schedule[]>>({data: [], total: 0});
   const [loading, setLoading] = useState(false);
   const auth = useAuthenticationState();
 
