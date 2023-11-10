@@ -38,7 +38,7 @@ export const DeviceStatistics = () => {
       alert(JSON.stringify(values, null, 2));
     },
   });
-  const { list: deviceList, loading: deviceLoading } = useDeviceData();
+  const { list: deviceList, loading: deviceLoading } = useDeviceData(undefined, 0, 200);
   const [rangeDay, setRangeDay] = useState<DateObject[]>([
     new DateObject().subtract(7, "days"),
     new DateObject(),
@@ -136,7 +136,7 @@ export const DeviceStatistics = () => {
             label="دستگاه"
             onChange={formik.handleChange}
           >
-            {deviceList?.map((item) => (
+            {deviceList?.data?.map((item) => (
               <MenuItem key={item._id} value={item.ip}>
                 {item.name + " " + item.ip}
               </MenuItem>

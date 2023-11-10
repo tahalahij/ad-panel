@@ -8,19 +8,19 @@ import { Device } from "../../types/DeviceType";
 import { useAuthenticationState } from "../../context";
 import { useQuery } from "@tanstack/react-query";
 
-export const useDeviceData = (operatorId?: string) => {
+export const useDeviceData = (operatorId?: string, page = 0, pageSize = 100) => {
   const auth = useAuthenticationState();
   const queryKey = auth.role === "OPERATOR" ? "my-devices" : "devices";
   const { data, isLoading: loading } = useQuery({
-    queryKey: [queryKey, operatorId],
+    queryKey: [queryKey, operatorId, page, pageSize],
     queryFn: () =>
       queryKey === "devices"
-        ? getDeviceListRequest({ operator: operatorId })
-        : getMyDevicesListRequest(),
-    placeholderData: { payload: [], error: "", httpStatus: 200, success: true },
+        ? getDeviceListRequest({ operator: operatorId, page, limit: pageSize })
+        : getMyDevicesListRequest({page, limit: pageSize}),
+    placeholderData: { payload: {data: [], total: 0}, error: "", httpStatus: 200, success: true },
   });
 
-  return { list: data?.payload || [], loading };
+  return { list: data?.payload || {data: [], total: 0}, loading };
 };
 
 export const useDeviceById = (id: string) => {
