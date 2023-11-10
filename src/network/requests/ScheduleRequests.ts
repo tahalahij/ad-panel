@@ -7,13 +7,13 @@ type paramsWithList = { operator: string } & listParamsReq;
 export const getSchedulesByOperatorRequest = async (
   params: listParamsReq = { page: 0, limit: 100 }
 ) => {
-  return NetworkHandler.get<WithPagination<Schedule[]>>(`schedule/operators`, {
+  return NetworkHandler.get<WithPagination<Schedule>>(`schedule/operators`, {
     params,
   });
 };
 
 export const getSchedulesByAdminRequest = async (params: paramsWithList) => {
-  return NetworkHandler.get<WithPagination<Schedule[]>>(`schedule/admin`, {
+  return NetworkHandler.get<WithPagination<Schedule>>(`schedule/admin`, {
     params: { page: 0, limit: 100, ...params },
   });
 };
@@ -21,7 +21,7 @@ export const getSchedulesByAdminRequest = async (params: paramsWithList) => {
 export const getSchedulesByControllerRequest = async (
   params: paramsWithList
 ) => {
-  return NetworkHandler.get<WithPagination<Schedule[]>>(`schedule/controller`, {
+  return NetworkHandler.get<WithPagination<Schedule>>(`schedule/controller`, {
     params: { page: 0, limit: 100, ...params },
   });
 };

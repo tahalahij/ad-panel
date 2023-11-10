@@ -24,7 +24,7 @@ export const useGetConductor = (
   limit: number = 100
 ) => {
   const [operatorConductors, setOperatorConductors] = useState<
-    WithPagination<ScheduleConductor[]>
+    WithPagination<ScheduleConductor>
   >({data: [], total: 0});
   const [loading, setLoading] = useState(false);
   const authState = useAuthenticationState();

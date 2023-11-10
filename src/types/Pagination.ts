@@ -1,4 +1,4 @@
 export type WithPagination<T> = {
-  data: T;
+  data: T[];
   total: number;
 };

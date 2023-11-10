@@ -7,13 +7,13 @@ import NetworkHandler, {
 } from "../NetworkHandler";
 
 export const getFilesListByOperatorRequest = async (params: withListParam) => {
-  return NetworkHandler.get<WithPagination<FileUploadItem[]>>(`files/operator`, {
+  return NetworkHandler.get<WithPagination<FileUploadItem>>(`files/operator`, {
     params: { page: 0, limit: 100, ...params },
   });
 };
 
 export const getFilesListByAdminRequest = async (params: withListParam) => {
-  return NetworkHandler.get<WithPagination<FileUploadItem[]>>(`files`, {
+  return NetworkHandler.get<WithPagination<FileUploadItem>>(`files`, {
     params: { page: 0, limit: 100, ...params },
   });
 };
