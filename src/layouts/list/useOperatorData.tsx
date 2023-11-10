@@ -22,7 +22,7 @@ export const useOperatorData = (userType: USER_ROLE) => {
         : getControllerListRequest;
     const response = await apiRequest({ page, limit: 100 });
     if (response.success) {
-      setUserList(response.payload);
+      setUserList(response.payload?.data);
     }
     setLoading(false);
   };
