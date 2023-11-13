@@ -1,10 +1,11 @@
 // import type {ExpertCardType} from './../types';
 import { FileUploadItem } from "../../types/FileTypes";
+import { WithPagination } from "../../types/Pagination";
 import { Setting } from "../../types/SettingTypes";
 import NetworkHandler, { listParamsReq } from "../NetworkHandler";
 
 export const getAllSettingsRequest = async () => {
-  return NetworkHandler.get<Setting[]>(`system-settings/admin`);
+  return NetworkHandler.get<WithPagination<Setting>>(`system-settings/admin`);
 };
 
 export const updateSettingByIdRequest = async (id: string, value: string) => {

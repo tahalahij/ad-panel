@@ -23,7 +23,7 @@ export const FileLimits: FC<layoutProps> = ({ title }) => {
   const formik = useFormik({
     initialValues: {
       fileSizeLimit:
-        settings?.payload?.find(
+        settings?.payload?.data?.find(
           (s) => s.name === "FILE_SIZE_LIMIT_IN_MEGA_BYTE"
         )?.value ?? "",
     },
@@ -37,7 +37,7 @@ export const FileLimits: FC<layoutProps> = ({ title }) => {
 
   const submit = () => {
     updateSettings({
-      id: settings?.payload?.find(
+      id: settings?.payload?.data?.find(
         (s) => s.name === "FILE_SIZE_LIMIT_IN_MEGA_BYTE"
       )?._id!,
       value: formik.values.fileSizeLimit,
