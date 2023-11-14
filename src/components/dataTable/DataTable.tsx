@@ -45,13 +45,12 @@ export const DataTable: FC<IDataTableProps> = ({
   pageSize = 5,
   onPageChange,
 }) => {
-  const actionColumn = [
+  const actionColumn = !actionVisible ? [] : [
     {
       field: "action",
       headerName: "دستور",
       width: 120,
       renderCell: (params: any) => {
-        if (!actionVisible) return null;
         const patchLink =
           columnKey === "user"
             ? `${params.row._id}`

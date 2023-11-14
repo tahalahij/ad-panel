@@ -7,6 +7,8 @@ import Alert from "@mui/material/Alert";
 import { DataTable, OperatorSelector } from "../../../components";
 import { Link } from "react-router-dom";
 import { useFileData } from "../useFileData";
+import { userHasAccess } from "../../../utils/UserAccess";
+import { useAuthenticationState } from "../../../context";
 
 const PAGE_SIZE = parseInt(process.env.REACT_APP_PAGE_SIZE!);
 
@@ -23,6 +25,8 @@ export const FileList: FC<ListProps> = ({
 }) => {
   const [operatorId, setOperatorId] = useState("");
   const [page, setPage] = useState(0);
+  const authState = useAuthenticationState();
+
   const { removeItem, message, setMessage, data, loading } = useFileData(
     operatorId,
     page,
@@ -37,9 +41,11 @@ export const FileList: FC<ListProps> = ({
     <div className="list">
       <div className="header">
         <Typography variant="h6">{title}</Typography>
-        <Link to={"new"} style={{ textDecoration: "none" }} className="link">
-          <Typography variant="button">{"افزودن"}</Typography>
-        </Link>
+        {userHasAccess(authState.role, ["ADMIN", "OPERATOR"]) && (
+          <Link to={"new"} style={{ textDecoration: "none" }} className="link">
+            <Typography variant="button">{"افزودن"}</Typography>
+          </Link>
+        )}
       </div>
       {loading ? <CircularProgress /> : null}
       <OperatorSelector
@@ -49,6 +55,7 @@ export const FileList: FC<ListProps> = ({
       <DataTable
         columnKey={"file"}
         singleItemRoute={singleItemRoute}
+        actionVisible={userHasAccess(authState.role, ["ADMIN", "OPERATOR"])}
         onDeleteClick={onDeleteClick}
         data={data?.data}
         rowCount={data?.total}

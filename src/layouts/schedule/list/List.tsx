@@ -79,6 +79,7 @@ export const List: FC<ListProps> = ({ title, newItemRoute, columnKey }) => {
       />
       <DataTable
         columnKey={columnKey}
+        actionVisible={userHasAccess(authState.role, ["ADMIN", "OPERATOR"])}
         data={list?.data}
         onDeleteClick={onDelete}
         resizable={true}

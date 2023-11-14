@@ -20,6 +20,7 @@ import {
 } from "../../network/requests";
 import { FileUploadItem } from "../../types/FileTypes";
 import { useAuthenticationState } from "../../context";
+import { userHasAccess } from "../../utils/UserAccess";
 
 type ConductorProps = {};
 
@@ -198,15 +199,8 @@ export const Conductor: FC<ConductorProps> = () => {
                 ثبت تغییرات
               </LoadingButton>
             </>
-          ) : (
+          ) : userHasAccess(authState.role, ["ADMIN", "OPERATOR"]) ? (
             <>
-              {/* <Button
-                variant="outlined"
-                onClick={() => setOrdering(true)}
-                startIcon={<MdReorder />}
-              >
-                تغییر ترتیب
-              </Button> */}
               <Button
                 className="link"
                 variant="outlined"
@@ -215,7 +209,7 @@ export const Conductor: FC<ConductorProps> = () => {
                 افزودن
               </Button>
             </>
-          )}
+          ) : null}
         </div>
       </div>
       <div>
@@ -250,7 +244,7 @@ export const Conductor: FC<ConductorProps> = () => {
           <DataTable
             columnKey="conductor"
             data={operatorConductors?.data}
-            // actionVisible={false}
+            actionVisible={userHasAccess(authState.role, ["ADMIN", "OPERATOR"])}
             onDeleteClick={onDeleteClick}
             rowCount={operatorConductors?.total}
             page={page}
