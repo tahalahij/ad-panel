@@ -45,7 +45,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   const { scheduleId } = useParams();
   const { data, loading: scheduleLoading } = useScheduleById(scheduleId);
 
-  const { list: deviceList, loading: deviceLoading } = useDeviceData(operatorId);
+  const { list: deviceList, loading: deviceLoading } = useDeviceData(operatorId, 0, 100);
   const { operatorConductors, loading: conductorLoading } = useGetConductor(operatorId);
   // const [currentIndex, setCurrentIndex] = useState(-1);
   const authState = useAuthenticationState();
@@ -186,7 +186,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                   value={formik.values.conductor}
                   onChange={formik.handleChange}
                 >
-                  {operatorConductors?.map((item, index) => (
+                  {operatorConductors?.data?.length && operatorConductors?.data?.map((item, index) => (
                     <MenuItem value={item._id} key={item._id}>
                       {item.name}
                     </MenuItem>
@@ -225,7 +225,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                   label="دستگاه"
                   onChange={formik.handleChange}
                 >
-                  {deviceList?.map((item, index) => (
+                  {deviceList?.data?.map((item, index) => (
                     <MenuItem value={item._id} key={item._id}>
                       {item.name + " " + item.ip}
                     </MenuItem>

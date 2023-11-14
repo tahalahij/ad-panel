@@ -1,11 +1,13 @@
 import "./list.scss";
-import { FC } from "react";
+import { FC, useState } from "react";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import { DataTable } from "../../../components";
 import { Link } from "react-router-dom";
 import { useDeviceData } from "../useDeviceData";
 import { useAuthenticationState } from "../../../context";
+
+const PAGE_SIZE = parseInt(process.env.REACT_APP_PAGE_SIZE!);
 
 type ListProps = {
   title?: string;
@@ -18,7 +20,8 @@ export const List: FC<ListProps> = ({
   newItemRoute,
   columnKey = "device",
 }) => {
-  const { list, loading } = useDeviceData();
+  const [page, setPage] = useState(0);
+  const { list, loading } = useDeviceData(undefined, page, PAGE_SIZE);
   const auth = useAuthenticationState();
   return (
     <div className="list">
@@ -34,7 +37,11 @@ export const List: FC<ListProps> = ({
       <DataTable
         columnKey={"device"}
         actionVisible={auth.role !== "OPERATOR"}
-        data={list}
+        data={list?.data}
+        pageSize={PAGE_SIZE}
+        rowCount={list?.total}
+        page={page}
+        onPageChange={setPage}
       />
     </div>
   );

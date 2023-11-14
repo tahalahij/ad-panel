@@ -1,5 +1,6 @@
 import { Device } from "../../types/DeviceType";
 import { FileUploadItem } from "../../types/FileTypes";
+import { WithPagination } from "../../types/Pagination";
 import { Schedule } from "../../types/ScheduleTypes";
 import NetworkHandler, { listParamsReq, withListParam } from "../NetworkHandler";
 
@@ -14,8 +15,8 @@ type newDeviceParams = {
 export const getDeviceListRequest = async (
   params: withListParam,
 ) => {
-  return NetworkHandler.get<Device[]>(`devices/admin`, {
-    params: { page: 0, limit: 100, operatorId: params.operator },
+  return NetworkHandler.get<WithPagination<Device>>(`devices/admin`, {
+    params,
   });
 };
 
@@ -31,9 +32,9 @@ export const updateDeviceRequest = async ({
 };
 
 export const getMyDevicesListRequest = async (
-  params: listParamsReq = { page: 0, limit: 100 }
+  params: listParamsReq
 ) => {
-  return NetworkHandler.get<Device[]>(`devices`, {
+  return NetworkHandler.get<WithPagination<Device>>(`devices`, {
     params,
   });
 };

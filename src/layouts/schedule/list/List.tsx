@@ -79,10 +79,10 @@ export const List: FC<ListProps> = ({ title, newItemRoute, columnKey }) => {
       />
       <DataTable
         columnKey={columnKey}
-        data={list}
+        data={list?.data}
         onDeleteClick={onDelete}
         resizable={true}
-        rowCount={1000}
+        rowCount={list?.total}
         pageSize={PAGE_SIZE}
         page={page}
         onPageChange={setPage}

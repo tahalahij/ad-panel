@@ -23,7 +23,7 @@ import { useAuthenticationState } from "../../../context";
 type CurrentPlayingProps = {};
 
 export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
-  const { list, loading } = useDeviceData();
+  const { list, loading } = useDeviceData(undefined, 0, 100);
   const auth = useAuthenticationState();
 
   const [currentIndex, setCurrentIndex] = useState(-1);
@@ -45,7 +45,7 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
         ? getDeviceCurrentScheduleByOperatorRequest
         : getDeviceCurrentScheduleByAdminRequest;
 
-    getCurrentScheduleRequest(list[currentIndex]._id)
+    getCurrentScheduleRequest(list?.data?.[currentIndex]._id)
       .then((res) => {
         if (res.success)
           setCurrentItem({
@@ -64,7 +64,7 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
   };
 
   useEffect(() => {
-    if (currentIndex > -1 && list?.length > 0) {
+    if (currentIndex > -1 && list?.data?.length > 0) {
       fetchData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,7 +88,7 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
             label="دستگاه"
             onChange={onDeviceChange}
           >
-            {list?.map((item, index) => (
+            {list?.data?.map((item, index) => (
               <MenuItem key={item.ip} value={index}>
                 {item.name + " " + item.ip}
               </MenuItem>
@@ -180,9 +180,9 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
                     }}
                   >
                     {"‏" +
-                      list[currentIndex].name +
+                      list?.data?.[currentIndex].name +
                       " " +
-                      list[currentIndex].ip +
+                      list?.data?.[currentIndex].ip +
                       "‏"}
                   </div>
                 </div>

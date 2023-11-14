@@ -61,7 +61,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   const submitUser = async () => {
     const { password, role, ...requestBody } = formik.values;
     if (!!password) {
-      Object.assign(requestBody, { password, role });
+      Object.assign(requestBody, { password });
     }
     const response = update
       ? await updateOperatorRequest({ ...requestBody, _id: userId })
@@ -158,7 +158,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 sx={{ width: "25ch" }}
               />
             </div> */}
-            {!update && (
+            {(
               <div className="formInput">
                 <TextField
                   id="password"

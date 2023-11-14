@@ -1,3 +1,4 @@
+import { WithPagination } from "../../types/Pagination";
 import { USER_ROLE, User } from "../../types/UserTypes";
 import NetworkHandler, { listParamsReq } from "../NetworkHandler";
 
@@ -14,7 +15,7 @@ type newUserParams = {
 export const getOperatorListRequest = async (
   params: listParamsReq = { page: 0, limit: 100 }
 ) => {
-  return NetworkHandler.get<User[]>(`users/admin/operators`, {
+  return NetworkHandler.get<WithPagination<User>>(`users/admin/operators`, {
     params,
   });
 };
@@ -22,7 +23,7 @@ export const getOperatorListRequest = async (
 export const getControllerListRequest = async (
   params: listParamsReq = { page: 0, limit: 100 }
 ) => {
-  return NetworkHandler.get<User[]>(`users/admin/controllers`, {
+  return NetworkHandler.get<WithPagination<User>>(`users/admin/controllers`, {
     params,
   });
 };

@@ -130,25 +130,25 @@ export const Conductor: FC<ConductorProps> = () => {
     }
   };
 
-  const onViewClick = (_id: string) => {
-    try {
-      const index = operatorConductors.findIndex(
-        (schedule) => schedule._id === _id
-      );
-      const activeIds = operatorConductors[index].conductor;
-      // const tempIp = operatorConductors[index].ip;
-      const tempArray = conductorList.filter(function (item) {
-        return activeIds.indexOf(item._id) > -1;
-      });
-      setOrderList(tempArray);
-      // setIp(tempIp);
-      setPatching(true);
-      // patchingId.current = _id;
-      setOrdering(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const onViewClick = (_id: string) => {
+  //   try {
+  //     const index = operatorConductors.findIndex(
+  //       (schedule) => schedule._id === _id
+  //     );
+  //     const activeIds = operatorConductors[index].conductor;
+  //     // const tempIp = operatorConductors[index].ip;
+  //     const tempArray = conductorList.filter(function (item) {
+  //       return activeIds.indexOf(item._id) > -1;
+  //     });
+  //     setOrderList(tempArray);
+  //     // setIp(tempIp);
+  //     setPatching(true);
+  //     // patchingId.current = _id;
+  //     setOrdering(true);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const onRemove = (_id: string) => {
     const index = orderList.findIndex((schedule) => schedule._id === _id);
@@ -249,10 +249,10 @@ export const Conductor: FC<ConductorProps> = () => {
           {listLoading ? <CircularProgress /> : null}
           <DataTable
             columnKey="conductor"
-            data={operatorConductors}
+            data={operatorConductors?.data}
             // actionVisible={false}
             onDeleteClick={onDeleteClick}
-            rowCount={1000}
+            rowCount={operatorConductors?.total}
             page={page}
             onPageChange={setPage}
             pageSize={PAGE_SIZE}
