@@ -1,6 +1,6 @@
 import { GridColDef } from "@mui/x-data-grid";
 import { CellImage } from "./CellImage";
-// import { CellLink } from "./CellLink";
+import { CellLink } from "./CellLink";
 import { ScheduleTypeEnum } from "../../types/ScheduleTypes";
 import moment from "moment-jalaali";
 import { digitsEnToFa } from "@persian-tools/persian-tools";
@@ -46,7 +46,7 @@ export const fileColumns: GridColDef[] = [
     field: "originalName",
     headerName: "نام فایل",
     width: 330,
-    // renderCell: CellLink,
+    renderCell: CellLink,
   },
   { field: "type", headerName: "نوع فایل", width: 100, sortable: false },
   {

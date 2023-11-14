@@ -106,7 +106,7 @@ export const SortingList = forwardRef<SortListMethods, SortingListProps>(
                 </div>
                 <div className="part">
                   <Typography>
-                    <a href={item.path} target="_blank" rel="noreferrer">
+                    <a href={encodeURI(BASE_API_URL + "files/download/stream/" + item.name.replace('files:/', ''))} target="_blank" rel="noreferrer">
                       {item.originalName}
                     </a>
                   </Typography>
