@@ -15,7 +15,7 @@ export const useDeviceData = (operatorId?: string, page = 0, pageSize = 100) => 
     queryKey: [queryKey, operatorId, page, pageSize],
     queryFn: () =>
       queryKey === "devices"
-        ? getDeviceListRequest({ operator: operatorId, page, limit: pageSize })
+        ? getDeviceListRequest({ operatorId, page, limit: pageSize })
         : getMyDevicesListRequest({page, limit: pageSize}),
     placeholderData: { payload: {data: [], total: 0}, error: "", httpStatus: 200, success: true },
   });
