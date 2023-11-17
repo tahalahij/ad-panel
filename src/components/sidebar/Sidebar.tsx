@@ -118,15 +118,22 @@ export const Sidebar = () => {
             // exactActivate=
           />
 
-          {authState.role === "ADMIN" && (
+          {userHasAccess(authState.role, ["ADMIN", "CONTROLLER"]) && (
             <>
               <Typography className="title" component={"p"}>
                 گزارش ها
               </Typography>
 
+              {userHasAccess(authState.role, ["ADMIN"]) && (
+                <LinkItem
+                  link="/statistics"
+                  title="آمار دستگاه ها"
+                  icon={<MdOutlineBarChart className="icon" />}
+                />
+              )}
               <LinkItem
-                link="/statistics"
-                title="آمار دستگاه ها"
+                link="/statistics/logs"
+                title="لاگ عملیات"
                 icon={<MdOutlineBarChart className="icon" />}
               />
             </>

@@ -69,7 +69,7 @@ export const scheduleColumns: GridColDef[] = [
     headerName: "نام دستگاه",
     width: 150,
     sortable: false,
-    valueFormatter: ({value}) => value.name
+    valueFormatter: ({ value }) => value.name,
   },
   {
     field: "type",
@@ -159,6 +159,46 @@ export const deviceColumns: GridColDef[] = [
     headerName: "وضعیت",
     width: 80,
     sortable: true,
-    valueFormatter: (params) => params.value ? 'فعال' : 'غیرفعال',
+    valueFormatter: (params) => (params.value ? "فعال" : "غیرفعال"),
+  },
+];
+
+export const auditLogsColumns: GridColDef[] = [
+  {
+    field: "createdAt",
+    headerName: "تاریخ",
+    width: 100,
+    valueFormatter: (params) =>
+      digitsEnToFa(moment(params.value).format("jYYYY-jMM-jDD HH:mm")),
+    type: "dateTime",
+    valueGetter: ({ value }) => value && new Date(value),
+  },
+  {
+    field: "initiatorId",
+    headerName: "شناسه کاربر",
+    width: 210,
+    renderCell: CellLink
+  },
+  {
+    field: "initiatorName",
+    headerName: "نام کاربر",
+    width: 140,
+  },
+  {
+    field: "role",
+    headerName: "دسترسی",
+    width: 120,
+    // valueFormatter: (params) =>
+    //   params.value === "ADMIN"
+    //     ? "ادمین"
+    //     : params.value === "CONTROLLER"
+    //     ? "کنترلر"
+    //     : "اپراتور",
+  },
+  {
+    field: "description",
+    headerName: "شرح عملیات",
+    width: 340,
+    // valueFormatter: (params) => params.value.replace(/,/g, '،')
   },
 ];

@@ -8,6 +8,7 @@ import {
   scheduleColumns,
   deviceColumns,
   conductorColumns,
+  auditLogsColumns,
 } from "./dataTableSource";
 import { Link } from "react-router-dom";
 import { EmptyList } from "./EmptyList";
@@ -19,13 +20,15 @@ interface IDataTableProps {
     | "file"
     | "schedule"
     | "device"
-    | "conductor";
+    | "conductor"
+    | "audit-logs";
   singleItemRoute?: string;
   data?: any[];
   onViewClick?: (_id: string) => void;
   onDeleteClick?: (_id: string) => void;
   actionVisible?: boolean;
   resizable?: boolean;
+  forceResize?: boolean;
   rowCount?: number;
   page?: number;
   pageSize?: number;
@@ -40,6 +43,7 @@ export const DataTable: FC<IDataTableProps> = ({
   onDeleteClick,
   actionVisible = true,
   resizable = false,
+  forceResize = false,
   rowCount,
   page = 0,
   pageSize = 5,
@@ -107,6 +111,8 @@ export const DataTable: FC<IDataTableProps> = ({
         return fileColumns.concat(actionColumn);
       case "device":
         return deviceColumns.concat(actionColumn);
+      case "audit-logs":
+        return auditLogsColumns.concat(actionColumn);
       case "user":
       case "controller":
       default:
@@ -128,6 +134,8 @@ export const DataTable: FC<IDataTableProps> = ({
         return "اپراتور";
       case "controller":
         return "کاربر کنترلر";
+      case "audit-logs":
+        return "لاگ عملیات"
       default:
         return "";
     }
@@ -148,6 +156,7 @@ export const DataTable: FC<IDataTableProps> = ({
         getRowHeight={
           resizable
             ? (params) =>
+                forceResize ||
                 params.model?.type &&
                 params.model.type !== "ONE_TIME" &&
                 params.model?.day?.length > 2

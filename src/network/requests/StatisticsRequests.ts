@@ -1,4 +1,6 @@
+import { WithPagination } from "../../types/Pagination";
 import { Schedule } from "../../types/ScheduleTypes";
+import { USER_ROLE } from "../../types/UserTypes";
 import NetworkHandler, { listParamsReq } from "../NetworkHandler";
 
 export type deviceStatisticsParams = listParamsReq & {
@@ -19,3 +21,14 @@ export const getDevicesStatisticsRequest = async (
     }
   );
 };
+
+export const getAuditLogsRequest = async (params: listParamsReq & {role?: USER_ROLE}) =>
+  NetworkHandler.get<
+    WithPagination<{
+      createdAt: string;
+      description: string;
+      initiatorName: string;
+      initiatorId: string;
+      role: USER_ROLE;
+    }>
+  >("audit-logs", { params });

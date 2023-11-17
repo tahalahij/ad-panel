@@ -22,6 +22,7 @@ import { DeviceStatistics } from "../layouts/statistics/devices/DevicesStatistic
 import { FileUpload as UploadAzan } from "../layouts/azan";
 import { userHasAccess } from "../utils/UserAccess";
 import { WithLogout, logoutUnAuthorized } from "../network/useLogout";
+import { AuditLogList } from "../layouts/statistics/logs/AuditLogs";
 
 export const RootRouter = () => {
   const authState = useAuthenticationState();
@@ -165,10 +166,15 @@ export const RootRouter = () => {
                       element={<FileLimits title={"تنظیمات فایل ها"} />}
                     />
                   </Route>
-                  <Route path="statistics">
-                    <Route index element={<DeviceStatistics />} />
-                  </Route>
                 </>
+              )}
+              {userHasAccess(authState.role, ["ADMIN", "CONTROLLER"]) && (
+                <Route path="statistics">
+                  {userHasAccess(authState.role, ["ADMIN"]) && (
+                    <Route index element={<DeviceStatistics />} />
+                  )}
+                  <Route path="logs" element={<AuditLogList />} />
+                </Route>
               )}
             </Route>
             <Route path="*" element={<PageNotFound />} />
