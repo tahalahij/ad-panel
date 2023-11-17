@@ -22,7 +22,9 @@ export const getDevicesStatisticsRequest = async (
   );
 };
 
-export const getAuditLogsRequest = async (params: listParamsReq & {role?: USER_ROLE}) =>
+export const getAuditLogsRequest = async (
+  params: listParamsReq & { role?: USER_ROLE; initiatorId?: string }
+) =>
   NetworkHandler.get<
     WithPagination<{
       createdAt: string;
