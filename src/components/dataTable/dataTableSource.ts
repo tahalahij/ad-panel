@@ -5,6 +5,7 @@ import { ScheduleTypeEnum } from "../../types/ScheduleTypes";
 import moment from "moment-jalaali";
 import { digitsEnToFa } from "@persian-tools/persian-tools";
 import { CellWeekDays } from "./CellWeekDays";
+import { CellOnlineStatus } from "./CellOnlineStatus";
 
 export const userColumns: GridColDef[] = [
   { field: "_id", headerName: "شناسه", width: 280, sortable: false },
@@ -145,21 +146,27 @@ export const deviceColumns: GridColDef[] = [
   {
     field: "ip",
     headerName: "آدرس IP",
-    width: 190,
+    width: 140,
     sortable: false,
   },
   {
     field: "mac",
     headerName: "آدرس mac",
-    width: 190,
+    width: 140,
     sortable: false,
   },
   {
     field: "enabled",
-    headerName: "وضعیت",
-    width: 80,
+    headerName: "وضعیت فعالیت",
+    width: 120,
     sortable: true,
     valueFormatter: (params) => (params.value ? "فعال" : "غیرفعال"),
+  },
+  {
+    field: "isOnline",
+    headerName: "وضعیت اتصال",
+    width: 120,
+    renderCell: CellOnlineStatus
   },
 ];
 

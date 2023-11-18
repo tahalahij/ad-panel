@@ -9,5 +9,6 @@ export class Device {
       public mac: string,
       public operatorId: string,
       public enabled: boolean,
+      public isOnline: boolean,
     ) {}
   }

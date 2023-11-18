@@ -6,6 +6,7 @@ import { DataTable } from "../../../components";
 import { Link } from "react-router-dom";
 import { useDeviceData } from "../useDeviceData";
 import { useAuthenticationState } from "../../../context";
+import { useSocket } from "../../../network/socket/useSocket";
 
 const PAGE_SIZE = parseInt(process.env.REACT_APP_PAGE_SIZE!);
 
@@ -23,6 +24,18 @@ export const List: FC<ListProps> = ({
   const [page, setPage] = useState(0);
   const { list, loading } = useDeviceData(undefined, page, PAGE_SIZE);
   const auth = useAuthenticationState();
+  const onlineDevices = useSocket();
+
+  const getData = () => {
+    if (list?.data?.length) {
+      return list.data.map((item) => {
+        item.isOnline = onlineDevices.some((d) => d === item._id);
+        return item;
+      });
+    }
+
+    return [];
+  };
   return (
     <div className="list">
       <div className="header">
@@ -37,7 +50,7 @@ export const List: FC<ListProps> = ({
       <DataTable
         columnKey={"device"}
         actionVisible={auth.role !== "OPERATOR"}
-        data={list?.data}
+        data={getData()}
         pageSize={PAGE_SIZE}
         rowCount={list?.total}
         page={page}
