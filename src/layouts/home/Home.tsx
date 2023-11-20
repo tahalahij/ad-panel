@@ -1,6 +1,7 @@
 import "./Home.scss";
 import Typography from "@mui/material/Typography";
 import { useAuthenticationState } from "../../context";
+import { getRoleName } from "../../utils/Utils";
 // import {
 //   Sidebar,
 //   Navbar,
@@ -15,11 +16,17 @@ export const Home = () => {
   const authState = useAuthenticationState();
   return (
     <div className="home homeCenter">
-      <img className="logo" src={require("../../assets/images/icon_title.png")} alt="logo" />
+      <img
+        className="logo"
+        src={require("../../assets/images/icon_title.png")}
+        alt="logo"
+      />
       <Typography variant="h3">خوش آمدید</Typography>
       <br />
       <br />
-      <Typography>{`شما دسترسی ${authState.role} دارید`}</Typography>
+      <Typography>{`شما دسترسی "${getRoleName(
+        authState.role
+      )}" دارید`}</Typography>
       <Typography>{`از منوی سمت راست می‌توانید به قسمت های مختلف برنامه دسترسی داشته باشید`}</Typography>
     </div>
   );

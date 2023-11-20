@@ -1,5 +1,6 @@
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools";
 import { WeekDays } from "../types/ScheduleTypes";
+import { USER_ROLE } from "../types/UserTypes";
 
 type convertOptions = {
   isRial?: boolean;
@@ -103,4 +104,17 @@ export function generateReadableError(
   }
 
   return "";
+}
+
+export function getRoleName(role: USER_ROLE) {
+  switch (role) {
+    case "ADMIN":
+      return "مدیر سامانه";
+    case "CONTROLLER":
+      return "مدیر کنترلی";
+    case "OPERATOR":
+      return "مدیر مانیتورها";
+    default:
+      return "";
+  }
 }
