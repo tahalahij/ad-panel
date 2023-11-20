@@ -36,7 +36,6 @@ function buildUrl(parameters: object) {
     qs = qs.substring(0, qs.length - 1);
     qs = "?" + qs;
   }
-  console.log(qs);
   return qs;
 }
 
