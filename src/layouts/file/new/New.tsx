@@ -164,52 +164,52 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
                     >
                       <MenuItem value={"none"}>{"بدون انیمیشن"}</MenuItem>
                       <MenuItem value={"rotate"}>
-                        {"rotate".replace("-", " ").toUpperCase()}
+                        {"چرخش"}
                       </MenuItem>
                       <MenuItem value={"zoom"}>
-                        {"zoom".replace("-", " ").toUpperCase()}
+                        {"بزرگنمایی"}
                       </MenuItem>
                       <MenuItem value={"fade"}>
-                        {"fade".replace("-", " ").toUpperCase()}
+                        {"محو شدن"}
                       </MenuItem>
                       <MenuItem value={"fade-left"}>
-                        {"fade-left".replace("-", " ").toUpperCase()}
+                        {"محو شدن از چپ"}
                       </MenuItem>
                       <MenuItem value={"fade-right"}>
-                        {"fade-right".replace("-", " ").toUpperCase()}
+                        {"محو شدن از راست"}
                       </MenuItem>
                       <MenuItem value={"fade-top"}>
-                        {"fade-top".replace("-", " ").toUpperCase()}
+                        {"محو شدن از بالا"}
                       </MenuItem>
                       <MenuItem value={"fade-bottom"}>
-                        {"fade-bottom".replace("-", " ").toUpperCase()}
+                        {"محو شدن از پایین"}
                       </MenuItem>
                       <MenuItem value={"flip-left"}>
-                        {"flip-left".replace("-", " ").toUpperCase()}
+                        {"ورق زدن به چپ"}
                       </MenuItem>
                       <MenuItem value={"flip-right"}>
-                        {"flip-right".replace("-", " ").toUpperCase()}
+                        {"ورق زدن به راست"}
                       </MenuItem>
                       <MenuItem value={"flip-top"}>
-                        {"flip-top".replace("-", " ").toUpperCase()}
+                        {"ورق زدن به بالا"}
                       </MenuItem>
                       <MenuItem value={"flip-bottom"}>
-                        {"flip-bottom".replace("-", " ").toUpperCase()}
+                        {"ورق زدن به پایین"}
                       </MenuItem>
                       <MenuItem value={"bounce"}>
-                        {"bounce".replace("-", " ").toUpperCase()}
+                        {"پرش"}
                       </MenuItem>
                       <MenuItem value={"bounce-left"}>
-                        {"bounce-left".replace("-", " ").toUpperCase()}
+                        {"پرش از چپ"}
                       </MenuItem>
                       <MenuItem value={"bounce-right"}>
-                        {"bounce-right".replace("-", " ").toUpperCase()}
+                        {"پرش از راست"}
                       </MenuItem>
                       <MenuItem value={"bounce-top"}>
-                        {"bounce-top".replace("-", " ").toUpperCase()}
+                        {"پرش از بالا"}
                       </MenuItem>
                       <MenuItem value={"bounce-bottom"}>
-                        {"bounce-bottom".replace("-", " ").toUpperCase()}
+                        {"پرش از پایین"}
                       </MenuItem>
                     </Select>
                   </FormControl>
