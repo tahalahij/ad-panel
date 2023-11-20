@@ -12,7 +12,7 @@ export const useOperatorData = (userType: USER_ROLE) => {
   const [loading, setLoading] = useState(false);
   const authState = useAuthenticationState();
 
-  const fetchData = async (page: number = 0) => {
+  const fetchData = async (page: number = 0, params?: any) => {
     if (!userHasAccess(authState.role, ["ADMIN", "CONTROLLER"])) return;
 
     setLoading(true);
@@ -20,7 +20,13 @@ export const useOperatorData = (userType: USER_ROLE) => {
       userType.toLocaleLowerCase() === "operator"
         ? getOperatorListRequest
         : getControllerListRequest;
-    const response = await apiRequest({ page, limit: 100 });
+    const _params = {
+      ip: "",
+      mac: "",
+      username: "",
+      ...params,
+    };
+    const response = await apiRequest({ page, limit: 100, ..._params });
     if (response.success) {
       setUserList(response.payload?.data);
     }
