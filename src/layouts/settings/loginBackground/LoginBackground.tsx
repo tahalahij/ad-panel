@@ -98,7 +98,7 @@ export const LoginBackground: FC<layoutProps> = ({ title }) => {
                 loading={loading}
                 onClick={upload}
               >
-                ارسال
+                تایید
               </LoadingButton>
             </div>
           </form>

@@ -133,7 +133,7 @@ export const FileUpload: FC<UploadProps> = ({ title }) => {
                 loading={loading}
                 onClick={() => upload("timeStamp")}
               >
-                ارسال
+                تایید
               </LoadingButton>
             </div>
           </form>
@@ -170,7 +170,7 @@ export const FileUpload: FC<UploadProps> = ({ title }) => {
                 loading={loading}
                 onClick={() => upload("media")}
               >
-                ارسال
+                تایید
               </LoadingButton>
             </div>
           </form>

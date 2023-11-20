@@ -355,7 +355,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 loading={loading}
                 onClick={onSubmit}
               >
-                ارسال
+                تایید
               </LoadingButton>
             </div>
 

@@ -232,7 +232,7 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
                 loading={loading}
                 onClick={upload}
               >
-                ارسال
+                تایید
               </LoadingButton>
             </div>
           </form>

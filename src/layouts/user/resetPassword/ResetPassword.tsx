@@ -192,7 +192,7 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ title }) => {
                 loading={loading}
                 onClick={submitPassword}
               >
-                ارسال
+                تایید
               </LoadingButton>
             </div>
             <div className="formInput"></div>
