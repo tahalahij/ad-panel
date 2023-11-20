@@ -2,11 +2,17 @@ import "./list.scss";
 import { FC, useState } from "react";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
-import { DataTable } from "../../../components";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import { DataTable, OperatorSelector } from "../../../components";
 import { Link } from "react-router-dom";
 import { useDeviceData } from "../useDeviceData";
 import { useAuthenticationState } from "../../../context";
 import { useSocket } from "../../../network/socket/useSocket";
+import { useFormik } from "formik";
 
 const PAGE_SIZE = parseInt(process.env.REACT_APP_PAGE_SIZE!);
 
@@ -21,8 +27,25 @@ export const List: FC<ListProps> = ({
   newItemRoute,
   columnKey = "device",
 }) => {
+  const formik = useFormik({
+    initialValues: {
+      ip: "",
+      mac: "",
+      name: "",
+      operatorId: "",
+    },
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
+
   const [page, setPage] = useState(0);
-  const { list, loading } = useDeviceData(undefined, page, PAGE_SIZE);
+  const { list, loading } = useDeviceData(
+    undefined,
+    page,
+    PAGE_SIZE,
+    formik.values
+  );
   const auth = useAuthenticationState();
   const onlineDevices = useSocket();
 
@@ -47,6 +70,43 @@ export const List: FC<ListProps> = ({
         )}
       </div>
       {loading ? <CircularProgress /> : null}
+      <div className="filters">
+        <OperatorSelector
+          operatorId={formik.values.operatorId}
+          onChange={formik.handleChange}
+          sx={{ width: "26ch" }}
+        />
+        <FormControl sx={{ width: "26ch" }}>
+          <TextField
+            id="name"
+            name="name"
+            label="نام دستگاه"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            placeholder="نام دستگاه"
+          />
+        </FormControl>
+        <FormControl sx={{ width: "26ch" }}>
+          <TextField
+            id="ip"
+            name="ip"
+            label="آدرس IP"
+            value={formik.values.ip}
+            onChange={formik.handleChange}
+            placeholder="آدرس IP"
+          />
+        </FormControl>
+        <FormControl sx={{ width: "26ch" }}>
+          <TextField
+            id="mac"
+            name="mac"
+            label="آدرس MAC"
+            value={formik.values.mac}
+            onChange={formik.handleChange}
+            placeholder="آدرس MAC"
+          />
+        </FormControl>
+      </div>
       <DataTable
         columnKey={"device"}
         actionVisible={auth.role !== "OPERATOR"}
