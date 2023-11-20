@@ -24,6 +24,15 @@ export const userColumns: GridColDef[] = [
     sortable: false,
     valueFormatter: (params) => getRoleName(params.value),
   },
+  {
+    field: "createdAt",
+    headerName: "تاریخ ایجاد",
+    width: 140,
+    valueFormatter: (params) =>
+      digitsEnToFa(moment(params.value).format("HH:mm jYYYY-jMM-jDD")),
+    type: "dateTime",
+    valueGetter: ({ value }) => value && new Date(value),
+  },
 ];
 
 export const fileColumns: GridColDef[] = [
@@ -53,7 +62,7 @@ export const scheduleColumns: GridColDef[] = [
   {
     field: "device",
     headerName: "نام دستگاه",
-    width: 150,
+    width: 140,
     sortable: false,
     valueFormatter: ({ value }) => value.name,
   },
@@ -67,7 +76,7 @@ export const scheduleColumns: GridColDef[] = [
   {
     field: "start",
     headerName: "تاریخ شروع",
-    width: 90,
+    width: 88,
     valueFormatter: (params) =>
       digitsEnToFa(moment(params.value).format("jYYYY-jMM-jDD")),
     type: "dateTime",
@@ -76,7 +85,7 @@ export const scheduleColumns: GridColDef[] = [
   {
     field: "end",
     headerName: "تاریخ پایان",
-    width: 90,
+    width: 88,
     valueFormatter: (params) =>
       digitsEnToFa(moment(params.value).format("jYYYY-jMM-jDD")),
     type: "dateTime",
@@ -103,6 +112,15 @@ export const scheduleColumns: GridColDef[] = [
     valueFormatter: (params) =>
       params.value ? digitsEnToFa(moment(params.value).format("HH:mm")) : "",
   },
+  {
+    field: "createdAt",
+    headerName: "تاریخ ایجاد",
+    width: 88,
+    valueFormatter: (params) =>
+      digitsEnToFa(moment(params.value).format("jYYYY-jMM-jDD HH:mm")),
+    type: "dateTime",
+    valueGetter: ({ value }) => value && new Date(value),
+  },
 ];
 
 export const conductorColumns: GridColDef[] = [
@@ -111,6 +129,15 @@ export const conductorColumns: GridColDef[] = [
     field: "name",
     headerName: "نام",
     width: 330,
+  },
+  {
+    field: "createdAt",
+    headerName: "تاریخ ایجاد",
+    width: 140,
+    valueFormatter: (params) =>
+      digitsEnToFa(moment(params.value).format("HH:mm jYYYY-jMM-jDD")),
+    type: "dateTime",
+    valueGetter: ({ value }) => value && new Date(value),
   },
 ];
 
@@ -131,27 +158,36 @@ export const deviceColumns: GridColDef[] = [
   {
     field: "ip",
     headerName: "آدرس IP",
-    width: 140,
+    width: 120,
     sortable: false,
   },
   {
     field: "mac",
     headerName: "آدرس mac",
-    width: 140,
+    width: 120,
     sortable: false,
   },
   {
     field: "enabled",
-    headerName: "وضعیت فعالیت",
-    width: 120,
+    headerName: "فعالیت",
+    width: 76,
     sortable: true,
     valueFormatter: (params) => (params.value ? "فعال" : "غیرفعال"),
   },
   {
     field: "isOnline",
-    headerName: "وضعیت اتصال",
-    width: 120,
+    headerName: "اتصال",
+    width: 76,
     renderCell: CellOnlineStatus,
+  },
+  {
+    field: "createdAt",
+    headerName: "تاریخ ایجاد",
+    width: 140,
+    valueFormatter: (params) =>
+      digitsEnToFa(moment(params.value).format("HH:mm jYYYY-jMM-jDD")),
+    type: "dateTime",
+    valueGetter: ({ value }) => value && new Date(value),
   },
 ];
 
