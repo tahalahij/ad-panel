@@ -3,7 +3,6 @@ import { FC } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import {
   userColumns,
-  userRows,
   fileColumns,
   scheduleColumns,
   deviceColumns,

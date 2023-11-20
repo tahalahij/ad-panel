@@ -6,6 +6,7 @@ import moment from "moment-jalaali";
 import { digitsEnToFa } from "@persian-tools/persian-tools";
 import { CellWeekDays } from "./CellWeekDays";
 import { CellOnlineStatus } from "./CellOnlineStatus";
+import { getRoleName } from "../../utils/Utils";
 
 export const userColumns: GridColDef[] = [
   { field: "_id", headerName: "شناسه", width: 280, sortable: false },
@@ -21,24 +22,8 @@ export const userColumns: GridColDef[] = [
     headerName: "دسترسی",
     width: 130,
     sortable: false,
+    valueFormatter: (params) => getRoleName(params.value),
   },
-];
-
-export const userRows = [
-  { id: 1, userName: "Snow", email: "Jon0@gmail.com", role: ["ADMIN"] },
-  { id: 2, userName: "Lannister", email: "Cersei0@gmail.com", role: ["ADMIN"] },
-  { id: 3, userName: "Lannister", email: "Jaime0@gmail.com", role: ["ADMIN"] },
-  { id: 4, userName: "Stark", email: "Arya0@gmail.com", role: ["ADMIN"] },
-  {
-    id: 5,
-    userName: "Targaryen",
-    email: "Daenerys0@gmail.com",
-    role: ["ADMIN"],
-  },
-  { id: 6, userName: "Melisandre", email: "null0@gmail.com", role: ["ADMIN"] },
-  { id: 7, userName: "Clifford", email: "Ferrara0@gmail.com", role: ["ADMIN"] },
-  { id: 8, userName: "Frances", email: "Rossini0@gmail.com", role: ["ADMIN"] },
-  { id: 9, userName: "Roxie", email: "Harvey0@gmail.com", role: ["ADMIN"] },
 ];
 
 export const fileColumns: GridColDef[] = [
@@ -166,7 +151,7 @@ export const deviceColumns: GridColDef[] = [
     field: "isOnline",
     headerName: "وضعیت اتصال",
     width: 120,
-    renderCell: CellOnlineStatus
+    renderCell: CellOnlineStatus,
   },
 ];
 
@@ -184,7 +169,7 @@ export const auditLogsColumns: GridColDef[] = [
     field: "initiatorId",
     headerName: "شناسه کاربر",
     width: 210,
-    renderCell: CellLink
+    renderCell: CellLink,
   },
   {
     field: "initiatorName",
@@ -195,12 +180,7 @@ export const auditLogsColumns: GridColDef[] = [
     field: "role",
     headerName: "دسترسی",
     width: 120,
-    // valueFormatter: (params) =>
-    //   params.value === "ADMIN"
-    //     ? "ادمین"
-    //     : params.value === "CONTROLLER"
-    //     ? "کنترلر"
-    //     : "اپراتور",
+    valueFormatter: (params) => getRoleName(params.value),
   },
   {
     field: "description",
