@@ -1,18 +1,15 @@
 import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { queryClient } from "../../../App";
 import {
   getAllSettingsRequest,
   updateSettingByIdRequest,
 } from "../../../network/requests";
-import { useAuthenticationState } from "../../../context";
 
 export const useSettingsData = () => {
   const [message, setMessage] = useState<{
     title: string;
     type?: "success" | "error";
   }>({ title: "" });
-  const auth = useAuthenticationState();
 
   const { data: settings } = useQuery({
     queryKey: ["system-settings"],

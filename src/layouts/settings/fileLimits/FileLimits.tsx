@@ -26,6 +26,10 @@ export const FileLimits: FC<layoutProps> = ({ title }) => {
         settings?.payload?.data?.find(
           (s) => s.name === "FILE_SIZE_LIMIT_IN_MEGA_BYTE"
         )?.value ?? "",
+      filesUploadPerDay:
+        settings?.payload?.data?.find(
+          (s) => s.name === "FILE_UPLOAD_LIMIT_PER_DAY"
+        )?.value ?? "",
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -35,12 +39,21 @@ export const FileLimits: FC<layoutProps> = ({ title }) => {
   //
   const navigate = useNavigate();
 
-  const submit = () => {
+  const submitSizeLimit = () => {
     updateSettings({
       id: settings?.payload?.data?.find(
         (s) => s.name === "FILE_SIZE_LIMIT_IN_MEGA_BYTE"
       )?._id!,
       value: formik.values.fileSizeLimit,
+    });
+  };
+
+  const submitFilesPerDay = () => {
+    updateSettings({
+      id: settings?.payload?.data?.find(
+        (s) => s.name === "FILE_UPLOAD_LIMIT_PER_DAY"
+      )?._id!,
+      value: formik.values.filesUploadPerDay,
     });
   };
 
@@ -86,14 +99,43 @@ export const FileLimits: FC<layoutProps> = ({ title }) => {
                   ),
                 }}
               />
-            </div>
 
-            <div className="formInput">
               <LoadingButton
                 variant="contained"
                 className="submitButton"
                 loading={loading}
-                onClick={submit}
+                onClick={submitSizeLimit}
+              >
+                ثبت
+              </LoadingButton>
+            </div>
+
+            <div className="formInput">
+              <TextField
+                error={false}
+                id="filesUploadPerDay"
+                name="filesUploadPerDay"
+                value={formik.values.filesUploadPerDay}
+                onChange={formik.handleChange}
+                label="تعداد فایل مجاز اپراتور در روز"
+                helperText={""}
+                placeholder="100"
+                sx={{ width: "30ch" }}
+                InputProps={{
+                  //}}
+                  // endAdornment={
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Typography>عدد</Typography>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <LoadingButton
+                variant="contained"
+                className="submitButton"
+                loading={loading}
+                onClick={submitFilesPerDay}
               >
                 ثبت
               </LoadingButton>
