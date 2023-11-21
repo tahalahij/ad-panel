@@ -25,6 +25,18 @@ export const userColumns: GridColDef[] = [
     valueFormatter: (params) => getRoleName(params.value),
   },
   {
+    field: "ip",
+    headerName: "آدرس IP",
+    width: 120,
+    sortable: false,
+  },
+  {
+    field: "mac",
+    headerName: "آدرس mac",
+    width: 120,
+    sortable: false,
+  },
+  {
     field: "createdAt",
     headerName: "تاریخ ایجاد",
     width: 140,

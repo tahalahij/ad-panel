@@ -11,6 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { DataTable } from "../../../components";
 import { useAuditLogs } from "./useAuditLogs";
 import { USER_ROLE } from "../../../types/UserTypes";
+import { getRoleName } from "../../../utils/Utils";
 
 const PAGE_SIZE = parseInt(process.env.REACT_APP_PAGE_SIZE!);
 
@@ -20,6 +21,8 @@ export const AuditLogList = () => {
     initialValues: {
       role: "",
       initiatorId: "",
+      initiatorName: "",
+      description: "",
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -28,6 +31,8 @@ export const AuditLogList = () => {
   const { isFetching: loading, data } = useAuditLogs(
     formik.values.role as USER_ROLE,
     formik.values.initiatorId,
+    formik.values.initiatorName,
+    formik.values.description,
     page,
     PAGE_SIZE
   );
@@ -37,7 +42,7 @@ export const AuditLogList = () => {
         <Typography variant="h6">{"لاگ عملیات"}</Typography>
       </div>
       <div className="filters">
-        <FormControl sx={{ width: "30ch" }}>
+        <FormControl sx={{ width: "26ch" }}>
           <InputLabel id="select-role-logs">دسترسی</InputLabel>
           <Select
             labelId="select-role-logs"
@@ -51,17 +56,17 @@ export const AuditLogList = () => {
               {"همه"}
             </MenuItem>
             <MenuItem key={"ADMIN"} value={"ADMIN"}>
-              {"ADMIN"}
+              {getRoleName("ADMIN")}
             </MenuItem>
             <MenuItem key={"CONTROLLER"} value={"CONTROLLER"}>
-              {"CONTROLLER"}
+              {getRoleName("CONTROLLER")}
             </MenuItem>
             <MenuItem key={"OPERATOR"} value={"OPERATOR"}>
-              {"OPERATOR"}
+              {getRoleName("OPERATOR")}
             </MenuItem>
           </Select>
         </FormControl>
-        <FormControl sx={{ width: "30ch" }}>
+        <FormControl sx={{ width: "26ch" }}>
           <TextField
             id="initiatorId"
             name="initiatorId"
@@ -69,6 +74,26 @@ export const AuditLogList = () => {
             value={formik.values.initiatorId}
             onChange={formik.handleChange}
             placeholder="شناسه کاربر"
+          />
+        </FormControl>
+        <FormControl sx={{ width: "26ch" }}>
+          <TextField
+            id="initiatorName"
+            name="initiatorName"
+            label="نام کاربر"
+            value={formik.values.initiatorName}
+            onChange={formik.handleChange}
+            placeholder="نام کاربر"
+          />
+        </FormControl>
+        <FormControl sx={{ width: "26ch" }}>
+          <TextField
+            id="description"
+            name="description"
+            label="توضیحات"
+            value={formik.values.description}
+            onChange={formik.handleChange}
+            placeholder="توضیحات"
           />
         </FormControl>
       </div>

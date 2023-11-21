@@ -1,26 +1,34 @@
-import { useEffect, useState } from "react";
 import {
   getDeviceByIdRequest,
   getDeviceListRequest,
   getMyDevicesListRequest,
 } from "../../network/requests";
-import { Device } from "../../types/DeviceType";
 import { useAuthenticationState } from "../../context";
 import { useQuery } from "@tanstack/react-query";
 
-export const useDeviceData = (operatorId?: string, page = 0, pageSize = 100) => {
+export const useDeviceData = (
+  operatorId?: string,
+  page = 0,
+  pageSize = 100,
+  params: any = {},
+) => {
   const auth = useAuthenticationState();
   const queryKey = auth.role === "OPERATOR" ? "my-devices" : "devices";
   const { data, isLoading: loading } = useQuery({
-    queryKey: [queryKey, operatorId, page, pageSize],
+    queryKey: [queryKey, operatorId, page, pageSize, ...Object.values(params)],
     queryFn: () =>
       queryKey === "devices"
-        ? getDeviceListRequest({ operatorId, page, limit: pageSize })
-        : getMyDevicesListRequest({page, limit: pageSize}),
-    placeholderData: { payload: {data: [], total: 0}, error: "", httpStatus: 200, success: true },
+        ? getDeviceListRequest({ operatorId, page, limit: pageSize, ...params })
+        : getMyDevicesListRequest({ page, limit: pageSize }),
+    placeholderData: {
+      payload: { data: [], total: 0 },
+      error: "",
+      httpStatus: 200,
+      success: true,
+    },
   });
 
-  return { list: data?.payload || {data: [], total: 0}, loading };
+  return { list: data?.payload || { data: [], total: 0 }, loading };
 };
 
 export const useDeviceById = (id: string) => {
