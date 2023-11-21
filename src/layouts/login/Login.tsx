@@ -63,7 +63,7 @@ export const Login = () => {
       setError(response.error?.toString() ?? "خطا در ورود به برنامه");
     }
   };
-  const uri = encodeURI(BASE_API_URL + "files/dashboard");
+  const uri = encodeURI(BASE_API_URL + "files/panel-files/first-page");
   return (
     <div className="login">
       <div className="cardContainer">
