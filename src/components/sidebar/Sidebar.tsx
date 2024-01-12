@@ -160,7 +160,9 @@ export const Sidebar = () => {
           </Typography>
           <LinkItem
             link="/users/resetPassword"
-            title="تغییر رمز عبور"
+            title={
+              authState.role === "ADMIN" ? "ویرایش مدیر سامانه" : "تغییر رمز عبور"
+            }
             icon={<MdLockReset className="icon" />}
           />
 

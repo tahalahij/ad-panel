@@ -16,11 +16,9 @@ import {
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { useAuthenticationState } from "../../../context";
 
-type ResetPasswordProps = {
-  title: string;
-};
+type ResetPasswordProps = {};
 
-export const ResetPassword: FC<ResetPasswordProps> = ({ title }) => {
+export const ResetPassword: FC<ResetPasswordProps> = () => {
   const navigate = useNavigate();
   //   const { userId, username, name } = useParams();
   const auth = useAuthenticationState();
@@ -78,7 +76,7 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ title }) => {
       }, 2000);
     } else {
       setMessage({
-        title:  response.error?.toString()!,
+        title: response.error?.toString()!,
         type: "error",
       });
     }
@@ -95,11 +93,14 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ title }) => {
       ? "حداقل 8 کاراکتر شامل حروف لاتین و عدد وارد کنید"
       : "";
 
+  const pageTitle =
+    auth.role === "ADMIN" ? "ویرایش مدیر سامانه" : "تغییر رمز عبور";
+
   return (
     <div className="resetPassword">
       <div className="top">
         <Typography variant="h5" className="title">
-          {title}
+          {pageTitle}
         </Typography>
       </div>
       <div className="bottom">

@@ -49,7 +49,7 @@ export const RootRouter = () => {
               <Route path="users">
                 <Route
                   path="resetPassword"
-                  element={<ResetPassword title={"تغییر رمز عبور"} />}
+                  element={<ResetPassword />}
                 />
                 <Route
                   path=":type/:userId"
