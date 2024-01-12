@@ -9,11 +9,11 @@ import { CellOnlineStatus } from "./CellOnlineStatus";
 import { getRoleName } from "../../utils/Utils";
 
 export const userColumns: GridColDef[] = [
-  { field: "_id", headerName: "شناسه", width: 280, sortable: false },
+  { field: "_id", headerName: "شناسه", width: 218, sortable: false },
   {
     field: "username",
     headerName: "نام کاربری",
-    width: 200,
+    width: 192,
     renderCell: CellImage,
   },
   { field: "name", headerName: "نام", width: 230, sortable: true },
