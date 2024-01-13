@@ -43,8 +43,14 @@ export const updateAdminRequest = async ({ _id, ...data }: newUserParams) => {
   return NetworkHandler.patch<any>(`users/admin`, data);
 };
 
-export const resetPasswordAdminRequest = async (password: string) => {
-  return NetworkHandler.patch<any>(`users/admin`, { password });
+export const updateAdminInfoRequest = async (body: {
+  password?: string;
+  ip?: string;
+  mac?: string;
+  name?: string;
+  username?: string;
+}) => {
+  return NetworkHandler.patch<any>(`users/admin`, body);
 };
 
 export const resetPasswordRequest = async (

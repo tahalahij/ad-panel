@@ -118,3 +118,10 @@ export function getRoleName(role: USER_ROLE) {
       return "";
   }
 }
+
+export function extractNonEmptyStrings(obj: { [key: string]: string }) {
+  return Object.entries(obj).reduce(
+    (acc, [k, v]) => (v ? { ...acc, [k]: v } : acc),
+    {}
+  );
+}

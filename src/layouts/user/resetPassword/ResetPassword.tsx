@@ -8,13 +8,15 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useFormik } from "formik";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
-  resetPasswordAdminRequest,
+  updateAdminInfoRequest,
   resetPasswordRequest,
 } from "../../../network/requests";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { useAuthenticationState } from "../../../context";
+import { EditAdminProfile } from "./components/EditAdmin";
+import { extractNonEmptyStrings } from "../../../utils/Utils";
 
 type ResetPasswordProps = {};
 
@@ -32,6 +34,10 @@ export const ResetPassword: FC<ResetPasswordProps> = () => {
     initialValues: {
       password: "",
       repeatPassword: "",
+      ip: "",
+      mac: "",
+      username: "",
+      name: "",
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -46,31 +52,35 @@ export const ResetPassword: FC<ResetPasswordProps> = () => {
     event.preventDefault();
   };
 
-  const submitPassword = async () => {
-    const { password, repeatPassword } = formik.values;
-    if (password !== repeatPassword) {
-      setMessage({
-        title: `تکرار رمز عبور اشتباه است. لطفا با دقت وارد کنید!`,
-        type: "error",
-      });
-      return;
-    }
+  const submitInformation = async () => {
+    const { password, repeatPassword, ...reset } = formik.values;
+    if (password.length > 0 || repeatPassword.length > 0) {
+      if (password !== repeatPassword) {
+        setMessage({
+          title: `تکرار رمز عبور اشتباه است. لطفا با دقت وارد کنید!`,
+          type: "error",
+        });
+        return;
+      }
 
-    if (password.length < 8) {
-      setMessage({
-        title: `حداقل 8 کاراکتر شامل حروف لاتین و عدد وارد کنید`,
-        type: "error",
-      });
-      return;
+      if (password.length < 8) {
+        setMessage({
+          title: `حداقل 8 کاراکتر شامل حروف لاتین و عدد وارد کنید`,
+          type: "error",
+        });
+        return;
+      }
     }
 
     setLoading(true);
     const response =
       auth.role === "OPERATOR"
         ? await resetPasswordRequest(password)
-        : await resetPasswordAdminRequest(password);
+        : await updateAdminInfoRequest(
+            extractNonEmptyStrings({ password, ...reset })
+          );
     if (response.success) {
-      setMessage({ title: "رمز عبور با موفقیت ثبت شد", type: "success" });
+      setMessage({ title: "اطلاعات با موفقیت ثبت شد", type: "success" });
       setTimeout(() => {
         navigate(-1);
       }, 2000);
@@ -104,19 +114,13 @@ export const ResetPassword: FC<ResetPasswordProps> = () => {
         </Typography>
       </div>
       <div className="bottom">
-        {/* <div className="left">
-          <img
-            src={
-              file
-                ? URL.createObjectURL(file)
-                : require("../../../assets/images/no_image.jpg")
-            }
-            alt="empty field"
-            className="image"
-          />
-        </div> */}
         <div className="right">
           <form action="">
+            <EditAdminProfile
+              values={formik.values}
+              handleChange={formik.handleChange}
+            />
+
             <div className="formInput">
               <TextField
                 id="password"
@@ -185,13 +189,12 @@ export const ResetPassword: FC<ResetPasswordProps> = () => {
                 label="تکرار رمز عبور"
               />
             </div>
-            <div className="formInput"></div>
             <div className="formInput">
               <LoadingButton
                 variant="contained"
                 className="submitButton"
                 loading={loading}
-                onClick={submitPassword}
+                onClick={submitInformation}
               >
                 تایید
               </LoadingButton>
