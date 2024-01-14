@@ -1,5 +1,5 @@
 import "./new.scss";
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -19,7 +19,10 @@ import moment from "moment";
 
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
-import { addScheduleByAdminRequest, addScheduleRequest } from "../../../network/requests";
+import {
+  addScheduleByAdminRequest,
+  addScheduleRequest,
+} from "../../../network/requests";
 import { useScheduleById } from "../useScheduleData";
 import {
   SchedulePure,
@@ -33,6 +36,7 @@ import { useGetConductor } from "../../conductor/data/useConductorData";
 import { OperatorSelector } from "../../../components";
 import { useAuthenticationState } from "../../../context";
 import { userHasAccess } from "../../../utils/UserAccess";
+import { DeviceChip } from "./DeviceChip";
 
 type NewProps = {
   title: string;
@@ -45,13 +49,19 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   const { scheduleId } = useParams();
   const { data, loading: scheduleLoading } = useScheduleById(scheduleId);
 
-  const { list: deviceList, loading: deviceLoading } = useDeviceData(operatorId, 0, 100);
-  const { operatorConductors, loading: conductorLoading } = useGetConductor(operatorId);
+  const { list: deviceList, loading: deviceLoading } = useDeviceData(
+    operatorId,
+    0,
+    100
+  );
+  const { operatorConductors, loading: conductorLoading } =
+    useGetConductor(operatorId);
   // const [currentIndex, setCurrentIndex] = useState(-1);
   const authState = useAuthenticationState();
 
   const [rangeDay, setRangeDay] = useState<DateObject[]>([]);
   const [days, setDays] = useState<WeekDays[]>([]);
+  const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
   const [startTime, setStartTime] = useState(moment());
   const [endTime, setEndTime] = useState(moment());
   const [loading, setLoading] = useState(false);
@@ -64,7 +74,6 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
     initialValues: {
       name: data?.name ?? "",
       conductor: data?.conductor ?? "",
-      deviceId: "",
       type: data?.type ?? ScheduleTypeEnum.ONE_TIME,
     },
     onSubmit: (values) => {
@@ -73,10 +82,10 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
   });
 
   const onSubmit = async () => {
-    // const response = update
-    //   ? await updateDeviceRequest({ ...requestBody, _id: scheduleId })
-    //   : await addDeviceRequest(formik.values);
-    const requestBody: SchedulePure = { ...formik.values };
+    const requestBody: SchedulePure = {
+      ...formik.values,
+      deviceIds: selectedDevices,
+    };
 
     if (requestBody.type === ScheduleTypeEnum.RECURSIVE) {
       requestBody.day = days;
@@ -130,6 +139,21 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
       typeof value === "string" ? (value.split(",") as WeekDays[]) : value
     );
   };
+
+  const onDeviceChange = (event: SelectChangeEvent<string[]>) => {
+    const {
+      target: { value },
+    } = event;
+
+    setSelectedDevices(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
+  useEffect(() => {
+    setSelectedDevices([]);
+  }, [operatorId]);
 
   // console.log(new Date(rangeDay[0].valueOf()).toISOString())
   return (
@@ -186,11 +210,12 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                   value={formik.values.conductor}
                   onChange={formik.handleChange}
                 >
-                  {operatorConductors?.data?.length && operatorConductors?.data?.map((item, index) => (
-                    <MenuItem value={item._id} key={item._id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
+                  {operatorConductors?.data?.length &&
+                    operatorConductors?.data?.map((item, index) => (
+                      <MenuItem value={item._id} key={item._id}>
+                        {item.name}
+                      </MenuItem>
+                    ))}
                 </Select>
               </FormControl>
             </div>
@@ -221,9 +246,13 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                   labelId="device-select-label"
                   id="deviceId"
                   name="deviceId"
-                  value={formik.values.deviceId}
+                  value={selectedDevices}
                   label="دستگاه"
-                  onChange={formik.handleChange}
+                  onChange={onDeviceChange}
+                  multiple={true}
+                  renderValue={(selected) => (
+                    <DeviceChip selected={selected} devices={deviceList.data} />
+                  )}
                 >
                   {deviceList?.data?.map((item, index) => (
                     <MenuItem value={item._id} key={item._id}>

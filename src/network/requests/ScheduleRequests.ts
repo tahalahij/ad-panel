@@ -32,14 +32,14 @@ export const getScheduleByIdRequest = async (id: string) => {
 
 export const addScheduleRequest = async (
   data: SchedulePure,
-    operatorId?: string
+  operatorId?: string
 ) => {
   return NetworkHandler.post<Schedule>(`schedule`, data);
 };
 
 export const addScheduleByAdminRequest = async (
   data: SchedulePure,
-    operatorId?: string
+  operatorId?: string
 ) => {
   return NetworkHandler.post<Schedule>(`schedule/admin/${operatorId}`, data);
 };
