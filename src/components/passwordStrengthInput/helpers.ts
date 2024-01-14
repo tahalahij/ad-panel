@@ -1,3 +1,4 @@
+import { colors } from "@mui/material";
 import { IconType } from "react-icons";
 import { MdCheckCircleOutline, MdOutlineErrorOutline } from "react-icons/md";
 
@@ -12,7 +13,7 @@ const atLeastOneNumber = (password: string) =>
 const atLeastOneSpecialChar = (password: string) =>
   new RegExp(/(?=.*?[#?!@$ %^&*-])/).test(password);
 
-enum PasswordStrength {
+export enum PasswordStrength {
   STRONG = "قوی",
   MEDIUM = "خوب",
   WEAK = "ضعیف",
@@ -45,27 +46,24 @@ export function getIcon(strength: PasswordStrength): IconType {
   }
 }
 
-export function generateColors(strength: PasswordStrength): string[] {
-  let result: string[] = [];
+export function generateColors(
+  strength: PasswordStrength
+): [string, string, string, string] {
 
   const COLORS = {
-    NEUTRAL: "hsla(0, 0%, 88%, 1)",
-    WEAK: "hsla(353, 100%, 38%, 1)",
-    MEDIUM: "hsla (40, 71%, 51%, 1)",
-    STRONG: "hsla (134, 73%, 30%, 1)",
+    NEUTRAL: colors.grey[600],
+    WEAK: colors.red[800],
+    MEDIUM: colors.amber[800],
+    STRONG: colors.green[800],
   };
 
   switch (strength) {
-    case PasswordStrength.WEAK:
-      result = [COLORS.WEAK, COLORS.NEUTRAL, COLORS.NEUTRAL, COLORS.NEUTRAL];
-      break;
     case PasswordStrength.MEDIUM:
-      result = [COLORS.MEDIUM, COLORS.MEDIUM, COLORS.NEUTRAL, COLORS.NEUTRAL];
-      break;
+      return [COLORS.MEDIUM, COLORS.MEDIUM, COLORS.NEUTRAL, COLORS.NEUTRAL];
     case PasswordStrength.STRONG:
-      result = [COLORS.STRONG, COLORS.STRONG, COLORS.STRONG, COLORS.STRONG];
-      break;
+      return [COLORS.STRONG, COLORS.STRONG, COLORS.STRONG, COLORS.STRONG];
+    case PasswordStrength.WEAK:
+    default:
+      return [COLORS.WEAK, COLORS.NEUTRAL, COLORS.NEUTRAL, COLORS.NEUTRAL];
   }
-
-  return result;
 }

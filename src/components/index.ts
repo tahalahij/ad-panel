@@ -8,3 +8,4 @@ export * from "./mainContainer/MainContainer";
 export * from "./switchButton/SwitchButton";
 export { FileTypeDetector } from "./scheduleModule";
 export * from "./operator/OperatorSelector";
+export * from "./passwordStrengthInput/PasswordStrengthInput";
