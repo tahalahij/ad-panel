@@ -17,6 +17,7 @@ import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { useAuthenticationState } from "../../../context";
 import { EditAdminProfile } from "./components/EditAdmin";
 import { extractNonEmptyStrings } from "../../../utils/Utils";
+import { PasswordStrengthInput } from "../../../components";
 
 type ResetPasswordProps = {};
 
@@ -154,6 +155,7 @@ export const ResetPassword: FC<ResetPasswordProps> = () => {
                 }}
                 label="رمز عبور"
               />
+              <PasswordStrengthInput password={formik.values.password} />
             </div>
             <div className="formInput">
               <TextField

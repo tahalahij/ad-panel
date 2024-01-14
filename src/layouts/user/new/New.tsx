@@ -16,6 +16,7 @@ import {
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { USER_ROLE } from "../../../types/UserTypes";
 import { useUserData } from "../data/useOperator";
+import { PasswordStrengthInput } from "../../../components";
 
 type NewProps = {
   title?: string;
@@ -158,7 +159,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 sx={{ width: "25ch" }}
               />
             </div> */}
-            {(
+            {
               <div className="formInput">
                 <TextField
                   id="password"
@@ -190,8 +191,9 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                   }}
                   label="رمز عبور"
                 />
+                <PasswordStrengthInput password={formik.values.password} />
               </div>
-            )}
+            }
             <div className="formInput">
               <TextField
                 error={false}
