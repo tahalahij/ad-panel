@@ -21,6 +21,7 @@ export enum PasswordStrength {
 
 export function testPasswordStrength(password?: string): PasswordStrength {
   if (!password) return PasswordStrength.WEAK;
+  if (!atLeastMinimumLength(password)) return PasswordStrength.WEAK;
 
   let points = 0;
 

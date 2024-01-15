@@ -130,7 +130,7 @@ export const ResetPassword: FC<ResetPasswordProps> = () => {
                 onChange={formik.handleChange}
                 placeholder="رمز عبور را وارد کنید"
                 type={showPassword ? "text" : "password"}
-                helperText={passwordError}
+                // helperText={passwordError}
                 error={!!passwordError}
                 sx={{ width: "35ch" }}
                 InputProps={{
@@ -155,7 +155,7 @@ export const ResetPassword: FC<ResetPasswordProps> = () => {
                 }}
                 label="رمز عبور"
               />
-              <PasswordStrengthInput password={formik.values.password} />
+              <PasswordStrengthInput password={formik.values.password} width="35ch" />
             </div>
             <div className="formInput">
               <TextField

@@ -159,41 +159,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 sx={{ width: "25ch" }}
               />
             </div> */}
-            {
-              <div className="formInput">
-                <TextField
-                  id="password"
-                  name="password"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  placeholder="رمز عبور را وارد کنید"
-                  type={showPassword ? "text" : "password"}
-                  sx={{ width: "25ch" }}
-                  InputProps={{
-                    //}}
-                    // endAdornment={
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {showPassword ? (
-                            <MdOutlineVisibilityOff />
-                          ) : (
-                            <MdOutlineVisibility />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  label="رمز عبور"
-                />
-                <PasswordStrengthInput password={formik.values.password} />
-              </div>
-            }
+
             <div className="formInput">
               <TextField
                 error={false}
@@ -218,6 +184,43 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 helperText={""}
                 placeholder="آدرس mac را وارد کنید"
                 sx={{ width: "25ch" }}
+              />
+            </div>
+
+            <div className="formInput">
+              <TextField
+                id="password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                placeholder="رمز عبور را وارد کنید"
+                type={showPassword ? "text" : "password"}
+                sx={{ width: "25ch" }}
+                InputProps={{
+                  //}}
+                  // endAdornment={
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? (
+                          <MdOutlineVisibilityOff />
+                        ) : (
+                          <MdOutlineVisibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                label="رمز عبور"
+              />
+              <PasswordStrengthInput
+                password={formik.values.password}
+                width="25ch"
               />
             </div>
             {/* <div className="formInput">
