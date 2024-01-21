@@ -13,7 +13,10 @@ export function DeviceChip(props: DeviceChipProps) {
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
       {selected.map((value) => (
-        <Chip key={value} label={devices.find((d) => d._id === value)?.name || ''} />
+        <Chip
+          key={value}
+          label={devices.find((d) => d._id === value)?.name || ""}
+        />
       ))}
     </Box>
   );

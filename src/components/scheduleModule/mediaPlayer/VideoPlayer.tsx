@@ -17,7 +17,7 @@ export const VideoPlayer: FC<VideoPlayerType> = ({ resetKey, uri, onEnd }) => {
 
   return (
     <div style={{ display: 'flex', flex: 1, height: '100%' }}>
-      <video controls autoPlay={true} muted onEnded={onEnd} ref={ref}>
+      <video autoPlay={true} muted onEnded={onEnd} ref={ref}>
         <source src={uri} type="video/mp4" />
         Sorry, your browser doesn't support videos.
       </video>

@@ -8,6 +8,7 @@ import {
 } from "../../../network/requests";
 import { FileUploadItem } from "../../../types/FileTypes";
 import { Schedule } from "../../../types/ScheduleTypes";
+import { Typography } from "@mui/material";
 
 interface IGridDeviceProps {
   deviceId: string;
@@ -60,6 +61,7 @@ export const GridDevice = ({ deviceId }: IGridDeviceProps) => {
       <div className="mediaPlayer">
         <FileTypeDetector onEnd={onEnd} {...currentItem?.file} />
       </div>
+      {/* <Typography  /> */}
     </div>
   );
 };

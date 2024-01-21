@@ -17,12 +17,7 @@ export const MusicPlayer: FC<MusicPlayerType> = ({ uri, resetKey, onEnd }) => {
   }, [resetKey]);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        width: "100%",
-      }}
-    >
+    <div style={{ display: 'flex', flex: 1, height: '100%', alignItems: 'center' }}>
       {/* <div
             style={{
               display: "flex",
@@ -39,7 +34,7 @@ export const MusicPlayer: FC<MusicPlayerType> = ({ uri, resetKey, onEnd }) => {
         <source src={uri} type="audio/mp3" />
         Sorry, your browser doesn't support audio.
       </audio>
-    </Box>
+    </div>
   );
 };
 

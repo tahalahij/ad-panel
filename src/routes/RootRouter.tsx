@@ -23,6 +23,7 @@ import { FileUpload as UploadAzan } from "../layouts/azan";
 import { userHasAccess } from "../utils/UserAccess";
 import { WithLogout, logoutUnAuthorized } from "../network/useLogout";
 import { AuditLogList } from "../layouts/statistics/logs/AuditLogs";
+import { AllDevicesPlaying } from "../layouts/device/allDevicesPlaying/AllDevicesPlaying";
 
 export const RootRouter = () => {
   const authState = useAuthenticationState();
@@ -96,7 +97,8 @@ export const RootRouter = () => {
                       path="new"
                       element={<NewDevice title={"افزودن دستگاه جدید"} />}
                     />
-                    <Route path="current" element={<CurrentPlaying />} />
+                    <Route path="current" element={<AllDevicesPlaying />} />
+                    <Route path="current:deviceId" element={<CurrentPlaying />} />
                   </>
                 ) : (
                   <>
