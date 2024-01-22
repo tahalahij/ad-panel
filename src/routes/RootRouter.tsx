@@ -98,7 +98,7 @@ export const RootRouter = () => {
                       element={<NewDevice title={"افزودن دستگاه جدید"} />}
                     />
                     <Route path="current" element={<AllDevicesPlaying />} />
-                    <Route path="current:deviceId" element={<CurrentPlaying />} />
+                    <Route path="current/:deviceId" element={<CurrentPlaying />} />
                   </>
                 ) : (
                   <>

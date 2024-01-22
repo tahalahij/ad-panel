@@ -9,6 +9,7 @@ import {
 import { FileUploadItem } from "../../../types/FileTypes";
 import { Schedule } from "../../../types/ScheduleTypes";
 import { Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 interface IGridDeviceProps {
   deviceId: string;
@@ -20,6 +21,7 @@ export const GridDevice = ({ deviceId }: IGridDeviceProps) => {
     schedule: Schedule;
   }>();
   const auth = useAuthenticationState();
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     const getCurrentScheduleRequest =
@@ -57,7 +59,7 @@ export const GridDevice = ({ deviceId }: IGridDeviceProps) => {
   }
 
   return (
-    <div className="gridDevice">
+    <div className="gridDevice" onClick={() => navigate(`${deviceId}`)}>
       <div className="mediaPlayer">
         <FileTypeDetector onEnd={onEnd} {...currentItem?.file} />
       </div>
