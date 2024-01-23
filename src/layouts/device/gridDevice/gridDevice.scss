@@ -1,0 +1,27 @@
+.gridDevice {
+  display: flex;
+  aspect-ratio: 16 / 9;
+
+  .mediaPlayer {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background-color: black;
+    flex: 1;
+
+    &:hover {
+      border-radius: 4px;
+      outline: 4px solid #42a5f5
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: scale-down;
+    }
+
+    audio {
+      width: 100%;
+    }
+  }
+}

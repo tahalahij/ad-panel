@@ -19,24 +19,27 @@ import { FileUploadItem } from "../../../types/FileTypes";
 import { Schedule, ScheduleTypeEnum } from "../../../types/ScheduleTypes";
 import { getReadableDay } from "../../../utils/Utils";
 import { useAuthenticationState } from "../../../context";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type CurrentPlayingProps = {};
 
 export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
   const { list, loading } = useDeviceData(undefined, 0, 100);
   const auth = useAuthenticationState();
+  const { deviceId } = useParams();
 
-  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [currentDeviceId, setCurrentDeviceId] = useState(deviceId);
   const [currentItem, setCurrentItem] = useState<{
     file: FileUploadItem;
     schedule: Schedule;
   }>();
 
-  const onDeviceChange = (event: SelectChangeEvent<number>) => {
+  const onDeviceChange = (event: SelectChangeEvent<string>) => {
     const {
       target: { value },
     } = event;
-    setCurrentIndex(Number(value));
+    setCurrentDeviceId(value);
   };
 
   const fetchData = async () => {
@@ -45,7 +48,11 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
         ? getDeviceCurrentScheduleByOperatorRequest
         : getDeviceCurrentScheduleByAdminRequest;
 
-    getCurrentScheduleRequest(list?.data?.[currentIndex]._id)
+    if (!currentDeviceId) {
+      return toast("خطا در دریافت اطلاعات دستگاه");
+    }
+
+    getCurrentScheduleRequest(currentDeviceId)
       .then((res) => {
         if (res.success)
           setCurrentItem({
@@ -64,11 +71,13 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
   };
 
   useEffect(() => {
-    if (currentIndex > -1 && list?.data?.length > 0) {
+    if (currentDeviceId) {
       fetchData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentIndex]);
+  }, [currentDeviceId]);
+
+  const currentDevice = list?.data?.find((d) => d._id)!;
 
   return (
     <div className="currentPlaying">
@@ -84,12 +93,12 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
             labelId="demo-simple-select-label"
             id="type"
             name="type"
-            value={currentIndex}
+            value={currentDeviceId}
             label="دستگاه"
             onChange={onDeviceChange}
           >
             {list?.data?.map((item, index) => (
-              <MenuItem key={item.ip} value={index}>
+              <MenuItem key={item._id} value={item._id}>
                 {item.name + " " + item.ip}
               </MenuItem>
             ))}
@@ -179,11 +188,7 @@ export const CurrentPlaying: FC<CurrentPlayingProps> = () => {
                       flex: 1,
                     }}
                   >
-                    {"‏" +
-                      list?.data?.[currentIndex].name +
-                      " " +
-                      list?.data?.[currentIndex].ip +
-                      "‏"}
+                    {"‏" + currentDevice?.name + " " + currentDevice?.ip + "‏"}
                   </div>
                 </div>
                 <div
