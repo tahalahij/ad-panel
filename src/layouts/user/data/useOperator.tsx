@@ -1,5 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { getUserInfoRequest } from "../../../network/requests";
+import {
+  getUserInfoRequest,
+  getWhoAmIRequest,
+} from "../../../network/requests";
 
 export const useUserData = (id: string) => {
   const { data, isLoading: loading } = useQuery({
@@ -9,4 +12,12 @@ export const useUserData = (id: string) => {
   });
 
   return data?.payload;
+};
+
+export const useWhoAmI = () => {
+  return useQuery({
+    queryKey: ["whoami"],
+    queryFn: () => getWhoAmIRequest(),
+    cacheTime: 0,
+  });
 };

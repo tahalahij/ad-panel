@@ -18,6 +18,7 @@ import { useAuthenticationState } from "../../../context";
 import { EditAdminProfile } from "./components/EditAdmin";
 import { extractNonEmptyStrings } from "../../../utils/Utils";
 import { PasswordStrengthInput } from "../../../components";
+import { useWhoAmI } from "../data/useOperator";
 
 type ResetPasswordProps = {};
 
@@ -25,21 +26,24 @@ export const ResetPassword: FC<ResetPasswordProps> = () => {
   const navigate = useNavigate();
   //   const { userId, username, name } = useParams();
   const auth = useAuthenticationState();
+  const {data: whoami} = useWhoAmI();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{
     title: string;
     type?: "success" | "error";
   }>({ title: "" });
+
   const formik = useFormik({
     initialValues: {
       password: "",
       repeatPassword: "",
-      ip: "",
-      mac: "",
-      username: "",
-      name: "",
+      ip: whoami?.payload?.ip ?? "",
+      mac: whoami?.payload?.mac ?? "",
+      username: whoami?.payload?.username ?? "",
+      name: whoami?.payload?.name ?? "",
     },
+    enableReinitialize: true,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
@@ -155,7 +159,10 @@ export const ResetPassword: FC<ResetPasswordProps> = () => {
                 }}
                 label="رمز عبور"
               />
-              <PasswordStrengthInput password={formik.values.password} width="35ch" />
+              <PasswordStrengthInput
+                password={formik.values.password}
+                width="35ch"
+              />
             </div>
             <div className="formInput">
               <TextField
