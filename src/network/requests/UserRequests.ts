@@ -63,3 +63,7 @@ export const resetPasswordRequest = async (
 export const getUserInfoRequest = async (id: string) => {
   return NetworkHandler.get<User>(`users/admin/operators/${id}`);
 };
+
+export const getWhoAmIRequest = async () => {
+  return NetworkHandler.get<User>(`users/whoami`);
+};
