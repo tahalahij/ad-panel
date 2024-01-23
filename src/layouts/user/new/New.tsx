@@ -17,6 +17,7 @@ import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { USER_ROLE } from "../../../types/UserTypes";
 import { useUserData } from "../data/useOperator";
 import { PasswordStrengthInput } from "../../../components";
+import { containsPersianChar } from "../../../utils/Utils";
 
 type NewProps = {
   title?: string;
@@ -122,13 +123,13 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
             </div> */}
             <div className="formInput">
               <TextField
-                error={false}
+                error={containsPersianChar(formik.values.username)}
                 id="username"
                 name="username"
                 value={formik.values.username}
                 onChange={formik.handleChange}
                 label="نام کاربری"
-                helperText={""}
+                helperText={containsPersianChar(formik.values.username) ? 'نام کاربری نمی‌تواند شامل حروف فارسی باشد' : ''}
                 placeholder="نام کاربری را وارد کنید"
                 sx={{ width: "25ch" }}
               />

@@ -125,3 +125,9 @@ export function extractNonEmptyStrings(obj: { [key: string]: string }) {
     {}
   );
 }
+
+export function containsPersianChar(str: string) {
+  const regExp = /^[\u0600-\u06FF\s]+$/;
+
+  return regExp.test(str);
+}

@@ -5,6 +5,7 @@ import Divider from "@mui/material/Divider";
 
 import { userHasAccess } from "../../../../utils/UserAccess";
 import { useAuthenticationState } from "../../../../context";
+import { containsPersianChar } from "../../../../utils/Utils";
 
 interface IEditAdminProfile {
   handleChange: (e: React.ChangeEvent<any>) => void;
@@ -23,13 +24,13 @@ export const EditAdminProfile: FC<IEditAdminProfile> = ({
         <div className="editInformation">
           <div className="formInput">
             <TextField
-              error={false}
+              error={containsPersianChar(values.username)}
               id="username"
               name="username"
               value={values.username}
               onChange={handleChange}
               label="نام کاربری"
-              helperText={""}
+              helperText={containsPersianChar(values.username) ? 'نام کاربری نمی‌تواند شامل حروف فارسی باشد' : ''}
               placeholder="نام کاربری را وارد کنید"
               sx={{ width: "35ch" }}
             />
