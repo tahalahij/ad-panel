@@ -129,7 +129,11 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 value={formik.values.username}
                 onChange={formik.handleChange}
                 label="نام کاربری"
-                helperText={containsPersianChar(formik.values.username) ? 'نام کاربری نمی‌تواند شامل حروف فارسی باشد' : ''}
+                helperText={
+                  containsPersianChar(formik.values.username)
+                    ? "نام کاربری نمی‌تواند شامل حروف فارسی باشد"
+                    : ""
+                }
                 placeholder="نام کاربری را وارد کنید"
                 sx={{ width: "25ch" }}
               />
