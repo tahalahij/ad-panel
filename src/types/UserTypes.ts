@@ -10,6 +10,7 @@ export class User {
     public updatedAt: Date | string | null,
     public role: USER_ROLE,
     public ip: string,
-    public mac: string
+    public mac: string,
+    public enabled: boolean,
   ) {}
 }

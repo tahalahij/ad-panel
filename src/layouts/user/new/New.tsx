@@ -7,6 +7,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Stack from "@mui/material/Stack";
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -45,6 +48,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
         type === "operator"
           ? ("OPERATOR" as USER_ROLE)
           : ("CONTROLLER" as USER_ROLE),
+      enabled: userInfo?.enabled ?? true,
     },
     enableReinitialize: true,
     onSubmit: (values) => {
@@ -135,7 +139,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                     : ""
                 }
                 placeholder="نام کاربری را وارد کنید"
-                sx={{ width: "25ch" }}
+                sx={{ width: "35ch" }}
               />
             </div>
             <div className="formInput">
@@ -150,7 +154,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 placeholder={`نام ${
                   type === "operator" ? "اپراتور" : "کنترلر"
                 } را وارد کنید`}
-                sx={{ width: "25ch" }}
+                sx={{ width: "35ch" }}
               />
             </div>
             {/* <div className="formInput">
@@ -161,7 +165,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 defaultValue=""
                 helperText={""}
                 placeholder="ایمیل را وارد کنید"
-                sx={{ width: "25ch" }}
+                sx={{ width: "35ch" }}
               />
             </div> */}
 
@@ -175,7 +179,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 label="آدرس ip"
                 helperText={""}
                 placeholder="آدرس ip را وارد کنید"
-                sx={{ width: "25ch" }}
+                sx={{ width: "35ch" }}
               />
             </div>
             <div className="formInput">
@@ -188,7 +192,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 label="آدرس mac"
                 helperText={""}
                 placeholder="آدرس mac را وارد کنید"
-                sx={{ width: "25ch" }}
+                sx={{ width: "35ch" }}
               />
             </div>
 
@@ -200,7 +204,7 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
                 onChange={formik.handleChange}
                 placeholder="رمز عبور را وارد کنید"
                 type={showPassword ? "text" : "password"}
-                sx={{ width: "25ch" }}
+                sx={{ width: "35ch" }}
                 InputProps={{
                   //}}
                   // endAdornment={
@@ -225,23 +229,29 @@ export const New: FC<NewProps> = ({ title, update = false }) => {
               />
               <PasswordStrengthInput
                 password={formik.values.password}
-                width="25ch"
+                width="35ch"
               />
             </div>
-            {/* <div className="formInput">
-              <TextField
-                error={false}
-                id="outlined-error-helper-text"
-                label="آدرس"
-                defaultValue=""
-                helperText={""}
-                placeholder="آدرس را وارد کنید"
-                sx={{ width: "25ch" }}
-                multiline={true}
-                // fullWidth
-              />
-            </div> */}
-            {/* <div className="formInput"></div> */}
+            <div className="formInput">
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Typography>غیرفعال</Typography>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      // disabled={auth.role === "OPERATOR"}
+                      // inputProps={{ "aria-label": "ant design" }}
+                      checked={formik.values.enabled}
+                      onChange={formik.handleChange}
+                    />
+                  }
+                  name="enabled"
+                  id="enabled"
+                  label=""
+                />
+
+                <Typography>فعال</Typography>
+              </Stack>
+            </div>
             <div className="formInput">
               <LoadingButton
                 variant="contained"
