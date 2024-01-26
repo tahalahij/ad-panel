@@ -11,6 +11,7 @@ type OperatorSelectorProps = {
   operatorId: string;
   onOperatorChanged?: (id: string) => void;
   onChange?: (event: SelectChangeEvent<string>) => void;
+  hasError?: boolean;
   sx?: SxProps<Theme>;
 };
 
@@ -18,7 +19,8 @@ export const OperatorSelector = ({
   operatorId,
   onOperatorChanged,
   onChange,
-  sx = { width: "26ch", marginTop: 2, marginRight: "20px", marginLeft: "20px" },
+  hasError = false,
+  sx = { width: "35ch", marginTop: 2, marginRight: "20px", marginLeft: "20px" },
 }: OperatorSelectorProps) => {
   const authState = useAuthenticationState();
   const { userList } = useOperatorData("OPERATOR");
@@ -35,6 +37,7 @@ export const OperatorSelector = ({
         name="operatorId"
         label="نام اپراتور"
         value={operatorId}
+        error={hasError}
         onChange={(e) =>
           onChange
             ? onChange(e)

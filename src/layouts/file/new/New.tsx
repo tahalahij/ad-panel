@@ -41,6 +41,14 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
       return;
     }
 
+    if (!operatorId) {
+      setMessage({
+        title: "اپراتور انتخاب نشده است!",
+        type: "error",
+      });
+      return;
+    }
+
     if (file.type.startsWith("image") && (!delay || Number(delay) <= 0)) {
       setMessage({
         title: "مدت زمان نمایش تصویر به درستی وارد نشده است",
@@ -111,6 +119,7 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
           <OperatorSelector
             operatorId={operatorId}
             onOperatorChanged={setOperatorId}
+            hasError={!operatorId}
           />
           <form action="">
             <div className="formInput fileInput">
@@ -132,7 +141,6 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
                 onChange={(e) => {
                   if (e.target.files !== null) {
                     setFile(e.target.files[0]);
-                    console.log(e.target.files[0]);
                   }
                 }}
               />
