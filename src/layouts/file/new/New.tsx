@@ -8,6 +8,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
+import Stack from "@mui/material/Stack";
 import MenuItem from "@mui/material/MenuItem";
 import {
   uploadFileByAdminRequest,
@@ -18,6 +19,8 @@ import { MdOutlineCloudUpload } from "react-icons/md";
 import { Animator, ImageAnimation } from "../../../components/scheduleModule";
 import { OperatorSelector } from "../../../components";
 import { useAuthenticationState } from "../../../context";
+import { useQuery } from "@tanstack/react-query";
+import { getSettingByNameRequest } from "../../../network/requests";
 type NewProps = {
   title: string;
 };
@@ -35,6 +38,11 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
   }>({ title: "" });
 
   const navigate = useNavigate();
+
+  const { data: maxFileSize } = useQuery({
+    queryKey: ["max-file-size"],
+    queryFn: () => getSettingByNameRequest("FILE_SIZE_LIMIT_IN_MEGA_BYTE"),
+  });
 
   const upload = async () => {
     if (!file) {
@@ -135,7 +143,7 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
               </label>
               <input
                 type="file"
-                accept="image/*, audio/*, video/*"
+                accept=".png, .jpg, .jpeg, .mp3, .mp4"
                 id="file"
                 style={{ display: "none" }}
                 onChange={(e) => {
@@ -145,6 +153,12 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
                 }}
               />
             </div>
+            <Stack style={{margin: "0px 24px"}}>
+              <Typography variant="caption">{`فرمت های قابل پذیرش شامل .png, .jpg, .jpeg, .mp3, .mp4 می‌باشد.`}</Typography>
+              <Typography variant="caption">{`حداکثر حجم قابل اپلود در سیستم ${
+                maxFileSize?.payload?.value ?? "-"
+              }مگابایت می‌باشد.`}</Typography>
+            </Stack>
             {!!file && file.type.startsWith("image") && (
               <div className="imageBox">
                 <div className="inputs">
@@ -171,18 +185,10 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
                       onChange={onAnimationChange}
                     >
                       <MenuItem value={"none"}>{"بدون انیمیشن"}</MenuItem>
-                      <MenuItem value={"rotate"}>
-                        {"چرخش"}
-                      </MenuItem>
-                      <MenuItem value={"zoom"}>
-                        {"بزرگنمایی"}
-                      </MenuItem>
-                      <MenuItem value={"fade"}>
-                        {"محو شدن"}
-                      </MenuItem>
-                      <MenuItem value={"fade-left"}>
-                        {"محو شدن از چپ"}
-                      </MenuItem>
+                      <MenuItem value={"rotate"}>{"چرخش"}</MenuItem>
+                      <MenuItem value={"zoom"}>{"بزرگنمایی"}</MenuItem>
+                      <MenuItem value={"fade"}>{"محو شدن"}</MenuItem>
+                      <MenuItem value={"fade-left"}>{"محو شدن از چپ"}</MenuItem>
                       <MenuItem value={"fade-right"}>
                         {"محو شدن از راست"}
                       </MenuItem>
@@ -192,9 +198,7 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
                       <MenuItem value={"fade-bottom"}>
                         {"محو شدن از پایین"}
                       </MenuItem>
-                      <MenuItem value={"flip-left"}>
-                        {"ورق زدن به چپ"}
-                      </MenuItem>
+                      <MenuItem value={"flip-left"}>{"ورق زدن به چپ"}</MenuItem>
                       <MenuItem value={"flip-right"}>
                         {"ورق زدن به راست"}
                       </MenuItem>
@@ -204,18 +208,12 @@ export const NewFileUpload: FC<NewProps> = ({ title }) => {
                       <MenuItem value={"flip-bottom"}>
                         {"ورق زدن به پایین"}
                       </MenuItem>
-                      <MenuItem value={"bounce"}>
-                        {"پرش"}
-                      </MenuItem>
-                      <MenuItem value={"bounce-left"}>
-                        {"پرش از چپ"}
-                      </MenuItem>
+                      <MenuItem value={"bounce"}>{"پرش"}</MenuItem>
+                      <MenuItem value={"bounce-left"}>{"پرش از چپ"}</MenuItem>
                       <MenuItem value={"bounce-right"}>
                         {"پرش از راست"}
                       </MenuItem>
-                      <MenuItem value={"bounce-top"}>
-                        {"پرش از بالا"}
-                      </MenuItem>
+                      <MenuItem value={"bounce-top"}>{"پرش از بالا"}</MenuItem>
                       <MenuItem value={"bounce-bottom"}>
                         {"پرش از پایین"}
                       </MenuItem>
