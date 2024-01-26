@@ -44,13 +44,13 @@ export const getDeviceByIdRequest = async (deviceId: string) => {
 };
 
 export const getDeviceCurrentScheduleByAdminRequest = async (deviceId: string) => {
-  return NetworkHandler.get<{ file: FileUploadItem; schedule: Schedule }>(
+  return NetworkHandler.get<{ file: FileUploadItem; schedule: Schedule; device: Device }>(
     `devices/admin/schedule/${deviceId}`
   );
 };
 
 export const getDeviceCurrentScheduleByOperatorRequest = async (deviceId: string) => {
-  return NetworkHandler.get<{ file: FileUploadItem; schedule: Schedule }>(
+  return NetworkHandler.get<{ file: FileUploadItem; schedule: Schedule; device: Device }>(
     `devices/operator/schedule/${deviceId}`
   );
 };

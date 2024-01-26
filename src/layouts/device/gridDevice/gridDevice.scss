@@ -1,6 +1,14 @@
 .gridDevice {
   display: flex;
+  flex-direction: column;
   aspect-ratio: 16 / 9;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    outline: 4px solid #42a5f5;
+  }
 
   .mediaPlayer {
     display: flex;
@@ -8,11 +16,7 @@
     overflow: hidden;
     background-color: black;
     flex: 1;
-
-    &:hover {
-      border-radius: 4px;
-      outline: 4px solid #42a5f5
-    }
+    border-radius: 4px;
 
     video {
       width: 100%;
@@ -24,4 +28,26 @@
       width: 100%;
     }
   }
+
+  .footer {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    box-sizing: border-box;
+    padding: 4px 8px;
+    background-color: rgba(200, 200, 200, 0.3);
+  }
+}
+
+.offline {
+  outline: 4px solid rgb(148, 146, 146);
+}
+
+.online {
+  outline: 4px solid rgb(17, 233, 17);
 }
