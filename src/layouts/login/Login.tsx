@@ -15,6 +15,7 @@ import { loginRequest } from "../../network/requests";
 import { useFormik } from "formik";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { BASE_API_URL } from "../../network/Constants";
+import { PanelFilesNameEnum } from "../../types/FileTypes";
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -63,7 +64,7 @@ export const Login = () => {
       setError(response.error?.toString() ?? "خطا در ورود به برنامه");
     }
   };
-  const uri = encodeURI(BASE_API_URL + "files/panel-files/first-page");
+  const uri = encodeURI(BASE_API_URL + "files/panel-files/" + PanelFilesNameEnum.FIRST_PAGE);
   return (
     <div className="login">
       <div className="cardContainer">

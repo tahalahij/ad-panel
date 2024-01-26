@@ -28,3 +28,9 @@ export class ScheduleConductor {
     public _id: string
   ) {}
 }
+
+export enum PanelFilesNameEnum {
+  'DASHBOARD' = 'dashboard',
+  'LOGO' = 'logo',
+  'FIRST_PAGE' = 'first_page',
+}

@@ -7,6 +7,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { uploadDashboardBackgroundRequest } from "../../../network/requests/FileRequests";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineCloudUpload } from "react-icons/md";
+import { PanelFilesNameEnum } from "../../../types/FileTypes";
 
 type layoutProps = {
   title: string;
@@ -32,7 +33,7 @@ export const LoginBackground: FC<layoutProps> = ({ title }) => {
     data.append(`file`, file);
     // data.append("animationName", "flip");
 
-    const response = await uploadDashboardBackgroundRequest(data);
+    const response = await uploadDashboardBackgroundRequest(data, PanelFilesNameEnum.FIRST_PAGE);
     if (response.success) {
       setMessage({ title: "با موفقیت بارگذاری شد", type: "success" });
       setTimeout(() => {

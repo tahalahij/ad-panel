@@ -1,10 +1,7 @@
 // import type {ExpertCardType} from './../types';
-import { FileUploadItem, ScheduleConductor } from "../../types/FileTypes";
+import { FileUploadItem, PanelFilesNameEnum } from "../../types/FileTypes";
 import { WithPagination } from "../../types/Pagination";
-import NetworkHandler, {
-  listParamsReq,
-  withListParam,
-} from "../NetworkHandler";
+import NetworkHandler, { withListParam } from "../NetworkHandler";
 
 export const getFilesListByOperatorRequest = async (params: withListParam) => {
   return NetworkHandler.get<WithPagination<FileUploadItem>>(`files/operator`, {
@@ -52,6 +49,12 @@ export const deleteFileByAdminRequest = async (id: string) => {
   return NetworkHandler.delete<any>(`files/admin/${id}`, {});
 };
 
-export const uploadDashboardBackgroundRequest = async (file: FormData) => {
-  return NetworkHandler.post<any>(`files/admin/dashboard/upload`, file);
+export const uploadDashboardBackgroundRequest = async (
+  file: FormData,
+  place: PanelFilesNameEnum
+) => {
+  return NetworkHandler.post<any>(
+    `files/admin/panel-file/upload/${place}`,
+    file
+  );
 };
