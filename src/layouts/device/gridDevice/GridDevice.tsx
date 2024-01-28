@@ -15,13 +15,20 @@ import { Device } from "../../../types/DeviceType";
 interface IGridDeviceProps {
   deviceId: string;
   isOnline: boolean;
+  azanKey?: string;
+  azanItem?: FileUploadItem;
 }
 
-export const GridDevice = ({ deviceId, isOnline }: IGridDeviceProps) => {
+export const GridDevice = ({
+  deviceId,
+  isOnline,
+  azanKey = "ideal",
+  azanItem,
+}: IGridDeviceProps) => {
   const [currentItem, setCurrentItem] = useState<{
     file: FileUploadItem;
-    schedule: Schedule;
-    device: Device;
+    schedule?: Schedule;
+    device?: Device;
   }>();
   const auth = useAuthenticationState();
   const navigate = useNavigate();
@@ -58,6 +65,13 @@ export const GridDevice = ({ deviceId, isOnline }: IGridDeviceProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deviceId]);
 
+  useEffect(() => {
+    if (azanKey !== "ideal") {
+      // @ts-ignore
+      setCurrentItem((prev) => ({ ...(prev || {}), file: azanItem! }));
+    }
+  }, [azanKey]);
+
   if (!currentItem?.file) {
     return null;
   }
@@ -65,14 +79,23 @@ export const GridDevice = ({ deviceId, isOnline }: IGridDeviceProps) => {
   const onlineStatus = isOnline ? "online" : "offline";
 
   return (
-    <div className={`gridDevice ${onlineStatus}`} onClick={() => navigate(`${deviceId}`)}>
+    <div
+      className={`gridDevice ${onlineStatus}`}
+      onClick={() => navigate(`${deviceId}`)}
+    >
       <div className={`mediaPlayer ${onlineStatus}`}>
         <FileTypeDetector onEnd={onEnd} {...currentItem?.file} />
       </div>
 
       <div className="footer">
-        <Typography variant="caption" color="white">{`${currentItem.device.name}`}</Typography>
-        <Typography variant="caption" color="white">{`${currentItem.device.ip}`}</Typography>
+        <Typography
+          variant="caption"
+          color="white"
+        >{`${currentItem?.device?.name ?? ''}`}</Typography>
+        <Typography
+          variant="caption"
+          color="white"
+        >{`${currentItem?.device?.ip ?? ''}`}</Typography>
       </div>
     </div>
   );

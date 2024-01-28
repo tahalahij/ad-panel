@@ -37,6 +37,11 @@ export const useSocket = () => {
         }
         console.log(SocketEventsEnum.DEVICE_DISCONNECTED, data);
       });
+      // getSocketInstance().on(SocketEventsEnum.DEVICE_DISCONNECTED, (data) => {
+      //   if (arg.device === deviceId) {
+      //     setResetKey(Date.now().toString());
+      //   }
+      // });
     });
 
     getSocketInstance().on("disconnect", () => {
