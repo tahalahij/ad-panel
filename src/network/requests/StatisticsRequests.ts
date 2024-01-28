@@ -13,7 +13,7 @@ export type deviceStatisticsParams = listParamsReq & {
 export const getDevicesStatisticsRequest = async (
   params: deviceStatisticsParams
 ) => {
-  return NetworkHandler.get<{ details: unknown; statistics: File[] }>(
+  return NetworkHandler.get<{ details: unknown; statistics: File[], total: number }>(
     `statistics`,
     {
       params,

@@ -7,6 +7,11 @@ type convertOptions = {
   withComma?: boolean;
   appendToman?: boolean;
 };
+
+export function convertEnglishNumberToPersian(value: string | number) {
+  return digitsEnToFa(value);
+}
+
 export function convertToCurrency(
   amount: number,
   options: convertOptions = {
@@ -130,4 +135,27 @@ export function containsPersianChar(str: string) {
   const regExp = /^[\u0600-\u06FF\s]+$/;
 
   return regExp.test(str);
+}
+
+export function sumTotalSecondsToReadableValue(value: number) {
+  const hour = Math.floor(value / 3600);
+  const minute = Math.floor((value % 3600) / 60);
+  const second = Math.floor((value % 3600) % 60);
+
+  if (hour > 0) {
+    return (
+      `${digitsEnToFa(hour)} ساعت` +
+      (minute > 0 ? ` و ${digitsEnToFa(minute)} دقیقه` : "") +
+      (second > 0 ? ` و ${digitsEnToFa(second)} ثانیه` : "")
+    );
+  }
+
+  if (minute > 0) {
+    return (
+      `${digitsEnToFa(minute)} دقیقه` +
+      (second > 0 ? ` و ${digitsEnToFa(second)} ثانیه` : "")
+    );
+  }
+
+  return `${digitsEnToFa(second)} ثانیه`;
 }
