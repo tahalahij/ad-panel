@@ -7,11 +7,11 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
 
 import { useDeviceData } from "../useDeviceData";
 import { GridDevice } from "../gridDevice/GridDevice";
 import { DeviceChip } from "../../schedule/new/DeviceChip";
+import { useSocket } from "../../../network/socket/useSocket";
 
 type AllDevicesPlayingProps = {};
 
@@ -26,6 +26,7 @@ export const AllDevicesPlaying: FC<AllDevicesPlayingProps> = () => {
   const [cursor, setCursor] = useState(CURSOR_INITIAL_VALUE);
   const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
   const [playlist, setPlayList] = useState<string[]>([]);
+  const onlineDevices = useSocket();
 
   useEffect(() => {
     if (deviceList?.data?.length) {
@@ -101,7 +102,11 @@ export const AllDevicesPlaying: FC<AllDevicesPlayingProps> = () => {
         </div>
         <div className="grid-container">
           {playlist.map((deviceId) => (
-            <GridDevice deviceId={deviceId} key={deviceId} />
+            <GridDevice
+              deviceId={deviceId}
+              key={deviceId}
+              isOnline={onlineDevices.some((d) => d === deviceId)}
+            />
           ))}
         </div>
         {!loading ? (

@@ -10,15 +10,18 @@ import { FileUploadItem } from "../../../types/FileTypes";
 import { Schedule } from "../../../types/ScheduleTypes";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { Device } from "../../../types/DeviceType";
 
 interface IGridDeviceProps {
   deviceId: string;
+  isOnline: boolean;
 }
 
-export const GridDevice = ({ deviceId }: IGridDeviceProps) => {
+export const GridDevice = ({ deviceId, isOnline }: IGridDeviceProps) => {
   const [currentItem, setCurrentItem] = useState<{
     file: FileUploadItem;
     schedule: Schedule;
+    device: Device;
   }>();
   const auth = useAuthenticationState();
   const navigate = useNavigate();
@@ -38,6 +41,7 @@ export const GridDevice = ({ deviceId }: IGridDeviceProps) => {
               ...res.payload?.file!,
               resetKey: Date.now().toString(),
             },
+            device: res.payload?.device!,
           });
       })
       .catch(console.log);
@@ -58,12 +62,18 @@ export const GridDevice = ({ deviceId }: IGridDeviceProps) => {
     return null;
   }
 
+  const onlineStatus = isOnline ? "online" : "offline";
+
   return (
-    <div className="gridDevice" onClick={() => navigate(`${deviceId}`)}>
-      <div className="mediaPlayer">
+    <div className={`gridDevice ${onlineStatus}`} onClick={() => navigate(`${deviceId}`)}>
+      <div className={`mediaPlayer ${onlineStatus}`}>
         <FileTypeDetector onEnd={onEnd} {...currentItem?.file} />
       </div>
-      {/* <Typography  /> */}
+
+      <div className="footer">
+        <Typography variant="caption" color="white">{`${currentItem.device.name}`}</Typography>
+        <Typography variant="caption" color="white">{`${currentItem.device.ip}`}</Typography>
+      </div>
     </div>
   );
 };
