@@ -233,7 +233,7 @@ export const auditLogsColumns: GridColDef[] = [
   {
     field: "description",
     headerName: "شرح عملیات",
-    width: 340,
+    flex: 1,
     // valueFormatter: (params) => params.value.replace(/,/g, '،')
   },
 ];
