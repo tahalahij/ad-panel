@@ -2,31 +2,18 @@ import "./devicesStatistics.scss";
 import { useEffect, useState, useMemo } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import LoadingButton from "@mui/lab/LoadingButton";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Chip from "@mui/material/Chip";
-import Box from "@mui/material/Box";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { useFormik } from "formik";
-import moment from "moment";
-import { Chart } from "../../../components";
-import {
-  deviceStatisticsParams,
-  getDevicesStatisticsRequest,
-} from "../../../network/requests";
+import { getDevicesStatisticsRequest } from "../../../network/requests";
 import { useDeviceData } from "../../device/useDeviceData";
-import { BarChart } from "../../../components/chart/BarChart";
+import { PieChart } from "../../../components/chart/PieChart";
+import { sumTotalSecondsToReadableValue } from "../../../utils/Utils";
 
 export const DeviceStatistics = () => {
   const formik = useFormik({
@@ -38,12 +25,17 @@ export const DeviceStatistics = () => {
       alert(JSON.stringify(values, null, 2));
     },
   });
-  const { list: deviceList, loading: deviceLoading } = useDeviceData(undefined, 0, 200);
+  const { list: deviceList, loading: deviceLoading } = useDeviceData(
+    undefined,
+    0,
+    200
+  );
   const [rangeDay, setRangeDay] = useState<DateObject[]>([
     new DateObject().subtract(7, "days"),
     new DateObject(),
   ]);
   const [chartData, setChartData] = useState<File[]>([]);
+  const [totalSeconds, setTotalSeconds] = useState<number>(0);
 
   useEffect(() => {
     const _start = rangeDay[0].set({
@@ -51,7 +43,7 @@ export const DeviceStatistics = () => {
       minute: 0, //Number(startTime.format("mm")),
       millisecond: 0,
     });
-    const _end = rangeDay[0].set({
+    const _end = rangeDay[1].set({
       hour: 0, //Number(endTime.format("HH")),
       minute: 0, //Number(endTime.format("mm")),
       millisecond: 0,
@@ -59,23 +51,26 @@ export const DeviceStatistics = () => {
     const start = new Date(_start.valueOf()).toISOString();
     const end = new Date(_end.valueOf()).toISOString();
     const requestParams = {
-      page: 0,
-      limit: 100,
+      // page: 0,
+      // limit: 10000,
       start,
       end,
       ip: formik.values.ip ?? undefined,
       fileType: formik.values.fileType ?? undefined,
     };
     getDevicesStatisticsRequest(requestParams)
-      .then((res) => setChartData(res.payload?.statistics!))
+      .then((res) => {
+        setChartData(res.payload?.statistics!);
+        setTotalSeconds(res.payload?.total!);
+      })
       .catch(console.log);
   }, [rangeDay, formik.values.ip, formik.values.fileType]);
 
   const data = useMemo(() => {
-    const _d: { name: string; duration: number }[] = [
-      { name: "audio", duration: 0 },
-      { name: "video", duration: 0 },
-      { name: "image", duration: 0 },
+    const _d: { name: string; value: number; id: number; label?: string }[] = [
+      { id: 0, name: "audio", value: 0, label: "صدا" },
+      { id: 1, name: "video", value: 0, label: "ویدیو" },
+      { id: 2, name: "image", value: 0, label: "تصویر" },
     ];
     if (chartData)
       chartData.forEach((item) => {
@@ -83,13 +78,15 @@ export const DeviceStatistics = () => {
         const index = _d.findIndex((c) => c.name === item.fileType);
         if (index > -1) {
           // @ts-ignore
-          _d[index].duration = _d[index].duration + item.duration;
+          _d[index].value = _d[index].value + (item.duration || 0);
         } else {
           _d.push({
             // @ts-ignore
             name: item.fileType,
+            id: _d[_d.length - 1].id + 1,
+            label: "",
             // @ts-ignore
-            duration: item.duration,
+            value: item.duration,
           });
         }
       });
@@ -161,7 +158,10 @@ export const DeviceStatistics = () => {
       </div>
       <div className="charts">
         {/* <Featured /> */}
-        <BarChart title="" data={data} />
+        <PieChart title="" data={data} height={360} total={totalSeconds} />
+        <Typography className="listTitle">{`در مجموع ${sumTotalSecondsToReadableValue(
+          totalSeconds
+        )} فایل نمایش داده شده است`}</Typography>
       </div>
       {/* <div className="listContainer">
         <Typography className="listTitle">آخرین تراکنش ها</Typography>
