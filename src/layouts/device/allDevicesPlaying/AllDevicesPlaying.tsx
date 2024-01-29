@@ -12,6 +12,8 @@ import { useDeviceData } from "../useDeviceData";
 import { GridDevice } from "../gridDevice/GridDevice";
 import { DeviceChip } from "../../schedule/new/DeviceChip";
 import { useSocket } from "../../../network/socket/useSocket";
+import { useAzan } from "../../azan/hooks/useAzan";
+import { FileUploadItem } from "../../../types/FileTypes";
 
 type AllDevicesPlayingProps = {};
 
@@ -27,6 +29,8 @@ export const AllDevicesPlaying: FC<AllDevicesPlayingProps> = () => {
   const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
   const [playlist, setPlayList] = useState<string[]>([]);
   const onlineDevices = useSocket();
+
+  const { azanItem } = useAzan();
 
   useEffect(() => {
     if (deviceList?.data?.length) {
@@ -106,6 +110,8 @@ export const AllDevicesPlaying: FC<AllDevicesPlayingProps> = () => {
               deviceId={deviceId}
               key={deviceId}
               isOnline={onlineDevices.some((d) => d === deviceId)}
+              azanKey={azanItem?.resetKey || "ideal"}
+              azanItem={azanItem as unknown as FileUploadItem}
             />
           ))}
         </div>

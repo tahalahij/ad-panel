@@ -25,6 +25,7 @@ export const FileTypeDetector: FC<FileTypeDetectorProps> = ({
 }) => {
   //@ts-ignore
   const _fileType: "image" | "video" | "audio" = type!;
+  const azanUri = encodeURI(BASE_API_URL + "files/download/azan");
   const uri = encodeURI(BASE_API_URL + "files/admin/download/stream/" + name + '?auth_token=' + getToken());
 
   if (_fileType === "image") {
@@ -36,11 +37,11 @@ export const FileTypeDetector: FC<FileTypeDetectorProps> = ({
   }
 
   if (_fileType === "audio") {
-    return <MusicPlayer resetKey={resetKey!} uri={uri} onEnd={onEnd} />;
+    return <MusicPlayer resetKey={resetKey!} uri={resetKey?.startsWith("azan") ? azanUri : uri} onEnd={onEnd} />;
   }
 
   if (_fileType === "video") {
-    return <VideoPlayer resetKey={resetKey!} uri={uri} onEnd={onEnd} />;
+    return <VideoPlayer resetKey={resetKey!} uri={resetKey?.startsWith("azan") ? azanUri : uri} onEnd={onEnd} />;
   }
 
   return null;

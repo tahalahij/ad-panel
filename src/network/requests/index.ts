@@ -6,3 +6,4 @@ export * from "./ConductorRequests";
 export * from './ScheduleRequests';
 export * from './StatisticsRequests';
 export * from './SettingsRequests';
+export * from './AzanRequests';
