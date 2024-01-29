@@ -4,6 +4,10 @@ import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import LoadingButton from "@mui/lab/LoadingButton";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import { uploadDashboardBackgroundRequest } from "../../../network/requests/FileRequests";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineCloudUpload } from "react-icons/md";
@@ -15,6 +19,9 @@ type layoutProps = {
 
 export const LoginBackground: FC<layoutProps> = ({ title }) => {
   const [file, setFile] = useState<File>();
+  const [picturePosition, setPicturePosition] = useState<PanelFilesNameEnum>(
+    PanelFilesNameEnum.FIRST_PAGE
+  );
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{
     title: string;
@@ -33,7 +40,10 @@ export const LoginBackground: FC<layoutProps> = ({ title }) => {
     data.append(`file`, file);
     // data.append("animationName", "flip");
 
-    const response = await uploadDashboardBackgroundRequest(data, PanelFilesNameEnum.FIRST_PAGE);
+    const response = await uploadDashboardBackgroundRequest(
+      data,
+      picturePosition
+    );
     if (response.success) {
       setMessage({ title: "با موفقیت بارگذاری شد", type: "success" });
       setTimeout(() => {
@@ -41,7 +51,7 @@ export const LoginBackground: FC<layoutProps> = ({ title }) => {
       }, 2000);
     } else {
       setMessage({
-        title:  response.error?.toString()!,
+        title: response.error?.toString()!,
         type: "error",
       });
     }
@@ -68,6 +78,31 @@ export const LoginBackground: FC<layoutProps> = ({ title }) => {
           />
         </div> */}
         <div className="right">
+          <FormControl style={{marginRight: '24px'}} sx={{ width: "25ch" }}>
+            <InputLabel id="picture-id-label">موقعیت تصویر</InputLabel>
+            <Select
+              // disabled={auth.role === "CONTROLLER"}
+              labelId="picture-id-label"
+              id="operatorId"
+              name="operatorId"
+              label="موقعیت تصویر"
+              value={picturePosition}
+              // error={hasError}
+              onChange={(e) =>
+                setPicturePosition(e.target.value as PanelFilesNameEnum)
+              }
+            >
+              <MenuItem value={PanelFilesNameEnum.FIRST_PAGE}>
+                {'صفحه ورود'}
+              </MenuItem>
+              <MenuItem value={PanelFilesNameEnum.DASHBOARD}>
+                {'صفحه داشبورد'}
+              </MenuItem>
+              <MenuItem value={PanelFilesNameEnum.LOGO}>
+                {'لوگو برنامه'}
+              </MenuItem>
+            </Select>
+          </FormControl>
           <form action="">
             <div className="formInput fileInput">
               <label htmlFor="file" className="fileInput">

@@ -2,6 +2,8 @@ import "./Home.scss";
 import Typography from "@mui/material/Typography";
 import { useAuthenticationState } from "../../context";
 import { getRoleName } from "../../utils/Utils";
+import { BASE_API_URL } from "../../network/Constants";
+import { PanelFilesNameEnum } from "../../types/FileTypes";
 // import {
 //   Sidebar,
 //   Navbar,
@@ -14,11 +16,12 @@ import { getRoleName } from "../../utils/Utils";
 
 export const Home = () => {
   const authState = useAuthenticationState();
+  const uri = encodeURI(BASE_API_URL + "files/panel-files/" + PanelFilesNameEnum.DASHBOARD);
   return (
     <div className="home homeCenter">
       <img
         className="logo"
-        src={require("../../assets/images/icon_title.png")}
+        src={uri}
         alt="logo"
       />
       <Typography variant="h3">خوش آمدید</Typography>

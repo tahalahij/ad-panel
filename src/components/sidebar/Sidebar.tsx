@@ -19,17 +19,19 @@ import {
 import { userHasAccess } from "../../utils/UserAccess";
 import { logoutUnAuthorized } from "../../network/useLogout";
 import { LinkItem } from "./Item";
+import { BASE_API_URL } from "../../network/Constants";
+import { PanelFilesNameEnum } from "../../types/FileTypes";
 
 export const Sidebar = () => {
   const authState = useAuthenticationState();
-
+  const uri = encodeURI(BASE_API_URL + "files/panel-files/" + PanelFilesNameEnum.LOGO);
   return (
     <div className="sidebar">
       <div className="top">
         <Link to={"/"} style={{ textDecoration: "none" }}>
           <img
             className="logo"
-            src={require("../../assets/images/icon_title.png")}
+            src={uri}
             alt="logo"
           />
         </Link>
