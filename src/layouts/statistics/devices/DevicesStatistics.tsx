@@ -13,7 +13,6 @@ import { useFormik } from "formik";
 import { getDevicesStatisticsRequest } from "../../../network/requests";
 import { useDeviceData } from "../../device/useDeviceData";
 import { PieChart } from "../../../components/chart/PieChart";
-import { sumTotalSecondsToReadableValue } from "../../../utils/Utils";
 
 export const DeviceStatistics = () => {
   const formik = useFormik({
