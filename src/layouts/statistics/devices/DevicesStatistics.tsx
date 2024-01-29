@@ -68,9 +68,9 @@ export const DeviceStatistics = () => {
 
   const data = useMemo(() => {
     const _d: { name: string; value: number; id: number; label?: string }[] = [
-      { id: 0, name: "audio", value: 0, label: "صدا" },
-      { id: 1, name: "video", value: 0, label: "ویدیو" },
-      { id: 2, name: "image", value: 0, label: "تصویر" },
+      { id: 0, name: "audio", value: 0, label: "  ==>       صدا"},
+      { id: 1, name: "video", value: 0, label: "  ==>       ویدیو" },
+      { id: 2, name: "image", value: 0, label: "  ==>      تصویر" },
     ];
     if (chartData)
       chartData.forEach((item) => {
@@ -159,9 +159,7 @@ export const DeviceStatistics = () => {
       <div className="charts">
         {/* <Featured /> */}
         <PieChart title="" data={data} height={360} total={totalSeconds} />
-        <Typography className="listTitle">{`در مجموع ${sumTotalSecondsToReadableValue(
-          totalSeconds
-        )} فایل نمایش داده شده است`}</Typography>
+        <Typography className="listTitle">{`در مجموع ${totalSeconds} عدد فایل نمایش داده شده است `}</Typography>
       </div>
       {/* <div className="listContainer">
         <Typography className="listTitle">آخرین تراکنش ها</Typography>
